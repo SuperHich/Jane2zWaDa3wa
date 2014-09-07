@@ -1,5 +1,6 @@
 package com.janaezwadaawa;
 
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -7,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.ListFragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
@@ -24,13 +26,11 @@ import com.janaezwadaawa.adapters.MenuCustomAdapter;
 
 public class MainActivity extends FragmentActivity implements IMenuListener, OnTouchListener, EditNameDialogListener{
 
-	public static final String COMMENTS_FRAGMENT = "comments_fragment";
-	public static final String ADD_COMMENT_FRAGMENT = "add_comment_fragment";
-	public static final String EDIT_COMMENT_FRAGMENT = "edit_comment_fragment";
-	public static final String FAVOURITE_FRAGMENT = "favourite_fragment";
-	public static final String BOOKS_FRAGMENT = "books_fragment";
-	public static final String ABWAB_FRAGMENT = "abwab_fragment";
-	public static final String AHADITH_FRAGMENT = "ahadith_fragment";
+	public static final String MOSQUES_FRAGMENT = "mosques_fragment";
+	public static final String JANAEZ_FRAGMENT = "janaez_fragment";
+	public static final String DA3AWI_FRAGMENT = "da3awi_fragment";
+	
+	public static final String 	DEFAULT_FRAG_POSITION = "default_frag_position";
 	
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
@@ -44,8 +44,10 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 	private String lastText = "";
 	private boolean isFirstStart = true;
 	
-	private Fragment fragment;
+	private Fragment fragment, fragment1;
+	private String currentFragment;
 	
+	private boolean isBackEnabled = false;
 	
 
 	@Override
@@ -112,6 +114,8 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 		btn_search = (Button) findViewById(R.id.search);
 		btn_search.setOnTouchListener(this);
 
+		
+		lastPosition = getIntent().getExtras().getInt(DEFAULT_FRAG_POSITION);
 	}
 
 	@Override
@@ -152,59 +156,32 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 		btn_menu.setBackgroundResource(R.drawable.menu);
 
 		lastPosition = position;
+		boolean shouldSwitch = true;
 		
-		
-		Bundle args = null;
+//		Bundle args = null;
 		// update the main content by replacing fragments
 		
 		switch (position) {
 		case 0:
 			fragment = new MosqueFragment();
-//			args = new Bundle();
-//			args.putInt(AhadithFragment.ARG_AHADITH, position);
 			btn_search.setVisibility(View.VISIBLE);
+			currentFragment = MOSQUES_FRAGMENT;
 			break;
 		case 1:
 			fragment = new Da3waFragment();
-//			args = new Bundle();
-//			args.putInt(AhadithFragment.ARG_AHADITH, position);
 			btn_search.setVisibility(View.VISIBLE);
+			currentFragment = DA3AWI_FRAGMENT;
 			break;
-//		case 2:
-//			fragment = new AhadithFragment();
-//			args = new Bundle();
-//			args.putInt(AhadithFragment.ARG_AHADITH, position);
-//			btn_search.setVisibility(View.VISIBLE);
-//			break;
-//		case 3:
-//			fragment = new AbwabFragment();
-//			currentFragment = ABWAB_FRAGMENT;
-//			btn_search.setVisibility(View.GONE);
-//			break;
-//		case 4:
-//			fragment = new BooksFragment();
-//			currentFragment = BOOKS_FRAGMENT;
-//			btn_search.setVisibility(View.GONE);
-//			break;
-//		case 5:
-//			fragment = new AboutFragment();
-//			btn_search.setVisibility(View.GONE);
-//			break;
-//		case 6:
-//			fragment = new AboutAppFragment();
-//			btn_search.setVisibility(View.GONE);
-//			break;
 		default:
-			fragment = new MosqueFragment();
+			shouldSwitch = false;
 			break;
 
 		}
-//		
-//		
-		if(args != null)
-			fragment.setArguments(args);
 
-//		if(position != 0)
+//		if(args != null)
+//			fragment.setArguments(args);
+
+		if(shouldSwitch)
 			switchTab(fragment, false);
 
 		// update selected item and title, then close the drawer
@@ -258,10 +235,16 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 
 				switch (v.getId()) {
 				case R.id.menu:
-					if(!mDrawerLayout.isDrawerOpen(Gravity.RIGHT))
-						mDrawerLayout.openDrawer(Gravity.RIGHT);
-					else
-						mDrawerLayout.closeDrawer(Gravity.RIGHT);		
+					if(isBackEnabled)
+					{		
+						onBackPressed();
+					}
+					else{
+						if(!mDrawerLayout.isDrawerOpen(Gravity.RIGHT))
+							mDrawerLayout.openDrawer(Gravity.RIGHT);
+						else
+							mDrawerLayout.closeDrawer(Gravity.RIGHT);		
+					}
 					break;
 				case R.id.search:
 					//show search dialog;
@@ -314,19 +297,45 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 		
 		public void goToJanaezFragment(){
 			
-			fragment = new JanaezFragment();
-
 			FragmentManager fragmentManager = getSupportFragmentManager();
-			FragmentTransaction ft = fragmentManager.beginTransaction();
-			ft.setCustomAnimations(R.anim.right_in, R.anim.right_out, R.anim.left_in, R.anim.left_out);
+			FragmentTransaction transaction = fragmentManager.beginTransaction();
+			transaction.setCustomAnimations(R.anim.left_in, R.anim.left_out, R.anim.right_in, R.anim.right_out);
 
-			ft.replace(R.id.content_frame, fragment);
-			ft.commit();
+			fragment1 = (ListFragment) getSupportFragmentManager().findFragmentByTag(JANAEZ_FRAGMENT);
+
+			if(fragment1 == null){
+				fragment1 = new JanaezFragment();
+
+				transaction.replace(R.id.fragment_view, fragment1, JANAEZ_FRAGMENT);
+				transaction.addToBackStack(JANAEZ_FRAGMENT);
+			}else{
+				transaction.attach(fragment1);
+			}
+
+			transaction.commit();
+			
+			btn_menu.setBackgroundResource(R.drawable.back_list);
+			currentFragment = JANAEZ_FRAGMENT;
+			
+			isBackEnabled = true;
+
 		}
 		
 		@Override
 		public void onBackPressed() {
-			super.onBackPressed();
+			
+			if(currentFragment.equals(JANAEZ_FRAGMENT)){
+				currentFragment = MOSQUES_FRAGMENT;
+				btn_menu.setBackgroundResource(R.drawable.menu);
+				
+				isBackEnabled = false;
+				super.onBackPressed();
+			}else{
+				startActivity(new Intent(MainActivity.this, IndexActivity.class));
+				overridePendingTransition(R.anim.right_in, R.anim.right_out);
+				finish();
+			}
+			
 		}
 		
 }

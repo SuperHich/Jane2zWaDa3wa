@@ -21,17 +21,8 @@ import com.janaezwadaawa.utils.JDFonts;
 
 public class Da3waFragment extends Fragment implements IJana2zListener {
 
-	public static final String ARG_JANA2Z_TYPE = "jana2z_type";
-	public static final String ARG_PLACE_ID = "place_id";
-	public static final String ARG_JANA2Z_SEARCH = "jana2z_search_type";
-	public static final String ARG_JANA2Z_KEYWORD_TEXT = "jana2z_keyword";
-	
 	private Da3waAdapter adapter;
 	private ArrayList<Da3wa> da3awi = new ArrayList<Da3wa>();
-	private int jana2zType;
-	private int placeId;
-	private int jana2zSearch;
-	private String jana2zKeyword;
 	
 	private ListView listView;
 	private TextView txv_emptyList; 
@@ -51,12 +42,6 @@ public class Da3waFragment extends Fragment implements IJana2zListener {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_da3awi, container, false);
-		if(getArguments() != null){
-			jana2zType = getArguments().getInt(ARG_JANA2Z_TYPE);
-			placeId = getArguments().getInt(ARG_PLACE_ID);
-			jana2zSearch = getArguments().getInt(ARG_JANA2Z_SEARCH);
-			jana2zKeyword = getArguments().getString(ARG_JANA2Z_KEYWORD_TEXT);
-		}
 		
 		listView = (ListView) rootView.findViewById(R.id.listView);
  		

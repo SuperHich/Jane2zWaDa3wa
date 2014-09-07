@@ -2,7 +2,6 @@ package com.janaezwadaawa;
 
 import java.util.ArrayList;
 
-import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -22,17 +21,17 @@ import com.janaezwadaawa.utils.JDFonts;
 
 public class JanaezFragment extends Fragment implements IJana2zListener {
 
-	public static final String ARG_JANA2Z_TYPE = "jana2z_type";
-	public static final String ARG_PLACE_ID = "place_id";
-	public static final String ARG_JANA2Z_SEARCH = "jana2z_search_type";
-	public static final String ARG_JANA2Z_KEYWORD_TEXT = "jana2z_keyword";
+//	public static final String ARG_JANA2Z_TYPE = "jana2z_type";
+//	public static final String ARG_PLACE_ID = "place_id";
+//	public static final String ARG_JANA2Z_SEARCH = "jana2z_search_type";
+//	public static final String ARG_JANA2Z_KEYWORD_TEXT = "jana2z_keyword";
 	
 	private JanaezAdapter adapter;
 	private ArrayList<Janeza> janaez = new ArrayList<Janeza>();
-	private int jana2zType;
-	private int placeId;
-	private int jana2zSearch;
-	private String jana2zKeyword;
+//	private int jana2zType;
+//	private int placeId;
+//	private int jana2zSearch;
+//	private String jana2zKeyword;
 	
 	private ListView listView;
 	private TextView txv_emptyList, 
@@ -42,7 +41,7 @@ public class JanaezFragment extends Fragment implements IJana2zListener {
 					txv_title, txv_total;
 	
 	private JDManager jdManager;
-	private ProgressDialog loading;
+//	private ProgressDialog loading;
 	
 	private Mosque selectedMosque;
 	
@@ -59,12 +58,12 @@ public class JanaezFragment extends Fragment implements IJana2zListener {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_janaez, container, false);
-		if(getArguments() != null){
-			jana2zType = getArguments().getInt(ARG_JANA2Z_TYPE);
-			placeId = getArguments().getInt(ARG_PLACE_ID);
-			jana2zSearch = getArguments().getInt(ARG_JANA2Z_SEARCH);
-			jana2zKeyword = getArguments().getString(ARG_JANA2Z_KEYWORD_TEXT);
-		}
+//		if(getArguments() != null){
+//			jana2zType = getArguments().getInt(ARG_JANA2Z_TYPE);
+//			placeId = getArguments().getInt(ARG_PLACE_ID);
+//			jana2zSearch = getArguments().getInt(ARG_JANA2Z_SEARCH);
+//			jana2zKeyword = getArguments().getString(ARG_JANA2Z_KEYWORD_TEXT);
+//		}
 
 		listView = (ListView) rootView.findViewById(R.id.listView);
  		
@@ -121,9 +120,9 @@ public class JanaezFragment extends Fragment implements IJana2zListener {
 			@Override
 			protected void onPreExecute() {
 				janaez.clear();
-				loading = new ProgressDialog(getActivity());
-				loading.setMessage(getString(R.string.please_wait));
-				loading.show();
+//				loading = new ProgressDialog(getActivity());
+//				loading.setMessage(getString(R.string.please_wait));
+//				loading.show();
 			}
 			
 			@Override
@@ -135,7 +134,7 @@ public class JanaezFragment extends Fragment implements IJana2zListener {
 			
 			@Override
 			protected void onPostExecute(ArrayList<Janeza> result) {
-				loading.dismiss();
+//				loading.dismiss();
 				
 				if(result != null){
 					adapter.notifyDataSetChanged();

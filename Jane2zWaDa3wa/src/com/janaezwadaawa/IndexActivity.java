@@ -59,10 +59,19 @@ public class IndexActivity extends Activity implements OnTouchListener{
 		case MotionEvent.ACTION_UP: {
 			
 			switch (v.getId()) {
-			case R.id.dourouss:
-				break;
 			case R.id.jana2ez:
-				startActivity(new Intent(IndexActivity.this, MainActivity.class));
+				Intent intent1 = new Intent(IndexActivity.this, MainActivity.class);
+				intent1.putExtra(MainActivity.DEFAULT_FRAG_POSITION, 0);
+				startActivity(intent1);
+				overridePendingTransition(R.anim.left_in, R.anim.left_out);
+				finish();
+				break;
+			case R.id.dourouss:
+				Intent intent2 = new Intent(IndexActivity.this, MainActivity.class);
+				intent2.putExtra(MainActivity.DEFAULT_FRAG_POSITION, 1);
+				startActivity(intent2);
+				overridePendingTransition(R.anim.left_in, R.anim.left_out);
+				finish();
 				break;
 			case R.id.settings:
 				break;

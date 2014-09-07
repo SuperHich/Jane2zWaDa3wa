@@ -47,7 +47,7 @@ public class JanaezAdapter extends ArrayAdapter<Janeza> {
 			holder.txv_gender 		= (TextView) convertView.findViewById(R.id.txv_gender); 
 			holder.txv_gender_value = (TextView) convertView.findViewById(R.id.txv_gender_value); 
 			
-			holder.txv_index.setTypeface(JDFonts.getBDRFont());
+			holder.txv_index.setTypeface(JDFonts.getArabicFont());
 			holder.txv_name.setTypeface(JDFonts.getBDRFont());
 			holder.txv_name_value.setTypeface(JDFonts.getBDRFont());
 			holder.txv_gender.setTypeface(JDFonts.getBDRFont());
