@@ -1,0 +1,112 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff" >
+
+    <LinearLayout
+        android:id="@+id/content_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/img_daawa"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/txv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:maxLines="1"
+            android:padding="2dp"
+            android:text="@string/mosque_name"
+            android:textColor="@color/color_green"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/txv_trainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:maxLines="1"
+            android:padding="2dp"
+            android:text="trainer"
+            android:textColor="@color/color_beige"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/txv_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:maxLines="1"
+            android:padding="2dp"
+            android:text="description"
+            android:textSize="12sp" />
+
+        <RelativeLayout
+            android:id="@+id/bottom_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom|right" >
+
+            <TextView
+                android:id="@+id/txv_mosque"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:maxLines="1"
+                android:padding="2dp"
+                android:text="@string/mosque_name"
+                android:textColor="@color/color_yellow" />
+
+            <ImageView
+                android:id="@+id/img_mosque"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/txv_mosque"
+                android:src="@drawable/icon_mosque" />
+
+            <TextView
+                android:id="@+id/txv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@+id/img_mosque"
+                android:maxLines="1"
+                android:padding="2dp"
+                android:text="@string/date"
+                android:textColor="@color/color_yellow" />
+
+            <ImageView
+                android:id="@+id/img_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/txv_date"
+                android:src="@drawable/icon_date" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/img_daawa"
+        android:layout_width="90dp"
+        android:layout_height="70dp"
+        android:layout_alignParentRight="true"
+        android:layout_margin="5dp"
+        android:background="@drawable/daawa_image" />
+
+    <Button
+        android:id="@+id/btn_details"
+        android:layout_width="60dp"
+        android:layout_height="15dp"
+        android:layout_below="@+id/content_layout"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/showmore_selector" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_below="@+id/btn_details" />
+
+</RelativeLayout>

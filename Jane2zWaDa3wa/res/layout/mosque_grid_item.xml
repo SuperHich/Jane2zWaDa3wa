@@ -1,0 +1,77 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff" >
+
+    <RelativeLayout
+        android:id="@+id/mosque_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right" >
+
+        <TextView
+            android:id="@+id/txv_mosque_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/txv_mosque"
+            android:maxLines="1"
+            android:padding="5dp"
+            android:text="@string/mosque_name"
+            android:textColor="@color/color_green" />
+
+        <TextView
+            android:id="@+id/txv_mosque"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:gravity="right"
+            android:maxLines="1"
+            android:padding="5dp"
+            android:text="@string/mosque_name"
+            android:textColor="@color/color_beige" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/jana2z_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mosque_layout"
+        android:gravity="right"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/txv_jana2z_nb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/txv_jana2z"
+            android:maxLines="1"
+            android:padding="5dp"
+            android:text="@string/janaez_number"
+            android:textColor="@color/color_green" />
+
+        <TextView
+            android:id="@+id/txv_jana2z"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:gravity="right"
+            android:maxLines="1"
+            android:padding="5dp"
+            android:text="@string/janaez_number"
+            android:textColor="@color/color_beige" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_details"
+        android:layout_width="60dp"
+        android:layout_height="15dp"
+        android:layout_below="@+id/jana2z_layout"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/showmore_selector" />
+    
+    <View 
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_below="@+id/btn_details"/>
+
+</RelativeLayout>

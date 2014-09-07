@@ -15,11 +15,21 @@
   -->
 
 <resources>
-    <string name="app_name">صحيح البخاري</string>
+    <string name="app_name">جنائز ودعوة</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="action_websearch">Web search</string>
     <string name="app_not_available">Sorry, there\'s no web browser available</string>
+    
+    <string name="mosque_name">إسم الجامع :</string>
+    <string name="janaez_number">عدد الجنائز :</string>
+    <string name="please_wait">الرجاء الانتظار...</string>
+    <string name="janaez">جنائز</string>
+    <string name="day">اليوم :</string>
+    <string name="date">التاريخ :</string>
+    <string name="prayer">صلاة :</string>
+    <string name="name">الاسم :</string>
+    <string name="gender">الجنس :</string>
     
     <string name="added_to_fav">تمت إضافة الحديث إلى المفضلة</string>
     <string name="removed_from_fav">تم حذف الحديث من المفضلة</string>
