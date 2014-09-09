@@ -1,0 +1,46 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:background="@color/color_green">
+
+     <RelativeLayout
+        android:id="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:layout_alignParentTop="true">
+
+          <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp" 
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/sahih_boukhari"/>
+        
+    </RelativeLayout>
+    
+    <TextView
+        android:id="@+id/txv_emptyList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="@string/empty_list"
+        android:textSize="20sp"
+        android:maxLines="1"
+        android:textColor="#fff"
+        android:visibility="gone" />
+
+    <ListView
+        android:id="@+id/android:list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center" 
+        android:divider="@color/color_green"
+        android:dividerHeight="1px"
+        android:cacheColorHint="@null"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@android:color/white"/>
+
+</RelativeLayout>

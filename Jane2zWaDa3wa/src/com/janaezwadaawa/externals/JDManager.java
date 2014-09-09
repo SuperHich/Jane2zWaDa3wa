@@ -16,6 +16,7 @@ import com.janaezwadaawa.adapters.IFragmentNotifier;
 import com.janaezwadaawa.entity.Da3wa;
 import com.janaezwadaawa.entity.Janeza;
 import com.janaezwadaawa.entity.Mosque;
+import com.janaezwadaawa.entity.Place;
 
 public class JDManager {
 
@@ -26,6 +27,7 @@ public class JDManager {
 	private static final String URL_DA3WA 		= URL_BASE + "lectures/";
 	private static final String URL_MOSQUES 	= URL_BASE + "mosques/";
 	private static final String URL_PLACES 		= URL_BASE + "places/";	
+	
 	private static final String ID 				= "id";
 	private static final String TITLE 			= "title";
 	private static final String MOSQUE 			= "mosque";
@@ -37,6 +39,8 @@ public class JDManager {
 	private static final String TRAINER			= "trainer";
 	private static final String LAT			 	= "lat";
 	private static final String LONG		 	= "long";
+	private static final String PLACE_ID 		= "place_id";
+	private static final String PLACE_NAME 		= "place_name";
 
 	private IFragmentNotifier fragmentNotifier;
 	
@@ -167,6 +171,29 @@ public class JDManager {
 		}
 		
 		return da3awi;
+	}
+	
+	public ArrayList<Place> getAllPlaces() {
+		ArrayList<Place> places = new ArrayList<Place>();
+		JSONArray array = jsonParser.getJSONFromUrl(URL_PLACES);
+		if (array != null) 
+		for (int i = 0; i < array.length(); i++) {
+			try {
+				JSONObject jObj = array.getJSONObject(i);
+				Place place = new Place();
+				place.setId(Integer.valueOf(jObj.getString(PLACE_ID)));
+				place.setTitle(jObj.getString(PLACE_NAME));
+				
+				Log.i(TAG, place.toString());
+				
+				places.add(place);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return places;
 	}
 	
 	public IFragmentNotifier getFragmentNotifier() {

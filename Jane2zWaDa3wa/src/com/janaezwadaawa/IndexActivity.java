@@ -1,22 +1,29 @@
 package com.janaezwadaawa;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.janaezwadaawa.entity.Place;
 import com.janaezwadaawa.utils.JDFonts;
 
-public class IndexActivity extends Activity implements OnTouchListener{
+public class IndexActivity extends FragmentActivity implements OnTouchListener{
 
-	private TextView place , date ;
+	private static final String PLACES_FRAGMENT = null;
+	private TextView txv_place , txv_date ;
 	private Button settings, share , about, medina_choice ;
 	private Button dourouss, jana2ez ;
+	
+	private Fragment fragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +37,13 @@ public class IndexActivity extends Activity implements OnTouchListener{
 		dourouss 		= (Button) findViewById(R.id.jana2ez);
 		jana2ez 		= (Button) findViewById(R.id.dourouss);
 
-		place = (TextView) findViewById(R.id.place);
-		date = (TextView) findViewById(R.id.date);
+		txv_place = (TextView) findViewById(R.id.txv_place);
+		txv_date = (TextView) findViewById(R.id.txv_date);
 
 		JDFonts.Init(this);
 
-		place.setTypeface(JDFonts.getBDRFont());
-		date.setTypeface(JDFonts.getBDRFont());
+		txv_place.setTypeface(JDFonts.getBDRFont());
+		txv_date.setTypeface(JDFonts.getBDRFont());
 
 		settings.setOnTouchListener(this);
 		share.setOnTouchListener(this);
@@ -80,6 +87,7 @@ public class IndexActivity extends Activity implements OnTouchListener{
 			case R.id.share:
 				break;
 			case R.id.medina_choice:
+				goToPlacesFragment();
 				break;
 
 			default:
@@ -95,5 +103,47 @@ public class IndexActivity extends Activity implements OnTouchListener{
 		}
 		}
 		return true;
+	}
+	
+	public void goToPlacesFragment(){
+		
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		FragmentTransaction transaction = fragmentManager.beginTransaction();
+		transaction.setCustomAnimations(R.anim.left_in, R.anim.left_out, R.anim.right_in, R.anim.right_out);
+
+		fragment = new PlacesFragment();
+
+		transaction.replace(R.id.fragment_view, fragment, PLACES_FRAGMENT);
+		transaction.addToBackStack(PLACES_FRAGMENT);
+
+		transaction.commit();
+		
+		setEnableState(false);
+
+	}
+	
+	public void onPlaceSelected(Place place){
+		
+		txv_place.setText(place.getTitle());
+		
+	}
+	
+	private void setEnableState(boolean enabled){
+		jana2ez.setEnabled(enabled);
+		dourouss.setEnabled(enabled);
+		settings.setEnabled(enabled);
+		share.setEnabled(enabled);
+		about.setEnabled(enabled);
+		medina_choice.setEnabled(enabled);
+	}
+	
+	@Override
+	public void onBackPressed() {
+		
+		if(fragment != null){
+			setEnableState(true);
+			fragment = null;
+		}
+		super.onBackPressed();
 	}
 }
