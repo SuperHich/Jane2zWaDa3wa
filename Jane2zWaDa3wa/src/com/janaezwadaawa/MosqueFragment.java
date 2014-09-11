@@ -109,6 +109,7 @@ public class MosqueFragment extends Fragment implements IJana2zListener {
 			protected void onPreExecute() {
 				mosques.clear();
 				loading = new ProgressDialog(getActivity());
+				loading.setCancelable(false);
 				loading.setMessage(getString(R.string.please_wait));
 				loading.show();
 			}

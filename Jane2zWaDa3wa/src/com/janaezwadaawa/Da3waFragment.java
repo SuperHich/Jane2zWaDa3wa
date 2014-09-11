@@ -78,6 +78,7 @@ public class Da3waFragment extends Fragment implements IJana2zListener {
 			protected void onPreExecute() {
 				da3awi.clear();
 				loading = new ProgressDialog(getActivity());
+				loading.setCancelable(false);
 				loading.setMessage(getString(R.string.please_wait));
 				loading.show();
 			}

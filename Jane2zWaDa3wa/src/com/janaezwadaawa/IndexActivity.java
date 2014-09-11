@@ -1,12 +1,11 @@
 package com.janaezwadaawa;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -23,7 +22,7 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener{
 	private Button settings, share , about, medina_choice ;
 	private Button dourouss, jana2ez ;
 	
-	private Fragment fragment;
+	private android.app.Fragment fragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -107,14 +106,15 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener{
 	
 	public void goToPlacesFragment(){
 		
-		FragmentManager fragmentManager = getSupportFragmentManager();
+		FragmentManager fragmentManager = getFragmentManager();
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
-		transaction.setCustomAnimations(R.anim.left_in, R.anim.left_out, R.anim.right_in, R.anim.right_out);
+//		transaction.setCustomAnimations(R.anim.left_in, R.anim.left_out, R.anim.right_in, R.anim.right_out);
+		transaction.setCustomAnimations(R.animator.card_flip_left_in, R.animator.card_flip_left_out, R.animator.card_flip_right_in, R.animator.card_flip_right_out);
 
 		fragment = new PlacesFragment();
 
 		transaction.replace(R.id.fragment_view, fragment, PLACES_FRAGMENT);
-		transaction.addToBackStack(PLACES_FRAGMENT);
+		transaction.addToBackStack(null);
 
 		transaction.commit();
 		
@@ -125,7 +125,7 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener{
 	public void onPlaceSelected(Place place){
 		
 		txv_place.setText(place.getTitle());
-		
+		onBackPressed();
 	}
 	
 	private void setEnableState(boolean enabled){
@@ -141,9 +141,10 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener{
 	public void onBackPressed() {
 		
 		if(fragment != null){
+			getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 			setEnableState(true);
 			fragment = null;
-		}
-		super.onBackPressed();
+		}else
+			super.onBackPressed();
 	}
 }

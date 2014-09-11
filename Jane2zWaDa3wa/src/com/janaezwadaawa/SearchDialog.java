@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
-public class AhadithSearchDialog extends DialogFragment implements OnEditorActionListener {
+public class SearchDialog extends DialogFragment implements OnEditorActionListener {
 
     public interface EditNameDialogListener {
         void onFinishEditDialog(String inputText);
@@ -21,11 +21,11 @@ public class AhadithSearchDialog extends DialogFragment implements OnEditorActio
     private EditText mEditText;
     private String lastText = "";
 
-    public AhadithSearchDialog() {
+    public SearchDialog() {
         // Empty constructor required for DialogFragment
     }
     
-    public AhadithSearchDialog(String lastText) {
+    public SearchDialog(String lastText) {
     	this.lastText = lastText;
     }
 

@@ -3,9 +3,9 @@ package com.janaezwadaawa;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.ListFragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,9 +53,6 @@ public class PlacesFragment extends ListFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
-//		if(getArguments() != null)
-//			bookId = getArguments().getInt(ARG_BOOKID);
-		
 		View rootView = inflater.inflate(R.layout.fragment_places, container, false);
 		
 		txv_empty = (TextView) rootView.findViewById(R.id.txv_emptyList);
@@ -72,7 +69,7 @@ public class PlacesFragment extends ListFragment {
 		getListView().setAdapter(adapter);
 //		getListView().setCacheColorHint(Color.TRANSPARENT);
 
-		new LoadDataTask().execute();
+		initData();
 		
 		getListView().setOnItemClickListener(new OnItemClickListener() {
 
@@ -81,43 +78,49 @@ public class PlacesFragment extends ListFragment {
 					int position, long id) {
 				
 				((IndexActivity) getActivity()).onPlaceSelected(places.get(position));
-				getActivity().onBackPressed();
 			}
 		});
 		
 	}
 
-	private class LoadDataTask extends AsyncTask<Void, Void, Void> {
+	private void initData(){
+		
+		new AsyncTask<Void, Void, ArrayList<Place>>() {
 
-		@Override
-		protected Void doInBackground(Void... params) {
+//			private ProgressDialog loading;
 
-			if (isCancelled()) {
-				return null;
+			@Override
+			protected void onPreExecute() {
+				places.clear();
+//				loading = new ProgressDialog(getActivity());
+//				loading.setCancelable(false);
+//				loading.setMessage(getString(R.string.please_wait));
+//				loading.show();
 			}
 			
-			places.clear();
-			places.addAll(JDManager.getInstance(getActivity()).getAllPlaces());
-
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(Void result) {
-
-			// We need notify the adapter that the data have been changed
-			adapter.notifyDataSetChanged();
+			@Override
+			protected ArrayList<Place> doInBackground(Void... params) {
+				places.addAll(JDManager.getInstance(getActivity()).getAllPlaces());
+				return places;
+			}
 			
-			if(places.size() == 0)
-				txv_empty.setVisibility(View.VISIBLE);
-			else
-				txv_empty.setVisibility(View.GONE);
+			@Override
+			protected void onPostExecute(ArrayList<Place> result) {
+//				loading.dismiss();
+				
+				if(result != null){
+					adapter.notifyDataSetChanged();
+				}
+				toggleEmptyMessage();
+			}
+		}.execute();
 
-		}
-
-		@Override
-		protected void onCancelled() {
-		}
 	}
-
+	
+	private void toggleEmptyMessage() {
+		if(places.size() == 0)
+			txv_empty.setVisibility(View.VISIBLE);
+		else
+			txv_empty.setVisibility(View.GONE);
+	}
 }

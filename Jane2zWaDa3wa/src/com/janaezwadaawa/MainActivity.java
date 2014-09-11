@@ -20,7 +20,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
-import com.janaezwadaawa.AhadithSearchDialog.EditNameDialogListener;
+import com.janaezwadaawa.SearchDialog.EditNameDialogListener;
 import com.janaezwadaawa.adapters.IMenuListener;
 import com.janaezwadaawa.adapters.MenuCustomAdapter;
 
@@ -267,7 +267,7 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 
 		private void showSearchDialog() {
 			FragmentManager fm = getSupportFragmentManager();
-			AhadithSearchDialog searchDialog = new AhadithSearchDialog(lastText);
+			SearchDialog searchDialog = new SearchDialog(lastText);
 			searchDialog.show(fm, "fragment_search_keyword");
 		}
 
