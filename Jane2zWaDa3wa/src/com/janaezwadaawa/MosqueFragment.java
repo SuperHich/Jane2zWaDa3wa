@@ -1,12 +1,15 @@
 package com.janaezwadaawa;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +18,8 @@ import android.widget.TextView;
 
 import com.janaezwadaawa.adapters.IJana2zListener;
 import com.janaezwadaawa.adapters.MosqueAdapter;
+import com.janaezwadaawa.dateconverter.Hijri;
+import com.janaezwadaawa.entity.GHTDate;
 import com.janaezwadaawa.entity.Mosque;
 import com.janaezwadaawa.externals.JDManager;
 import com.janaezwadaawa.utils.JDFonts;
@@ -41,6 +46,10 @@ public class MosqueFragment extends Fragment implements IJana2zListener {
 	
 	private JDManager jdManager;
 	private ProgressDialog loading;
+	
+	private int gDay, gMonth, gYear,
+	hDay, hMonth, hYear ;
+	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -78,6 +87,27 @@ public class MosqueFragment extends Fragment implements IJana2zListener {
 		txv_date_name	.setTypeface(JDFonts.getBDRFont());
 		txv_prayer		.setTypeface(JDFonts.getBDRFont());
 		txv_prayer_name	.setTypeface(JDFonts.getBDRFont());
+		
+		Calendar calendar = Calendar.getInstance(Locale.getDefault());
+		gDay = calendar.get(Calendar.DAY_OF_MONTH);
+		gMonth = calendar.get(Calendar.MONTH) + 1;
+		gYear = calendar.get(Calendar.YEAR);
+		
+		GHTDate gDate = Hijri.GregorianToHijri(gYear, gMonth, gDay);
+		Log.i("refreshGDate", gDate.toString());
+		
+		
+		gDay = gDate.getDayG();
+		gMonth = gDate.getMonthG();
+		gYear = gDate.getYearG();
+		
+		hDay = gDate.getDayH();
+		hMonth = gDate.getMonthH();
+		hYear = gDate.getYearH();
+		
+		txv_day_name.setText( gDate.getDayNameH());
+		txv_date_name.setText( hDay + " " + gDate.getMonthNameH() + "  " + hYear + " هـ.");
+		
 		
 		adapter = new MosqueAdapter(getActivity(), mosques, this);
 		return rootView;

@@ -13,7 +13,7 @@
             android:layout_width="wrap_content"
             android:layout_height="50dp" 
             android:layout_centerHorizontal="true"
-            android:background="@drawable/sahih_boukhari"/>
+            android:background="@drawable/jana2ez"/>
         
     </RelativeLayout>
     

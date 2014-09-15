@@ -1,11 +1,14 @@
 package com.janaezwadaawa;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +17,8 @@ import android.widget.TextView;
 
 import com.janaezwadaawa.adapters.IJana2zListener;
 import com.janaezwadaawa.adapters.JanaezAdapter;
+import com.janaezwadaawa.dateconverter.Hijri;
+import com.janaezwadaawa.entity.GHTDate;
 import com.janaezwadaawa.entity.Janeza;
 import com.janaezwadaawa.entity.Mosque;
 import com.janaezwadaawa.externals.JDManager;
@@ -44,6 +49,9 @@ public class JanaezFragment extends Fragment implements IJana2zListener {
 //	private ProgressDialog loading;
 	
 	private Mosque selectedMosque;
+	
+	private int gDay, gMonth, gYear,
+	hDay, hMonth, hYear ;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -90,6 +98,30 @@ public class JanaezFragment extends Fragment implements IJana2zListener {
 		
 		txv_title.setText(selectedMosque.getTitle());
 		txv_total.setText(selectedMosque.getJana2z().size()+"");
+		
+		
+		Calendar calendar = Calendar.getInstance(Locale.getDefault());
+		gDay = calendar.get(Calendar.DAY_OF_MONTH);
+		gMonth = calendar.get(Calendar.MONTH) + 1;
+		gYear = calendar.get(Calendar.YEAR);
+		
+		GHTDate gDate = Hijri.GregorianToHijri(gYear, gMonth, gDay);
+		Log.i("refreshGDate", gDate.toString());
+		
+		
+		gDay = gDate.getDayG();
+		gMonth = gDate.getMonthG();
+		gYear = gDate.getYearG();
+		
+		hDay = gDate.getDayH();
+		hMonth = gDate.getMonthH();
+		hYear = gDate.getYearH();
+		
+		txv_day_name.setText( gDate.getDayNameH());
+		txv_date_name.setText( hDay + " " + gDate.getMonthNameH() + "  " + hYear + " هـ.");
+		
+	//	txv_date.setText(gDate.getDayNameH() + " " + hDay + " " + gDate.getMonthNameH() + " " + hYear);
+		
 		
 		adapter = new JanaezAdapter(getActivity(), janaez, this);
 		return rootView;

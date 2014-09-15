@@ -9,7 +9,8 @@
         android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" 
-        android:background="@color/color_green">
+        android:background="@color/color_green"
+        >
 
         <Button
             android:id="@+id/search"
@@ -19,10 +20,11 @@
             android:background="@drawable/search"/>
         
           <ImageView
-            android:layout_width="wrap_content"
+            android:id="@+id/header"
+            android:layout_width="265dp"
             android:layout_height="50dp" 
             android:layout_centerHorizontal="true"
-            android:background="@drawable/sahih_boukhari"/>
+            android:background="@drawable/jana2ez"/>
         
         <Button
             android:id="@+id/menu"

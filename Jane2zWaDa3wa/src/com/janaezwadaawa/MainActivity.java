@@ -17,12 +17,14 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.janaezwadaawa.SearchDialog.EditNameDialogListener;
 import com.janaezwadaawa.adapters.IMenuListener;
 import com.janaezwadaawa.adapters.MenuCustomAdapter;
+import com.janaezwadaawa.utils.ImageAdapter;
 
 public class MainActivity extends FragmentActivity implements IMenuListener, OnTouchListener, EditNameDialogListener{
 
@@ -35,6 +37,7 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private Button btn_menu, btn_search;
+	private ImageView header ;
 
 	private ActionBarDrawerToggle mDrawerToggle;
 	RelativeLayout mainView ;
@@ -55,7 +58,7 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-
+		header = (ImageView) findViewById(R.id.header);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.right_drawer);
 
@@ -166,11 +169,14 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 			fragment = new MosqueFragment();
 			btn_search.setVisibility(View.VISIBLE);
 			currentFragment = MOSQUES_FRAGMENT;
+			header.setBackgroundResource(R.drawable.jana2ez);
 			break;
 		case 1:
 			fragment = new Da3waFragment();
 			btn_search.setVisibility(View.VISIBLE);
 			currentFragment = DA3AWI_FRAGMENT;
+			header.setBackgroundResource(R.drawable.dawrat_header);
+			
 			break;
 		default:
 			shouldSwitch = false;
@@ -314,6 +320,7 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 
 			transaction.commit();
 			
+			header.setBackgroundResource(R.drawable.jana2ez);
 			btn_menu.setBackgroundResource(R.drawable.back_list);
 			currentFragment = JANAEZ_FRAGMENT;
 			
