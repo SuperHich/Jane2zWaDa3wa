@@ -51,6 +51,7 @@ public class JDManager {
 	private Context mContext;
 	
 	private Mosque selectedMosque;
+	private Place selectedPlace;
 	
 	public JDManager(Context context) {
 		
@@ -65,6 +66,51 @@ public class JDManager {
 			mInstance = new JDManager(context);
 
 		return mInstance;
+	}
+	
+	public ArrayList<Mosque> getJanaezByPlace(int placeID) {
+
+		HashMap<String, ArrayList<Janeza>> hashJana2z = new HashMap<String, ArrayList<Janeza>>();
+
+		ArrayList<Mosque> mosques = new ArrayList<Mosque>();
+		JSONArray array = jsonParser.getJSONFromUrl(URL_JANA2Z + "place/?place=" + placeID);
+		if (array != null) 
+			for (int i = 0; i < array.length(); i++) {
+				try {
+					JSONObject jObj = array.getJSONObject(i);
+					Janeza janeza = new Janeza();
+					//				janeza.setId(Integer.valueOf(jObj.getString(ID)));
+					janeza.setTitle(jObj.getString(TITLE));
+					janeza.setMosque(jObj.getString(MOSQUE));
+					janeza.setPlace(jObj.getString(PLACE));
+					janeza.setPrayerTime(jObj.getString(PRAYER_TIME));
+					janeza.setLatitude(jObj.getString(LAT));
+					janeza.setLongitude(jObj.getString(LONG));
+
+					Log.i(TAG, janeza.toString());
+
+					ArrayList<Janeza> list = hashJana2z.get(janeza.getMosque());
+					if(list == null)
+						list = new ArrayList<Janeza>();
+
+					list.add(janeza);
+					hashJana2z.put(janeza.getMosque(), list);
+
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+
+		for(ArrayList<Janeza> list : hashJana2z.values()){
+			Mosque mosque = new Mosque();
+			mosque.setTitle(list.get(0).getMosque());
+			mosque.setJana2z(list);
+			mosques.add(mosque);
+		}
+
+		return mosques;
 	}
 
 	public ArrayList<Mosque> getAllMosque() {
@@ -113,34 +159,34 @@ public class JDManager {
 	}
 	
 	
-	public ArrayList<Janeza> getJana2zByPlace(int placeId) {
-		ArrayList<Janeza> jana2z = new ArrayList<Janeza>();
-		JSONArray array = jsonParser.getJSONFromUrl(URL_JANA2Z.concat("place/?place=".concat(String.valueOf(placeId))));
-		if (array != null) 
-		for (int i = 0; i < array.length(); i++) {
-			try {
-				JSONObject jObj = array.getJSONObject(i);
-				Janeza janeza = new Janeza();
-				janeza.setId(Integer.valueOf(jObj.getString(ID)));
-				janeza.setTitle(jObj.getString(TITLE));
-				janeza.setMosque(jObj.getString(MOSQUE));
-				janeza.setPlace(jObj.getString(PLACE));
-				janeza.setPrayerTime(jObj.getString(PRAYER_TIME));
-				janeza.setLatitude(jObj.getString(LAT));
-				janeza.setLongitude(jObj.getString(LONG));
-				
-				Log.i(TAG, janeza.toString());
-				
-				jana2z.add(janeza);
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		}
-		
-		return jana2z;
-	}
+//	public ArrayList<Janeza> getJana2zByPlace(int placeId) {
+//		ArrayList<Janeza> jana2z = new ArrayList<Janeza>();
+//		JSONArray array = jsonParser.getJSONFromUrl(URL_JANA2Z.concat("place/?place=".concat(String.valueOf(placeId))));
+//		if (array != null) 
+//		for (int i = 0; i < array.length(); i++) {
+//			try {
+//				JSONObject jObj = array.getJSONObject(i);
+//				Janeza janeza = new Janeza();
+//				janeza.setId(Integer.valueOf(jObj.getString(ID)));
+//				janeza.setTitle(jObj.getString(TITLE));
+//				janeza.setMosque(jObj.getString(MOSQUE));
+//				janeza.setPlace(jObj.getString(PLACE));
+//				janeza.setPrayerTime(jObj.getString(PRAYER_TIME));
+//				janeza.setLatitude(jObj.getString(LAT));
+//				janeza.setLongitude(jObj.getString(LONG));
+//				
+//				Log.i(TAG, janeza.toString());
+//				
+//				jana2z.add(janeza);
+//			} catch (JSONException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			
+//		}
+//		
+//		return jana2z;
+//	}
 	
 	public ArrayList<Da3wa> getAllDa3awi() {
 		ArrayList<Da3wa> da3awi = new ArrayList<Da3wa>();
@@ -210,5 +256,13 @@ public class JDManager {
 
 	public void setSelectedMosque(Mosque selectedMosque) {
 		this.selectedMosque = selectedMosque;
+	}
+
+	public Place getSelectedPlace() {
+		return selectedPlace;
+	}
+
+	public void setSelectedPlace(Place selectedPlace) {
+		this.selectedPlace = selectedPlace;
 	}
 }

@@ -3,28 +3,19 @@ package com.janaezwadaawa;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
 
 import com.janaezwadaawa.SearchDialog.EditNameDialogListener;
 import com.janaezwadaawa.adapters.IMenuListener;
-import com.janaezwadaawa.adapters.MenuCustomAdapter;
-import com.janaezwadaawa.utils.ImageAdapter;
 
 public class MainActivity extends FragmentActivity implements IMenuListener, OnTouchListener, EditNameDialogListener{
 
@@ -32,18 +23,19 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 	public static final String JANAEZ_FRAGMENT = "janaez_fragment";
 	public static final String DA3AWI_FRAGMENT = "da3awi_fragment";
 	
-	public static final String 	DEFAULT_FRAG_POSITION = "default_frag_position";
+	public static final String 	DEFAULT_FRAG_POSITION 	= "default_frag_position";
+	public static final String 	SELECTED_PLACE 			= "selected_place";
 	
-	private DrawerLayout mDrawerLayout;
-	private ListView mDrawerList;
+//	private DrawerLayout mDrawerLayout;
+//	private ListView mDrawerList;
 	private Button btn_menu, btn_search;
 	private ImageView header ;
 
-	private ActionBarDrawerToggle mDrawerToggle;
-	RelativeLayout mainView ;
+//	private ActionBarDrawerToggle mDrawerToggle;
+//	RelativeLayout mainView ;
 
 	public static final int MESSAGE_START = 1;
-	private int lastPosition = 0;
+	private int lastPosition = 0, selected_placeID = -1;
 	private String lastText = "";
 	private boolean isFirstStart = true;
 	
@@ -59,43 +51,43 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 		setContentView(R.layout.activity_main);
 
 		header = (ImageView) findViewById(R.id.header);
-		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-		mDrawerList = (ListView) findViewById(R.id.right_drawer);
+//		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+//		mDrawerList = (ListView) findViewById(R.id.right_drawer);
+//
+//		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+//
+//		MenuCustomAdapter adapter = new MenuCustomAdapter(this, getResources
+//
+//				().obtainTypedArray(R.array.menu_drawables));
+//
+//
+//		mDrawerList.setAdapter(adapter);
+//		mDrawerList.setDivider(null);
+//
+//		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
-		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+//		mainView = (RelativeLayout) findViewById(R.id.content_frame);
 
-		MenuCustomAdapter adapter = new MenuCustomAdapter(this, getResources
-
-				().obtainTypedArray(R.array.menu_drawables));
-
-
-		mDrawerList.setAdapter(adapter);
-		mDrawerList.setDivider(null);
-
-		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
-		mainView = (RelativeLayout) findViewById(R.id.content_frame);
-
-		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, 
-
-				R.drawable.ic_drawer, R.string.app_name, R.string.app_name) {
-			public void onDrawerClosed(View view) {
-				supportInvalidateOptionsMenu();
-			}
-
-			public void onDrawerOpened(View drawerView) {
-				supportInvalidateOptionsMenu();
-			}
-
-			@Override
-			public void onDrawerSlide(View drawerView, float slideOffset) {
-				super.onDrawerSlide(drawerView, slideOffset);
-				mainView.setTranslationX(- slideOffset * drawerView.getWidth());
-				mDrawerLayout.bringChildToFront(drawerView);
-				mDrawerLayout.requestLayout();
-			}
-		};
-		mDrawerLayout.setDrawerListener(mDrawerToggle);
+//		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, 
+//
+//				R.drawable.ic_drawer, R.string.app_name, R.string.app_name) {
+//			public void onDrawerClosed(View view) {
+//				supportInvalidateOptionsMenu();
+//			}
+//
+//			public void onDrawerOpened(View drawerView) {
+//				supportInvalidateOptionsMenu();
+//			}
+//
+//			@Override
+//			public void onDrawerSlide(View drawerView, float slideOffset) {
+//				super.onDrawerSlide(drawerView, slideOffset);
+//				mainView.setTranslationX(- slideOffset * drawerView.getWidth());
+//				mDrawerLayout.bringChildToFront(drawerView);
+//				mDrawerLayout.requestLayout();
+//			}
+//		};
+//		mDrawerLayout.setDrawerListener(mDrawerToggle);
 
 		//		if (savedInstanceState == null) {
 		//			selectItem(1);
@@ -118,7 +110,8 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 		btn_search.setOnTouchListener(this);
 
 		
-		lastPosition = getIntent().getExtras().getInt(DEFAULT_FRAG_POSITION);
+//		lastPosition = getIntent().getExtras().getInt(DEFAULT_FRAG_POSITION);
+//		selected_placeID = getIntent().getExtras().getInt(SELECTED_PLACE);
 	}
 
 	@Override
@@ -145,13 +138,13 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 
 	}
 
-	private class DrawerItemClickListener implements ListView.OnItemClickListener {
-		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position, long id) 
-		{
-			selectItem(position);
-		}
-	}
+//	private class DrawerItemClickListener implements ListView.OnItemClickListener {
+//		@Override
+//		public void onItemClick(AdapterView<?> parent, View view, int position, long id) 
+//		{
+//			selectItem(position);
+//		}
+//	}
 
 
 	private void selectItem(int position) {
@@ -191,8 +184,8 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 			switchTab(fragment, false);
 
 		// update selected item and title, then close the drawer
-		mDrawerList.setItemChecked(position, true);
-		mDrawerLayout.closeDrawer(mDrawerList);
+//		mDrawerList.setItemChecked(position, true);
+//		mDrawerLayout.closeDrawer(mDrawerList);
 
 	}
 
@@ -241,16 +234,16 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 
 				switch (v.getId()) {
 				case R.id.menu:
-					if(isBackEnabled)
-					{		
+//					if(isBackEnabled)
+//					{		
 						onBackPressed();
-					}
-					else{
-						if(!mDrawerLayout.isDrawerOpen(Gravity.RIGHT))
-							mDrawerLayout.openDrawer(Gravity.RIGHT);
-						else
-							mDrawerLayout.closeDrawer(Gravity.RIGHT);		
-					}
+//					}
+//					else{
+//						if(!mDrawerLayout.isDrawerOpen(Gravity.RIGHT))
+//							mDrawerLayout.openDrawer(Gravity.RIGHT);
+//						else
+//							mDrawerLayout.closeDrawer(Gravity.RIGHT);		
+//					}
 					break;
 				case R.id.search:
 					//show search dialog;

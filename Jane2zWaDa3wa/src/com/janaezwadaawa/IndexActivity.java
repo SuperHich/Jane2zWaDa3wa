@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.janaezwadaawa.dateconverter.Hijri;
 import com.janaezwadaawa.entity.GHTDate;
 import com.janaezwadaawa.entity.Place;
+import com.janaezwadaawa.externals.JDManager;
 import com.janaezwadaawa.utils.JDFonts;
 
 public class IndexActivity extends FragmentActivity implements OnTouchListener{
@@ -157,6 +158,7 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener{
 
 	public void onPlaceSelected(Place place){
 
+		JDManager.getInstance(this).setSelectedPlace(place);
 		txv_place.setText(place.getTitle());
 		onBackPressed();
 	}
