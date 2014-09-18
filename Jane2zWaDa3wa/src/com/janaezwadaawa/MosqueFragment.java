@@ -9,7 +9,6 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,7 +95,7 @@ public class MosqueFragment extends Fragment implements IJana2zListener {
 		gYear = calendar.get(Calendar.YEAR);
 		
 		GHTDate gDate = Hijri.GregorianToHijri(gYear, gMonth, gDay);
-		Log.i("refreshGDate", gDate.toString());
+//		Log.i("refreshGDate", gDate.toString());
 		
 		
 		gDay = gDate.getDayG();
@@ -149,9 +148,11 @@ public class MosqueFragment extends Fragment implements IJana2zListener {
 			@Override
 			protected ArrayList<Mosque> doInBackground(Void... params) {
 				if(placeId != -1)
-					mosques.addAll(jdManager.getJanaezByPlace(placeId));
-				else
-					mosques.addAll(jdManager.getAllMosque());
+					mosques.addAll(jdManager.getMosquesByPlace(placeId));
+//				if(placeId != -1)
+//					mosques.addAll(jdManager.getJanaezByPlace(placeId));
+//				else
+//					mosques.addAll(jdManager.getAllJanaez());
 				return mosques;
 			}
 			

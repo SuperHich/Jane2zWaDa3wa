@@ -110,7 +110,7 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 		btn_search.setOnTouchListener(this);
 
 		
-//		lastPosition = getIntent().getExtras().getInt(DEFAULT_FRAG_POSITION);
+		lastPosition = getIntent().getExtras().getInt(DEFAULT_FRAG_POSITION);
 //		selected_placeID = getIntent().getExtras().getInt(SELECTED_PLACE);
 	}
 

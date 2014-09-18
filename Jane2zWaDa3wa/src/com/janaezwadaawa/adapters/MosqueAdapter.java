@@ -82,7 +82,7 @@ public class MosqueAdapter extends ArrayAdapter<Mosque> {
 		Mosque mosque = data.get(position);
 		
 		holder.txv_mosque_name.setText(mosque.getTitle());
-		holder.txv_nb_jana2z_nb.setText(mosque.getJana2z().size() + " " + mContext.getString(R.string.janaez));
+		holder.txv_nb_jana2z_nb.setText(mosque.getCount() + " " + mContext.getString(R.string.janaez));
 
 		return convertView;
 	}

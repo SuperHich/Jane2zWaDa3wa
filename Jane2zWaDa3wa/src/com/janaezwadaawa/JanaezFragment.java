@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -46,7 +47,7 @@ public class JanaezFragment extends Fragment implements IJana2zListener {
 					txv_title, txv_total;
 	
 	private JDManager jdManager;
-//	private ProgressDialog loading;
+	private ProgressDialog loading;
 	
 	private Mosque selectedMosque;
 	
@@ -97,7 +98,7 @@ public class JanaezFragment extends Fragment implements IJana2zListener {
 		
 		
 		txv_title.setText(selectedMosque.getTitle());
-		txv_total.setText(selectedMosque.getJana2z().size()+"");
+		txv_total.setText(selectedMosque.getCount()+"");
 		
 		
 		Calendar calendar = Calendar.getInstance(Locale.getDefault());
@@ -152,21 +153,21 @@ public class JanaezFragment extends Fragment implements IJana2zListener {
 			@Override
 			protected void onPreExecute() {
 				janaez.clear();
-//				loading = new ProgressDialog(getActivity());
-//				loading.setMessage(getString(R.string.please_wait));
-//				loading.show();
+				loading = new ProgressDialog(getActivity());
+				loading.setMessage(getString(R.string.please_wait));
+				loading.show();
 			}
 			
 			@Override
 			protected ArrayList<Janeza> doInBackground(Void... params) {
-				janaez.addAll(selectedMosque.getJana2z());
-//				janaez.addAll(jdManager.getJana2zByPlace(0));
+//				janaez.addAll(selectedMosque.getJana2z());
+				janaez.addAll(jdManager.getJanaezByMosque(selectedMosque.getId()));
 				return janaez;
 			}
 			
 			@Override
 			protected void onPostExecute(ArrayList<Janeza> result) {
-//				loading.dismiss();
+				loading.dismiss();
 				
 				if(result != null){
 					adapter.notifyDataSetChanged();

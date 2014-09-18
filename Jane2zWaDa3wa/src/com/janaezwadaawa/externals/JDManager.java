@@ -25,14 +25,14 @@ public class JDManager {
 	private static final String URL_BASE 		= "http://smartlives.ws/projects/exequyApp/api/";
 	private static final String URL_JANA2Z 		= URL_BASE + "exequy/";
 	private static final String URL_DA3WA 		= URL_BASE + "lectures/";
-	private static final String URL_MOSQUES 	= URL_BASE + "mosques/";
+	private static final String URL_MOSQUES 	= URL_BASE + "mosques";
 	private static final String URL_PLACES 		= URL_BASE + "places/";	
 	
 	private static final String ID 				= "id";
 	private static final String TITLE 			= "title";
 	private static final String MOSQUE 			= "mosque";
 	private static final String PLACE 			= "place";
-	private static final String DESCRIPTION 	= "description";
+	private static final String DESCRIPTION 	= "descrption";
 	private static final String PRAYER_TIME 	= "prayer_time";
 	private static final String START_TIME 		= "start_time";
 	private static final String END_TIME 		= "end_time";
@@ -41,7 +41,9 @@ public class JDManager {
 	private static final String LONG		 	= "long";
 	private static final String PLACE_ID 		= "place_id";
 	private static final String PLACE_NAME 		= "place_name";
-
+	private static final String MOSQUE_ID 		= "mosque_id";
+	private static final String COUNT	 		= "count";
+	
 	private IFragmentNotifier fragmentNotifier;
 	
 	private static JDManager mInstance = null;
@@ -113,7 +115,7 @@ public class JDManager {
 		return mosques;
 	}
 
-	public ArrayList<Mosque> getAllMosque() {
+	public ArrayList<Mosque> getAllJanaez() {
 		
 		HashMap<String, ArrayList<Janeza>> hashJana2z = new HashMap<String, ArrayList<Janeza>>();
 		
@@ -158,35 +160,65 @@ public class JDManager {
 		return mosques;
 	}
 	
+	public ArrayList<Janeza> getJanaezByMosque(int mosqueID) {
+
+		ArrayList<Janeza> janaez = new ArrayList<Janeza>();
+		JSONArray array = jsonParser.getJSONFromUrl(URL_JANA2Z + "mosques?mosque=" + mosqueID);
+		Log.i(TAG, "URL : " + URL_MOSQUES + "?mosque=" + mosqueID);
+		if (array != null) 
+			for (int i = 0; i < array.length(); i++) {
+				try {
+					JSONObject jObj = array.getJSONObject(i);
+					Janeza janeza = new Janeza();
+					janeza.setId(Integer.valueOf(jObj.getString(ID)));
+					janeza.setTitle(jObj.getString(TITLE));
+					janeza.setMosque(jObj.getString(MOSQUE));
+					janeza.setPlace(jObj.getString(PLACE));
+					janeza.setPrayerTime(jObj.getString(PRAYER_TIME));
+					janeza.setLatitude(jObj.getString(LAT));
+					janeza.setLongitude(jObj.getString(LONG));
+
+					Log.i(TAG, janeza.toString());
+
+
+					janaez.add(janeza);
+
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+
+		return janaez;
+	}
 	
-//	public ArrayList<Janeza> getJana2zByPlace(int placeId) {
-//		ArrayList<Janeza> jana2z = new ArrayList<Janeza>();
-//		JSONArray array = jsonParser.getJSONFromUrl(URL_JANA2Z.concat("place/?place=".concat(String.valueOf(placeId))));
-//		if (array != null) 
-//		for (int i = 0; i < array.length(); i++) {
-//			try {
-//				JSONObject jObj = array.getJSONObject(i);
-//				Janeza janeza = new Janeza();
-//				janeza.setId(Integer.valueOf(jObj.getString(ID)));
-//				janeza.setTitle(jObj.getString(TITLE));
-//				janeza.setMosque(jObj.getString(MOSQUE));
-//				janeza.setPlace(jObj.getString(PLACE));
-//				janeza.setPrayerTime(jObj.getString(PRAYER_TIME));
-//				janeza.setLatitude(jObj.getString(LAT));
-//				janeza.setLongitude(jObj.getString(LONG));
-//				
-//				Log.i(TAG, janeza.toString());
-//				
-//				jana2z.add(janeza);
-//			} catch (JSONException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			
-//		}
-//		
-//		return jana2z;
-//	}
+	
+	public ArrayList<Mosque> getMosquesByPlace(int placeId) {
+		ArrayList<Mosque> mosques = new ArrayList<Mosque>();
+		JSONArray array = jsonParser.getJSONFromUrl(URL_MOSQUES.concat("/place/?place=".concat(String.valueOf(placeId))));
+		if (array != null) 
+		for (int i = 0; i < array.length(); i++) {
+			try {
+				JSONObject jObj = array.getJSONObject(i);
+				Mosque mosque = new Mosque();
+				mosque.setId(Integer.valueOf(jObj.getString(MOSQUE_ID)));
+				mosque.setCount(Integer.valueOf(jObj.getString(COUNT)));
+				mosque.setTitle(jObj.getString(MOSQUE));
+				mosque.setPlace(jObj.getString(PLACE));
+				
+				Log.i(TAG, mosque.toString());
+				
+				mosques.add(mosque);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return mosques;
+	}
 	
 	public ArrayList<Da3wa> getAllDa3awi() {
 		ArrayList<Da3wa> da3awi = new ArrayList<Da3wa>();

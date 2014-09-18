@@ -10,12 +10,12 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.janaezwadaawa.dateconverter.Hijri;
 import com.janaezwadaawa.entity.GHTDate;
@@ -34,11 +34,15 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener{
 	hDay, hMonth, hYear ;
 
 	private android.app.Fragment fragment;
+	
+	private JDManager jdManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.index_activity);
+		
+		jdManager = JDManager.getInstance(this);
 
 		settings 		= (Button) findViewById(R.id.settings);
 		share 			= (Button) findViewById(R.id.share);
@@ -55,6 +59,8 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener{
 		txv_place.setTypeface(JDFonts.getBDRFont());
 		txv_date.setTypeface(JDFonts.getBDRFont());
 
+		if(jdManager.getSelectedPlace() != null)
+			txv_place.setText(jdManager.getSelectedPlace().getTitle());
 
 		Calendar calendar = Calendar.getInstance(Locale.getDefault());
 		gDay = calendar.get(Calendar.DAY_OF_MONTH);
@@ -62,7 +68,7 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener{
 		gYear = calendar.get(Calendar.YEAR);
 		
 		GHTDate gDate = Hijri.GregorianToHijri(gYear, gMonth, gDay);
-		Log.i("refreshGDate", gDate.toString());
+//		Log.i("refreshGDate", gDate.toString());
 		
 		
 		gDay = gDate.getDayG();
@@ -99,18 +105,27 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener{
 
 			switch (v.getId()) {
 			case R.id.jana2ez:
-				Intent intent1 = new Intent(IndexActivity.this, MainActivity.class);
-				intent1.putExtra(MainActivity.DEFAULT_FRAG_POSITION, 0);
-				startActivity(intent1);
-				overridePendingTransition(R.anim.left_in, R.anim.left_out);
-				finish();
+				
+				if(jdManager.getSelectedPlace() == null){
+					Toast.makeText(IndexActivity.this, R.string.select_place, Toast.LENGTH_LONG).show();
+				}else{
+					Intent intent1 = new Intent(IndexActivity.this, MainActivity.class);
+					intent1.putExtra(MainActivity.DEFAULT_FRAG_POSITION, 0);
+					startActivity(intent1);
+					overridePendingTransition(R.anim.left_in, R.anim.left_out);
+					finish();
+				}
 				break;
 			case R.id.dourouss:
-				Intent intent2 = new Intent(IndexActivity.this, MainActivity.class);
-				intent2.putExtra(MainActivity.DEFAULT_FRAG_POSITION, 1);
-				startActivity(intent2);
-				overridePendingTransition(R.anim.left_in, R.anim.left_out);
-				finish();
+//				if(jdManager.getSelectedPlace() == null){
+//					Toast.makeText(IndexActivity.this, R.string.select_place, Toast.LENGTH_LONG).show();
+//				}else{
+					Intent intent2 = new Intent(IndexActivity.this, MainActivity.class);
+					intent2.putExtra(MainActivity.DEFAULT_FRAG_POSITION, 1);
+					startActivity(intent2);
+					overridePendingTransition(R.anim.left_in, R.anim.left_out);
+					finish();
+//				}
 				break;
 			case R.id.settings:
 				break;
@@ -158,7 +173,7 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener{
 
 	public void onPlaceSelected(Place place){
 
-		JDManager.getInstance(this).setSelectedPlace(place);
+		jdManager.setSelectedPlace(place);
 		txv_place.setText(place.getTitle());
 		onBackPressed();
 	}
