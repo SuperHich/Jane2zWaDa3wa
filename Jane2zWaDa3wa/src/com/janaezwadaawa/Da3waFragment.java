@@ -30,6 +30,8 @@ public class Da3waFragment extends Fragment implements IJana2zListener {
 	private JDManager jdManager;
 	private ProgressDialog loading;
 	
+	
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

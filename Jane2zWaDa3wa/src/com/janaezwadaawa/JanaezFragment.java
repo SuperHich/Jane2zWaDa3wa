@@ -106,13 +106,15 @@ public class JanaezFragment extends Fragment implements IJana2zListener {
 		gMonth = calendar.get(Calendar.MONTH) + 1;
 		gYear = calendar.get(Calendar.YEAR);
 		
+		
+		
 		GHTDate gDate = Hijri.GregorianToHijri(gYear, gMonth, gDay);
 		Log.i("refreshGDate", gDate.toString());
 		
 		
-		gDay = gDate.getDayG();
-		gMonth = gDate.getMonthG();
-		gYear = gDate.getYearG();
+//		gDay = gDate.getDayG();
+//		gMonth = gDate.getMonthG();
+//		gYear = gDate.getYearG();
 		
 		hDay = gDate.getDayH();
 		hMonth = gDate.getMonthH();

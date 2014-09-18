@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,7 +14,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.janaezwadaawa.R;
+import com.janaezwadaawa.dateconverter.Hijri;
 import com.janaezwadaawa.entity.Da3wa;
+import com.janaezwadaawa.entity.GHTDate;
 import com.janaezwadaawa.utils.JDFonts;
 
 public class Da3waAdapter extends ArrayAdapter<Da3wa> {
@@ -23,6 +26,10 @@ public class Da3waAdapter extends ArrayAdapter<Da3wa> {
 	ArrayList<Da3wa> data = null;
 	LayoutInflater inflater;
 	private boolean isEnabled = true;
+	
+	private int gDay, gMonth, gYear,
+	hDay, hMonth, hYear ;
+	
 
 	public Da3waAdapter(Context mContext, ArrayList<Da3wa> data, IJana2zListener listener) {
 
@@ -82,10 +89,39 @@ public class Da3waAdapter extends ArrayAdapter<Da3wa> {
 		 */
 		Da3wa da3wa = data.get(position);
 		
+		
+		String non_formatted_date = da3wa.getStartTime() ;
+		String formatted_full_date = (non_formatted_date.split(">")[1]).split("</")[0] ;
+		
+		String formatted_only_date = formatted_full_date.split(" - ")[0];
+		
+		Log.e("DATE+++", formatted_only_date);
+	
+		
+		//////// Conversion to HIJRI /////////////////	
+		
+		String[] date = formatted_only_date.split("/");
+		
+		
+		gYear = Integer.valueOf(date[2]);
+		gMonth = Integer.valueOf(date[0]);
+		gDay = Integer.valueOf(date[1]);
+		
+		GHTDate gDate = Hijri.GregorianToHijri(gYear, gMonth, gDay);
+		Log.i("refreshGDate", gDate.toString());
+		
+		
+		hDay = gDate.getDayH();
+		hMonth = gDate.getMonthH();
+		hYear = gDate.getYearH();
+		
+		String formatted_hijri_date = "يوم " + gDate.getDayNameH()+ " " + hDay + " " + gDate.getMonthNameH() + "  " + hYear + " هـ." ;
+		
+		
 		holder.txv_title.setText(da3wa.getTitle());
 		holder.txv_trainer.setText(da3wa.getTrainer());
 		holder.txv_description.setText(da3wa.getDescription());
-		holder.txv_date.setText(da3wa.getStartTime());
+		holder.txv_date.setText(formatted_hijri_date);
 		holder.txv_mosque.setText(da3wa.getMosque());
 
 		return convertView;

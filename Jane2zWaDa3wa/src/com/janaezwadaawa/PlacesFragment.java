@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.janaezwadaawa.adapters.PlacesAdapter;
 import com.janaezwadaawa.entity.Place;
 import com.janaezwadaawa.externals.JDManager;
+import com.janaezwadaawa.utils.JDFonts;
 
 
 public class PlacesFragment extends ListFragment {
@@ -24,7 +25,7 @@ public class PlacesFragment extends ListFragment {
 	
 	private PlacesAdapter adapter;
 	private ArrayList<Place> places = new ArrayList<Place>();
-	private TextView txv_empty;
+	private TextView txv_empty, top_header ;
 	
 	public PlacesFragment() {
 		// Empty constructor required for fragment subclasses
@@ -56,7 +57,10 @@ public class PlacesFragment extends ListFragment {
 		View rootView = inflater.inflate(R.layout.fragment_places, container, false);
 		
 		txv_empty = (TextView) rootView.findViewById(R.id.txv_emptyList);
-
+		top_header =  (TextView) rootView.findViewById(R.id.top_header);
+		
+		top_header.setTypeface(JDFonts.getBDRFont());
+		
 		adapter = new PlacesAdapter(getActivity(), R.layout.place_list_item, places);
 
 		return rootView;

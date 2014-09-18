@@ -14,13 +14,14 @@
 
         <TextView
             android:id="@+id/txv_place"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/center_layout"
             android:text="المدينة المنورة"
             android:textColor="#85dda8"
+            android:gravity="center"
             android:textSize="23sp" />
 
         <View
@@ -31,7 +32,7 @@
 
         <TextView
             android:id="@+id/txv_date"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginRight="0dp"
