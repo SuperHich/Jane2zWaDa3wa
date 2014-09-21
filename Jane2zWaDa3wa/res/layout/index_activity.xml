@@ -19,7 +19,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/center_layout"
-            android:text="المدينة المنورة"
+            android:text="@string/amaken"
             android:textColor="#85dda8"
             android:gravity="center"
             android:textSize="23sp" />

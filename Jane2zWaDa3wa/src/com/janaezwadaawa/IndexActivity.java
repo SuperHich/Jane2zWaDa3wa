@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import android.annotation.SuppressLint;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
@@ -33,7 +34,7 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener{
 	private int gDay, gMonth, gYear,
 	hDay, hMonth, hYear ;
 
-	private android.app.Fragment fragment;
+	private Fragment fragment;
 	
 	private JDManager jdManager;
 
@@ -130,8 +131,10 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener{
 			case R.id.settings:
 				break;
 			case R.id.about:
+				goToAboutFragment();
 				break;
 			case R.id.share:
+				shareApp("بادر بتحميل تطبيق جنائز و دعوة http://goo.gl/Hvt1jT");
 				break;
 			case R.id.medina_choice:
 				goToPlacesFragment();
@@ -170,6 +173,25 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener{
 		setEnableState(false);
 
 	}
+	
+	public void goToAboutFragment(){
+
+		FragmentManager fragmentManager = getFragmentManager();
+		FragmentTransaction transaction = fragmentManager.beginTransaction();
+//		transaction.setCustomAnimations(R.anim.left_in, R.anim.left_out, R.anim.right_in, R.anim.right_out);
+		transaction.setCustomAnimations(R.animator.card_flip_left_in, R.animator.card_flip_left_out, R.animator.card_flip_right_in, R.animator.card_flip_right_out);
+
+
+		fragment = new AboutFragment();
+
+		transaction.replace(R.id.fragment_view, fragment, PLACES_FRAGMENT);
+		transaction.addToBackStack(null);
+
+		transaction.commit();
+
+		setEnableState(false);
+
+	}
 
 	public void onPlaceSelected(Place place){
 
@@ -196,5 +218,15 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener{
 			fragment = null;
 		}else
 			super.onBackPressed();
+	}
+	
+	private void shareApp(String text){
+
+		Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+		sharingIntent.setType("text/plain");
+		sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+		sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, text);
+		startActivity(Intent.createChooser(sharingIntent, getString(R.string.share)));
+
 	}
 }
