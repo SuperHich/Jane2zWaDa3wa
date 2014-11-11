@@ -54,6 +54,7 @@ public class JDManager {
 	
 	private Mosque selectedMosque;
 	private Place selectedPlace;
+	private Da3wa selectedDa3wa;
 	
 	public JDManager(Context context) {
 		
@@ -296,5 +297,13 @@ public class JDManager {
 
 	public void setSelectedPlace(Place selectedPlace) {
 		this.selectedPlace = selectedPlace;
+	}
+
+	public Da3wa getSelectedDa3wa() {
+		return selectedDa3wa;
+	}
+
+	public void setSelectedDa3wa(Da3wa selectedDa3wa) {
+		this.selectedDa3wa = selectedDa3wa;
 	}
 }

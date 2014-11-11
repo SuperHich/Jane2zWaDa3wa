@@ -22,6 +22,7 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 	public static final String MOSQUES_FRAGMENT = "mosques_fragment";
 	public static final String JANAEZ_FRAGMENT = "janaez_fragment";
 	public static final String DA3AWI_FRAGMENT = "da3awi_fragment";
+	public static final String DA3WA_DETAILS_FRAGMENT = "da3wa_details_fragment";
 	
 	public static final String 	DEFAULT_FRAG_POSITION 	= "default_frag_position";
 	public static final String 	SELECTED_PLACE 			= "selected_place";
@@ -321,10 +322,44 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 
 		}
 		
+		public void goToDa3waDetailsFragment(){
+
+			FragmentManager fragmentManager = getSupportFragmentManager();
+			FragmentTransaction transaction = fragmentManager.beginTransaction();
+			transaction.setCustomAnimations(R.anim.left_in, R.anim.left_out, R.anim.right_in, R.anim.right_out);
+
+			fragment1 = (ListFragment) getSupportFragmentManager().findFragmentByTag(DA3WA_DETAILS_FRAGMENT);
+
+			if(fragment1 == null){
+				fragment1 = new Da3waDetailFragment();
+
+				transaction.replace(R.id.fragment_view, fragment1, DA3WA_DETAILS_FRAGMENT);
+				transaction.addToBackStack(DA3WA_DETAILS_FRAGMENT);
+			}else{
+				transaction.attach(fragment1);
+			}
+
+			transaction.commit();
+
+			btn_menu.setBackgroundResource(R.drawable.back_list);
+			currentFragment = DA3WA_DETAILS_FRAGMENT;
+
+			isBackEnabled = true;
+
+		}
+		
 		@Override
 		public void onBackPressed() {
 			
-			if(currentFragment.equals(JANAEZ_FRAGMENT)){
+			if(currentFragment.equals(DA3WA_DETAILS_FRAGMENT))
+			{
+				currentFragment = DA3AWI_FRAGMENT;
+				btn_menu.setBackgroundResource(R.drawable.menu);
+				
+				isBackEnabled = false;
+				super.onBackPressed();
+			}
+			else if(currentFragment.equals(JANAEZ_FRAGMENT)){
 				currentFragment = MOSQUES_FRAGMENT;
 				btn_menu.setBackgroundResource(R.drawable.menu);
 				

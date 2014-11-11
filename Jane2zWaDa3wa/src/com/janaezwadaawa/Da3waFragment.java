@@ -107,7 +107,7 @@ public class Da3waFragment extends Fragment implements IJana2zListener {
 
 	@Override
 	public void onItemDetailsClicked(int position) {
-		// TODO Auto-generated method stub
-		
+		jdManager.setSelectedDa3wa(da3awi.get(position));
+		((MainActivity) getActivity()).goToDa3waDetailsFragment();
 	}
 }
