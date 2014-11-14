@@ -1,0 +1,80 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#22ffffff" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:weightSum="2" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:weightSum="2" >
+
+
+            <TextView
+                android:id="@+id/txv_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.45"
+                android:gravity="right"
+                android:maxLines="1"
+                android:padding="2dp"
+                android:text="address"
+                android:textColor="#739e2f"
+                android:textSize="18sp" />
+            
+            
+            <TextView
+                android:id="@+id/txv_title_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.55"
+                android:gravity="right"
+                android:maxLines="1"
+                android:padding="5dp"
+                android:text="@string/address"
+                android:textColor="#f7941e"
+                android:textSize="20sp" />
+            
+        </LinearLayout>
+
+       <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:weightSum="2" >
+
+            <TextView
+                android:id="@+id/txv_phones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.45"
+                android:gravity="right"
+                android:maxLines="1"
+                android:padding="2dp"
+                android:text="phone number"
+                android:textColor="#739e2f"
+                android:textSize="17sp" />
+            
+            <TextView
+                android:id="@+id/txv_title_phones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.55"
+                android:gravity="right"
+                android:maxLines="1"
+                android:padding="5dp"
+                android:text="@string/phones"
+                android:textColor="#f7941e"
+                android:textSize="20sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

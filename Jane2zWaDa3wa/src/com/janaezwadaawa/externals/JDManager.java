@@ -13,6 +13,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.janaezwadaawa.adapters.IFragmentNotifier;
+import com.janaezwadaawa.entity.Address;
 import com.janaezwadaawa.entity.Da3wa;
 import com.janaezwadaawa.entity.Janeza;
 import com.janaezwadaawa.entity.Mosque;
@@ -27,6 +28,7 @@ public class JDManager {
 	private static final String URL_DA3WA 		= URL_BASE + "lectures/";
 	private static final String URL_MOSQUES 	= URL_BASE + "mosques";
 	private static final String URL_PLACES 		= URL_BASE + "places/";	
+	private static final String URL_ADDRESSES 	= URL_BASE + "addresses/";	
 	
 	private static final String ID 				= "id";
 	private static final String TITLE 			= "title";
@@ -43,6 +45,9 @@ public class JDManager {
 	private static final String PLACE_NAME 		= "place_name";
 	private static final String MOSQUE_ID 		= "mosque_id";
 	private static final String COUNT	 		= "count";
+	private static final String ADDRESS	 		= "address";
+	private static final String PHONES	 		= "phones";
+	
 	
 	private IFragmentNotifier fragmentNotifier;
 	
@@ -274,6 +279,31 @@ public class JDManager {
 		
 		return places;
 	}
+	
+	public ArrayList<Address> getAllAddresses() {
+		ArrayList<Address> addresses = new ArrayList<Address>();
+		JSONArray array = jsonParser.getJSONFromUrl(URL_ADDRESSES);
+		if (array != null) 
+		
+			for (int i = 0; i < array.length(); i++) {
+			try {
+				JSONObject jObj = array.getJSONObject(i);
+				Address address = new Address();
+				address.setAddress(jObj.getString(ADDRESS));
+				address.setPhones(jObj.getString(PHONES));
+				
+				Log.i(TAG, address.toString());
+				
+				addresses.add(address);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return addresses;
+	}
+	
 	
 	public IFragmentNotifier getFragmentNotifier() {
 		return fragmentNotifier;

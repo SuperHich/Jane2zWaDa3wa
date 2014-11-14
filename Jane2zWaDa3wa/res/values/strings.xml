@@ -57,4 +57,9 @@
     <string name="update">تحديث</string>
     <string name="modifications">تعديل التعليق</string>
     <string name="select_place">الرجاء إختيار مدينة</string>
+    
+    <string name="address">العنوان :</string>
+    <string name="phones">الإتصال :</string>
+    <string name="call_title">إختر الرقم الذي تريد الإتصال به :</string>
+    
 </resources>
