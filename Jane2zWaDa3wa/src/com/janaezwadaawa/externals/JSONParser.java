@@ -26,6 +26,7 @@ import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
@@ -58,7 +59,7 @@ public class JSONParser {
     	int statusCode = -1;
         // Making HTTP request
         try {
-            HttpClient httpClient = new DefaultHttpClient();
+            HttpClient httpClient = new DefaultHttpClient(getHttpParams());
             HttpGet httpGet = new HttpGet(url);
  
             HttpResponse httpResponse = httpClient.execute(httpGet);
@@ -158,7 +159,7 @@ public class JSONParser {
  
     }
     
-    public static HttpClient getNewHttpClient() {
+    public HttpClient getNewHttpClient() {
         try {
             KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
             trustStore.load(null, null);
@@ -166,7 +167,8 @@ public class JSONParser {
             SSLSocketFactory sf = new MySSLSocketFactory(trustStore);
             sf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
 
-            HttpParams params = new BasicHttpParams();
+//            HttpParams params = new BasicHttpParams();
+            HttpParams params = getHttpParams();
             HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
             HttpProtocolParams.setContentCharset(params, HTTP.UTF_8);
 
@@ -180,5 +182,19 @@ public class JSONParser {
         } catch (Exception e) {
             return new DefaultHttpClient();
         }
+    }
+    
+    public HttpParams getHttpParams(){
+    	HttpParams httpParameters = new BasicHttpParams();
+    	// Set the timeout in milliseconds until a connection is established.
+    	// The default value is zero, that means the timeout is not used. 
+    	int timeoutConnection = 3000;
+    	HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
+    	// Set the default socket timeout (SO_TIMEOUT) 
+    	// in milliseconds which is the timeout for waiting for data.
+    	int timeoutSocket = 30000;
+    	HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+    	
+    	return httpParameters;
     }
 }

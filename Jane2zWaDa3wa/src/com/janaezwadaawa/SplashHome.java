@@ -1,13 +1,18 @@
 package com.janaezwadaawa;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.KeyEvent;
 import android.widget.RelativeLayout;
 
+import com.janaezwadaawa.entity.Place;
+import com.janaezwadaawa.externals.JDManager;
 import com.janaezwadaawa.utils.Utils;
 
 
@@ -20,7 +25,7 @@ import com.janaezwadaawa.utils.Utils;
 public class SplashHome extends Activity {
 	
 	private static final int STOPSPLASH = 0;
-	private static final long SPLASHTIME = 3000;
+	private static final long SPLASHTIME = 1500;
 	
 	public static final int MESSAGE_START = 1;
 	public static final int MESSAGE_FINISH = 2;
@@ -53,11 +58,11 @@ public class SplashHome extends Activity {
 		
 		principal_layout = (RelativeLayout) findViewById(R.id.principal_layout);
 		
-		Message msg = Message.obtain();
-		msg.what = MESSAGE_FINISH;
-	    splashHandler.sendMessageDelayed(msg, SPLASHTIME);
+//		Message msg = Message.obtain();
+//		msg.what = MESSAGE_FINISH;
+//	    splashHandler.sendMessageDelayed(msg, SPLASHTIME);
 		
-		
+		initPlaces();
 		
 	}
 
@@ -78,5 +83,32 @@ public class SplashHome extends Activity {
 	}
 	
 
+	private void initPlaces(){
+
+		new AsyncTask<Void, Void, ArrayList<Place>>() {
+
+			@Override
+			protected void onPreExecute() {
+			}
+
+			@Override
+			protected ArrayList<Place> doInBackground(Void... params) {
+
+				return JDManager.getInstance(SplashHome.this).getAllPlaces();
+			}
+
+			@Override
+			protected void onPostExecute(ArrayList<Place> result) {
+				if(result != null){
+
+				}
+				
+				Message msg = Message.obtain();
+				msg.what = MESSAGE_FINISH;
+			    splashHandler.sendMessageDelayed(msg, SPLASHTIME);
+			}
+		}.execute();
+
+	}
 
 }

@@ -47,6 +47,7 @@ public class JDManager {
 	private static final String COUNT	 		= "count";
 	private static final String ADDRESS	 		= "address";
 	private static final String PHONES	 		= "phones";
+	private static final String PLACE_EN	 	= "place_en";
 	
 	
 	private IFragmentNotifier fragmentNotifier;
@@ -60,6 +61,8 @@ public class JDManager {
 	private Mosque selectedMosque;
 	private Place selectedPlace;
 	private Da3wa selectedDa3wa;
+	
+	private ArrayList<Place> places;
 	
 	public JDManager(Context context) {
 		
@@ -267,6 +270,7 @@ public class JDManager {
 				Place place = new Place();
 				place.setId(Integer.valueOf(jObj.getString(PLACE_ID)));
 				place.setTitle(jObj.getString(PLACE_NAME));
+				place.setPlaceEn(jObj.getString(PLACE_EN));
 				
 				Log.i(TAG, place.toString());
 				
@@ -275,6 +279,10 @@ public class JDManager {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+		
+		if(getPlaces() == null){
+			setPlaces(places);
 		}
 		
 		return places;
@@ -302,6 +310,22 @@ public class JDManager {
 		}
 		
 		return addresses;
+	}
+	
+	
+	public boolean refreshLocalityIfPossible(String locality){
+
+		Log.v(TAG, ">>> locality " + locality);
+		if(getPlaces() != null)
+			for(Place place : getPlaces()){
+				Log.v(TAG, ">>> Place EN " + place.getPlaceEn());
+				if(place.getPlaceEn().equalsIgnoreCase(locality)){
+					setSelectedPlace(place);
+					return true;
+				}
+			}
+		
+		return false;
 	}
 	
 	
@@ -335,5 +359,13 @@ public class JDManager {
 
 	public void setSelectedDa3wa(Da3wa selectedDa3wa) {
 		this.selectedDa3wa = selectedDa3wa;
+	}
+
+	public ArrayList<Place> getPlaces() {
+		return places;
+	}
+
+	public void setPlaces(ArrayList<Place> places) {
+		this.places = places;
 	}
 }

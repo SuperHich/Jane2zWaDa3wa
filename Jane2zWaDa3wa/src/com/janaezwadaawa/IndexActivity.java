@@ -9,6 +9,8 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.PorterDuff;
+import android.location.Location;
+import android.location.LocationListener;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.MotionEvent;
@@ -23,8 +25,9 @@ import com.janaezwadaawa.entity.GHTDate;
 import com.janaezwadaawa.entity.Place;
 import com.janaezwadaawa.externals.JDManager;
 import com.janaezwadaawa.utils.JDFonts;
+import com.janaezwadaawa.utils.MyLocationManager;
 
-public class IndexActivity extends FragmentActivity implements OnTouchListener{
+public class IndexActivity extends FragmentActivity implements OnTouchListener, LocationListener{
 
 	private static final String PLACES_FRAGMENT = null;
 	private TextView txv_place , txv_date ;
@@ -36,14 +39,19 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener{
 
 	private Fragment fragment;
 	
-	private JDManager jdManager;
+	private JDManager mManager;
+	
+	private MyLocationManager mLocationManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.index_activity);
 		
-		jdManager = JDManager.getInstance(this);
+		mManager = JDManager.getInstance(this);
+		mLocationManager = MyLocationManager.getIntance(this);
+		mLocationManager.start();
+		mLocationManager.register(this);
 
 		settings 		= (Button) findViewById(R.id.settings);
 		share 			= (Button) findViewById(R.id.share);
@@ -60,8 +68,8 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener{
 		txv_place.setTypeface(JDFonts.getBDRFont());
 		txv_date.setTypeface(JDFonts.getBDRFont());
 
-		if(jdManager.getSelectedPlace() != null)
-			txv_place.setText(jdManager.getSelectedPlace().getTitle());
+		if(mManager.getSelectedPlace() != null)
+			txv_place.setText(mManager.getSelectedPlace().getTitle());
 
 		Calendar calendar = Calendar.getInstance(Locale.getDefault());
 		gDay = calendar.get(Calendar.DAY_OF_MONTH);
@@ -107,7 +115,7 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener{
 			switch (v.getId()) {
 			case R.id.jana2ez:
 				
-				if(jdManager.getSelectedPlace() == null){
+				if(mManager.getSelectedPlace() == null){
 					Toast.makeText(IndexActivity.this, R.string.select_place, Toast.LENGTH_LONG).show();
 				}else{
 					Intent intent1 = new Intent(IndexActivity.this, MainActivity.class);
@@ -195,7 +203,7 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener{
 
 	public void onPlaceSelected(Place place){
 
-		jdManager.setSelectedPlace(place);
+		mManager.setSelectedPlace(place);
 		txv_place.setText(place.getTitle());
 		onBackPressed();
 	}
@@ -228,5 +236,36 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener{
 		sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, text);
 		startActivity(Intent.createChooser(sharingIntent, getString(R.string.share)));
 
+	}
+
+	@Override
+	public void onLocationChanged(Location location) {
+		// TODO Auto-generated method stub
+		String locality = mLocationManager.getLocality();
+		if(locality != null){
+			if(mManager.refreshLocalityIfPossible(locality))
+				txv_place.setText(mManager.getSelectedPlace().getTitle());
+		}
+		
+		mLocationManager.remove(this);
+		mLocationManager.stop();
+	}
+
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onProviderEnabled(String provider) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onProviderDisabled(String provider) {
+		// TODO Auto-generated method stub
+		
 	}
 }

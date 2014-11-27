@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.app.ListFragment;
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,6 +27,8 @@ public class PlacesFragment extends ListFragment {
 	private PlacesAdapter adapter;
 	private ArrayList<Place> places = new ArrayList<Place>();
 	private TextView txv_empty, top_header ;
+
+	private JDManager mManager;
 	
 	public PlacesFragment() {
 		// Empty constructor required for fragment subclasses
@@ -70,6 +73,8 @@ public class PlacesFragment extends ListFragment {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		
+		mManager = JDManager.getInstance(getActivity());
+		
 		getListView().setAdapter(adapter);
 //		getListView().setCacheColorHint(Color.TRANSPARENT);
 
@@ -104,7 +109,10 @@ public class PlacesFragment extends ListFragment {
 			
 			@Override
 			protected ArrayList<Place> doInBackground(Void... params) {
-				places.addAll(JDManager.getInstance(getActivity()).getAllPlaces());
+				if(mManager.getPlaces() != null)
+					places.addAll(mManager.getPlaces());
+				else
+					places.addAll(mManager.getAllPlaces());
 				return places;
 			}
 			
