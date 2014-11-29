@@ -8,9 +8,8 @@
         android:id="@+id/top_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/jana2ez" 
-        android:layout_marginBottom="7dp"
-        >
+        android:layout_above="@+id/jana2ez"
+        android:layout_marginBottom="7dp" >
 
         <TextView
             android:id="@+id/txv_place"
@@ -19,9 +18,9 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/center_layout"
+            android:gravity="center"
             android:text="@string/amaken"
             android:textColor="#85dda8"
-            android:gravity="center"
             android:textSize="23sp" />
 
         <View
@@ -41,8 +40,8 @@
             android:textSize="23sp" />
     </RelativeLayout>
 
-<!--     android:text="5 شعبان 1453 ه." -->
-    
+    <!-- android:text="5 شعبان 1453 ه." -->
+
     <Button
         android:id="@+id/jana2ez"
         android:layout_width="wrap_content"
@@ -55,21 +54,22 @@
         android:id="@+id/dourouss"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/jana2ez"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:background="@drawable/btn_dourouss"
-        android:layout_below="@+id/jana2ez" />
+        android:background="@drawable/btn_dourouss" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true" 
+        android:layout_marginBottom="10dp">
 
         <Button
             android:id="@+id/settings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="3dp"
+            android:layout_marginRight="10dp"
             android:layout_toLeftOf="@+id/share"
             android:background="@drawable/btn_settings" />
 
@@ -77,38 +77,22 @@
             android:id="@+id/share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="3dp"
-            android:layout_toLeftOf="@+id/center_layout"
+            android:layout_centerHorizontal="true"
             android:background="@drawable/btn_share" />
-
-        <View
-            android:id="@+id/center_layout"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_centerInParent="true" />
 
         <Button
             android:id="@+id/about"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="3dp"
-            android:layout_toRightOf="@+id/center_layout"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/share"
             android:background="@drawable/btn_about" />
-
-        <Button
-            android:id="@+id/medina_choice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/about"
-            android:layout_marginLeft="3dp"
-            android:background="@drawable/btn_choice_medina" />
     </RelativeLayout>
-    
+
     <FrameLayout
         android:id="@+id/fragment_view"
         android:layout_width="match_parent"
-    	android:layout_height="match_parent">
+        android:layout_height="match_parent" >
     </FrameLayout>
-    
 
 </RelativeLayout>

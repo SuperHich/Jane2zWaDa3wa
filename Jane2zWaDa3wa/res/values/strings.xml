@@ -61,5 +61,8 @@
     <string name="address">العنوان :</string>
     <string name="phones">الإتصال :</string>
     <string name="call_title">إختر الرقم الذي تريد الإتصال به :</string>
-    
+    <string name="settings">الإعدادات</string>
+    <string name="notifications">الاخطارات :</string>
+    <string name="yes">نعم</string>
+    <string name="no">لا</string>
 </resources>

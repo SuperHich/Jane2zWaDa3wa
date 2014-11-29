@@ -31,23 +31,23 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 
 	private static final String PLACES_FRAGMENT = null;
 	private TextView txv_place , txv_date ;
-	private Button settings, share , about, medina_choice ;
+	private Button settings, share , about ;
 	private Button dourouss, jana2ez ;
 
 	private int gDay, gMonth, gYear,
 	hDay, hMonth, hYear ;
 
 	private Fragment fragment;
-	
+
 	private JDManager mManager;
-	
+
 	private MyLocationManager mLocationManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.index_activity);
-		
+
 		mManager = JDManager.getInstance(this);
 		mLocationManager = MyLocationManager.getIntance(this);
 		mLocationManager.start();
@@ -56,7 +56,6 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 		settings 		= (Button) findViewById(R.id.settings);
 		share 			= (Button) findViewById(R.id.share);
 		about 			= (Button) findViewById(R.id.about);
-		medina_choice 	= (Button) findViewById(R.id.medina_choice);
 		dourouss 		= (Button) findViewById(R.id.jana2ez);
 		jana2ez 		= (Button) findViewById(R.id.dourouss);
 
@@ -75,27 +74,26 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 		gDay = calendar.get(Calendar.DAY_OF_MONTH);
 		gMonth = calendar.get(Calendar.MONTH) + 1;
 		gYear = calendar.get(Calendar.YEAR);
-		
+
 		GHTDate gDate = Hijri.GregorianToHijri(gYear, gMonth, gDay);
-//		Log.i("refreshGDate", gDate.toString());
-		
-		
+		//		Log.i("refreshGDate", gDate.toString());
+
+
 		gDay = gDate.getDayG();
 		gMonth = gDate.getMonthG();
 		gYear = gDate.getYearG();
-		
+
 		hDay = gDate.getDayH();
 		hMonth = gDate.getMonthH();
 		hYear = gDate.getYearH();
-		
+
 		txv_date.setText( hDay + " " + gDate.getMonthNameH() + "  " + hYear + " هـ.");
-		
-	//	txv_date.setText(gDate.getDayNameH() + " " + hDay + " " + gDate.getMonthNameH() + " " + hYear);
+
+		//	txv_date.setText(gDate.getDayNameH() + " " + hDay + " " + gDate.getMonthNameH() + " " + hYear);
 
 		settings.setOnTouchListener(this);
 		share.setOnTouchListener(this);
 		about.setOnTouchListener(this);
-		medina_choice.setOnTouchListener(this);
 		jana2ez.setOnTouchListener(this);
 		dourouss.setOnTouchListener(this);
 
@@ -114,7 +112,7 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 
 			switch (v.getId()) {
 			case R.id.jana2ez:
-				
+
 				if(mManager.getSelectedPlace() == null){
 					Toast.makeText(IndexActivity.this, R.string.select_place, Toast.LENGTH_LONG).show();
 				}else{
@@ -126,26 +124,24 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 				}
 				break;
 			case R.id.dourouss:
-//				if(jdManager.getSelectedPlace() == null){
-//					Toast.makeText(IndexActivity.this, R.string.select_place, Toast.LENGTH_LONG).show();
-//				}else{
-					Intent intent2 = new Intent(IndexActivity.this, MainActivity.class);
-					intent2.putExtra(MainActivity.DEFAULT_FRAG_POSITION, 1);
-					startActivity(intent2);
-					overridePendingTransition(R.anim.left_in, R.anim.left_out);
-					finish();
-//				}
+				//				if(jdManager.getSelectedPlace() == null){
+				//					Toast.makeText(IndexActivity.this, R.string.select_place, Toast.LENGTH_LONG).show();
+				//				}else{
+				Intent intent2 = new Intent(IndexActivity.this, MainActivity.class);
+				intent2.putExtra(MainActivity.DEFAULT_FRAG_POSITION, 1);
+				startActivity(intent2);
+				overridePendingTransition(R.anim.left_in, R.anim.left_out);
+				finish();
+				//				}
 				break;
 			case R.id.settings:
+				goToSettingsFragment();
 				break;
 			case R.id.about:
 				goToAboutFragment();
 				break;
 			case R.id.share:
 				shareApp("بادر بتحميل تطبيق جنائز و دعوة http://goo.gl/Hvt1jT");
-				break;
-			case R.id.medina_choice:
-				goToPlacesFragment();
 				break;
 
 			default:
@@ -163,15 +159,17 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 		return true;
 	}
 
-	@SuppressLint("NewApi")
-	public void goToPlacesFragment(){
+	
+
+	public void goToAboutFragment(){
 
 		FragmentManager fragmentManager = getFragmentManager();
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
 		//		transaction.setCustomAnimations(R.anim.left_in, R.anim.left_out, R.anim.right_in, R.anim.right_out);
 		transaction.setCustomAnimations(R.animator.card_flip_left_in, R.animator.card_flip_left_out, R.animator.card_flip_right_in, R.animator.card_flip_right_out);
 
-		fragment = new PlacesFragment();
+
+		fragment = new AboutFragment();
 
 		transaction.replace(R.id.fragment_view, fragment, PLACES_FRAGMENT);
 		transaction.addToBackStack(null);
@@ -182,15 +180,16 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 
 	}
 	
-	public void goToAboutFragment(){
+	
+	public void goToSettingsFragment(){
 
 		FragmentManager fragmentManager = getFragmentManager();
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
-//		transaction.setCustomAnimations(R.anim.left_in, R.anim.left_out, R.anim.right_in, R.anim.right_out);
+		//		transaction.setCustomAnimations(R.anim.left_in, R.anim.left_out, R.anim.right_in, R.anim.right_out);
 		transaction.setCustomAnimations(R.animator.card_flip_left_in, R.animator.card_flip_left_out, R.animator.card_flip_right_in, R.animator.card_flip_right_out);
 
 
-		fragment = new AboutFragment();
+		fragment = new SettingsFragment();
 
 		transaction.replace(R.id.fragment_view, fragment, PLACES_FRAGMENT);
 		transaction.addToBackStack(null);
@@ -214,7 +213,6 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 		settings.setEnabled(enabled);
 		share.setEnabled(enabled);
 		about.setEnabled(enabled);
-		medina_choice.setEnabled(enabled);
 	}
 
 	@Override
@@ -227,7 +225,7 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 		}else
 			super.onBackPressed();
 	}
-	
+
 	private void shareApp(String text){
 
 		Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
@@ -246,7 +244,7 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 			if(mManager.refreshLocalityIfPossible(locality))
 				txv_place.setText(mManager.getSelectedPlace().getTitle());
 		}
-		
+
 		mLocationManager.remove(this);
 		mLocationManager.stop();
 	}
@@ -254,18 +252,18 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onProviderEnabled(String provider) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onProviderDisabled(String provider) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

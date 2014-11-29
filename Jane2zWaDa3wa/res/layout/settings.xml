@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/blank_bg" >
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="50dp"
+        android:background="@drawable/bg_text_settings"
+        android:gravity="center"
+        android:scaleType="fitCenter"
+        android:text="@string/settings"
+        android:textColor="#f7941e"
+        android:textSize="45sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/title"
+        android:layout_marginTop="50dp" >
+
+        <LinearLayout
+            android:id="@+id/notif_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal" >
+
+            <Switch
+                android:id="@+id/notif_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:textOff="@string/no"
+                android:textOn="@string/yes"
+                android:textSize="30sp" />
+            
+            <TextView
+                android:id="@+id/notif_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:scaleType="fitCenter"
+                android:layout_marginLeft="10dp"
+                android:text="@string/notifications"
+                android:textColor="#fff"
+                android:textSize="30sp" />
+            
+            
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/medina_choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="50dp"
+            android:background="@drawable/btn_choice_medina" />
+    </RelativeLayout>
+
+</RelativeLayout>
