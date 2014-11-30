@@ -3,7 +3,6 @@ package com.janaezwadaawa;
 import java.util.Calendar;
 import java.util.Locale;
 
-import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -13,6 +12,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -24,6 +24,8 @@ import com.janaezwadaawa.dateconverter.Hijri;
 import com.janaezwadaawa.entity.GHTDate;
 import com.janaezwadaawa.entity.Place;
 import com.janaezwadaawa.externals.JDManager;
+import com.janaezwadaawa.gcm.GcmManager;
+import com.janaezwadaawa.gcm.GcmManager.GcmListener;
 import com.janaezwadaawa.utils.JDFonts;
 import com.janaezwadaawa.utils.MyLocationManager;
 
@@ -42,6 +44,7 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 	private JDManager mManager;
 
 	private MyLocationManager mLocationManager;
+	private GcmManager gcmManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +99,8 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 		about.setOnTouchListener(this);
 		jana2ez.setOnTouchListener(this);
 		dourouss.setOnTouchListener(this);
+		
+		initGCM();
 
 	}
 
@@ -264,6 +269,28 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 	@Override
 	public void onProviderDisabled(String provider) {
 		// TODO Auto-generated method stub
+
+	}
+	
+	private void initGCM() {
+
+		gcmManager = new GcmManager(this);
+		gcmManager.setOnGcmListener(new GcmListener() {
+			@Override
+			public void onRegistrationComplete(String registrationId) {
+				Log.e("XX", "" + registrationId) ;
+//				updateDeviceToken("" + registrationId);
+			}
+
+		});
+
+	}
+
+
+	protected void resetGcm(){
+
+		gcmManager = null ;
+		initGCM();
 
 	}
 }

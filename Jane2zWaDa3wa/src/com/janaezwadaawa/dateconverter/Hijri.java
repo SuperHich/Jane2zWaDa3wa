@@ -196,7 +196,7 @@ public final class Hijri {
          ghtDate.setYearG(year);
          
          ghtDate.setDayNameG(Gregorian.WEEKDAYS[dayOfWeek]);
-         ghtDate.setMonthNameG(Gregorian.MONTHS[month+1]);
+         ghtDate.setMonthNameG(Gregorian.MONTHS[month]);
          
 //         GHTDate amazighDate = Tamazight.GregorianToAmazigh(year, month, day);
 //         ghtDate.setDayT(amazighDate.getDayT());
