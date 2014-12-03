@@ -3,12 +3,15 @@ package com.janaezwadaawa.externals;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -18,10 +21,11 @@ import com.janaezwadaawa.entity.Da3wa;
 import com.janaezwadaawa.entity.Janeza;
 import com.janaezwadaawa.entity.Mosque;
 import com.janaezwadaawa.entity.Place;
+import com.janaezwadaawa.gcm.GcmResponse;
 
 public class JDManager {
 
-	static final String TAG = "SABManager";
+	static final String TAG = "JDManager";
 	
 	private static final String URL_BASE 		= "http://smartlives.ws/projects/exequyApp/api/";
 	private static final String URL_JANA2Z 		= URL_BASE + "exequy/";
@@ -29,6 +33,7 @@ public class JDManager {
 	private static final String URL_MOSQUES 	= URL_BASE + "mosques";
 	private static final String URL_PLACES 		= URL_BASE + "places/";	
 	private static final String URL_ADDRESSES 	= URL_BASE + "addresses/";	
+	private static final String URL_PUSH_REGISTER	= "http://smartlives.ws/projects/exequyApp/mobile_data/push_notifications";
 	
 	private static final String ID 				= "id";
 	private static final String TITLE 			= "title";
@@ -48,6 +53,8 @@ public class JDManager {
 	private static final String ADDRESS	 		= "address";
 	private static final String PHONES	 		= "phones";
 	private static final String PLACE_EN	 	= "place_en";
+	private static final String TOKEN	 		= "token";
+	private static final String TYPE	 		= "type";
 	
 	
 	private IFragmentNotifier fragmentNotifier;
@@ -108,7 +115,6 @@ public class JDManager {
 					hashJana2z.put(janeza.getMosque(), list);
 
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
@@ -153,7 +159,6 @@ public class JDManager {
 				hashJana2z.put(janeza.getMosque(), list);
 				
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -193,7 +198,6 @@ public class JDManager {
 					janaez.add(janeza);
 
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
@@ -220,7 +224,6 @@ public class JDManager {
 				
 				mosques.add(mosque);
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -252,7 +255,6 @@ public class JDManager {
 				
 				da3awi.add(da3wa);
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -276,7 +278,6 @@ public class JDManager {
 				
 				places.add(place);
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -304,12 +305,49 @@ public class JDManager {
 				
 				addresses.add(address);
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		
 		return addresses;
+	}
+	
+	public boolean registerPush(String regID) {
+		boolean isOK = false;
+		
+		ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair(TOKEN, regID));
+		params.add(new BasicNameValuePair(TYPE, "android"));
+		
+		GcmResponse result = jsonParser.getGcmResponse(URL_PUSH_REGISTER, params);
+		if (result != null) 
+		{
+			Log.i(TAG, "result " + result.isSuccess() + "\n" + result.getMessage());
+			isOK = result.isSuccess();
+
+		}
+		
+		return isOK;
+	}
+
+	private String deviceToken;
+	public String getDeviceToken() {
+		return deviceToken;
+	}
+
+	public void setDeviceToken(String deviceToken) {
+		this.deviceToken = deviceToken;
+	}
+
+	public void updateDeviceToken(String token){
+		setDeviceToken(token);
+		new AsyncTask<String, Void, Boolean>() {
+
+			@Override
+			protected Boolean doInBackground(String... params) {
+				return registerPush(params[0]);
+			}
+		}.execute(token);
 	}
 	
 	
@@ -328,6 +366,14 @@ public class JDManager {
 		return false;
 	}
 	
+	public void setNotificationSettings(boolean isRegistered){
+		editor.putBoolean("notifs", isRegistered);
+		editor.commit();
+	}
+	
+	public boolean isNotificationEnabled(){
+		return settings.getBoolean("notifs", false);
+	}
 	
 	public IFragmentNotifier getFragmentNotifier() {
 		return fragmentNotifier;

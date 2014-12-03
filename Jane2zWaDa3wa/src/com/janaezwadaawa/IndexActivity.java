@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.location.Location;
 import android.location.LocationListener;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -279,7 +280,7 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 			@Override
 			public void onRegistrationComplete(String registrationId) {
 				Log.e("XX", "" + registrationId) ;
-//				updateDeviceToken("" + registrationId);
+				mManager.updateDeviceToken("" + registrationId);
 			}
 
 		});
@@ -293,4 +294,5 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 		initGCM();
 
 	}
+	
 }

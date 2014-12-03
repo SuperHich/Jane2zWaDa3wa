@@ -35,11 +35,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
+
+import com.janaezwadaawa.gcm.GcmResponse;
  
 /**
- * Sa7i7 Al Boukhari
+ * JD
  * @author HICHEM LAROUSSI - RAMI TRABELSI
- * Copyright (c) 2014 Zad Group. All rights reserved.
+ * Copyright (c) 2014. All rights reserved.
  */
 
 public class JSONParser {
@@ -106,12 +108,13 @@ public class JSONParser {
  
     }
     
-    public String getIntegerFromUrl(String url, List<NameValuePair> params) {
+    public GcmResponse getGcmResponse(String url, List<NameValuePair> params) {
     	
     	int statusCode = -1;
         // Making HTTP request
         try {
             HttpClient httpClient = getNewHttpClient();
+//            HttpClient httpClient = new DefaultHttpClient(getHttpParams());
             HttpPost httpPost = new HttpPost(url);
             httpPost.setEntity(new UrlEncodedFormEntity(params));
  
@@ -119,7 +122,7 @@ public class JSONParser {
             HttpEntity httpEntity = httpResponse.getEntity();
             statusCode = httpResponse.getStatusLine().getStatusCode();
             is = httpEntity.getContent();
- 
+            
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (ClientProtocolException e) {
@@ -127,6 +130,20 @@ public class JSONParser {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
+//      GcmResponseHandler handler = new GcmResponseHandler();
+//		try{
+//					
+//			SAXParserFactory fact = SAXParserFactory.newInstance();
+//			SAXParser pars = fact.newSAXParser();
+//				
+//			Log.v("", ">>> is " + is + " ... statusCode " + statusCode  );
+//			pars.parse(is, handler);
+//			
+//		}catch (Exception e) {
+//			Log.e("", "Problem while making a local request ! " + e.getMessage());
+//			e.printStackTrace();
+//		}
  
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(
@@ -143,19 +160,30 @@ public class JSONParser {
             Log.e("Buffer Error", "Error converting result " + e.toString());
         }
         
+        GcmResponse response = null;
         if(statusCode == HttpStatus.SC_OK)
         {
-        	// try parse the string to an Integer value
         	try {
-        		json = json.replace("\"","").trim();
-        		statusCode = Integer.parseInt(json);            
-        	} catch (NumberFormatException e) {
+        		jObj = new JSONObject(json); 
+        		
+        		response = new GcmResponse();
+        		response.setSuccess(jObj.getString("success").equals("1"));
+        		response.setMessage(jObj.getString("message"));
+        	} catch (JSONException e) {
         		Log.e("JSON Parser", "Error parsing data " + e.toString());
         	}
+        	// try parse the string to an Integer value
+//        	try {
+////        		json = json.replace("\"","").trim();
+////        		statusCode = Integer.parseInt(json);            
+//        	} catch (NumberFormatException e) {
+//        		Log.e("JSON Parser", "Error parsing data " + e.toString());
+//        	}
         }
  
         // return status code / response
-        return String.valueOf(statusCode);
+//        return handler.getResult();
+        return response;
  
     }
     
@@ -188,7 +216,7 @@ public class JSONParser {
     	HttpParams httpParameters = new BasicHttpParams();
     	// Set the timeout in milliseconds until a connection is established.
     	// The default value is zero, that means the timeout is not used. 
-    	int timeoutConnection = 3000;
+    	int timeoutConnection = 10000;
     	HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
     	// Set the default socket timeout (SO_TIMEOUT) 
     	// in milliseconds which is the timeout for waiting for data.

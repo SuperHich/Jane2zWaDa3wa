@@ -30,7 +30,7 @@ public class SettingsFragment extends Fragment {
 	private Fragment fragment;
 	private Button  medina_choice ;
 	private Switch notif_switch ;
-	private JDManager jdManager;
+	private JDManager mManager;
 	private TextView title, notif_text;
 
 	public SettingsFragment() {
@@ -54,7 +54,7 @@ public class SettingsFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		jdManager = JDManager.getInstance(getActivity());
+		mManager = JDManager.getInstance(getActivity());
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class SettingsFragment extends Fragment {
 		notif_text.setTypeface(JDFonts.getBDRFont());
 		notif_switch.setTypeface(JDFonts.getBDRFont());
 
-
+		notif_switch.setChecked(mManager.isNotificationEnabled());
 		//set the switch to ON 
 		//	notif_switch.setChecked(true);
 
@@ -84,9 +84,12 @@ public class SettingsFragment extends Fragment {
 
 				if(isChecked){
 					//Switch is currently ON
+					mManager.updateDeviceToken(mManager.getDeviceToken());
 				}else{
 					//Switch is currently OFF"
 				}
+				
+				mManager.setNotificationSettings(isChecked);
 
 			}
 		});
