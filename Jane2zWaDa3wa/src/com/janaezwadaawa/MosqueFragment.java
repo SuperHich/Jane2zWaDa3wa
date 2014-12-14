@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -14,8 +15,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.janaezwadaawa.adapters.IJana2zListener;
+import com.janaezwadaawa.adapters.ISearchListener;
 import com.janaezwadaawa.adapters.MosqueAdapter;
 import com.janaezwadaawa.dateconverter.Hijri;
 import com.janaezwadaawa.entity.GHTDate;
@@ -23,19 +26,14 @@ import com.janaezwadaawa.entity.Mosque;
 import com.janaezwadaawa.externals.JDManager;
 import com.janaezwadaawa.utils.JDFonts;
 
-public class MosqueFragment extends Fragment implements IJana2zListener {
+public class MosqueFragment extends Fragment implements IJana2zListener, ISearchListener {
 
-//	public static final String ARG_JANA2Z_TYPE = "jana2z_type";
 	public static final String ARG_PLACE_ID = "place_id";
-//	public static final String ARG_JANA2Z_SEARCH = "jana2z_search_type";
-//	public static final String ARG_JANA2Z_KEYWORD_TEXT = "jana2z_keyword";
 	
 	private MosqueAdapter adapter;
 	private ArrayList<Mosque> mosques = new ArrayList<Mosque>();
-//	private int jana2zType;
+	private ArrayList<Mosque> allMosques = new ArrayList<Mosque>();
 	private int placeId = -1;
-//	private int jana2zSearch;
-//	private String jana2zKeyword;
 	
 	private GridView gridView;
 	private TextView txv_emptyList, 
@@ -54,9 +52,24 @@ public class MosqueFragment extends Fragment implements IJana2zListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+	}
+	
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		
 		jdManager = JDManager.getInstance(getActivity());
+		jdManager.setSearchListener(this);
+		
 		if(jdManager.getSelectedPlace() != null)
 			placeId = jdManager.getSelectedPlace().getId();
+	}
+	
+	@Override
+	public void onDetach() {
+		super.onDetach();
+		
+		jdManager.setSearchListener(null);
 	}
 	
 	
@@ -110,7 +123,6 @@ public class MosqueFragment extends Fragment implements IJana2zListener {
 		txv_date_name.setText( hDay + " " + gDate.getMonthNameH() + "  " + hYear + " هـ.");
 		
 		
-		adapter = new MosqueAdapter(getActivity(), mosques, this);
 		return rootView;
 	}
 	
@@ -118,6 +130,7 @@ public class MosqueFragment extends Fragment implements IJana2zListener {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		
+		adapter = new MosqueAdapter(getActivity(), mosques, this);
 		gridView.setAdapter(adapter);
 		gridView.setCacheColorHint(Color.TRANSPARENT);
 		
@@ -138,6 +151,7 @@ public class MosqueFragment extends Fragment implements IJana2zListener {
 
 			@Override
 			protected void onPreExecute() {
+				allMosques.clear();
 				mosques.clear();
 				loading = new ProgressDialog(getActivity());
 				loading.setCancelable(false);
@@ -147,8 +161,10 @@ public class MosqueFragment extends Fragment implements IJana2zListener {
 			
 			@Override
 			protected ArrayList<Mosque> doInBackground(Void... params) {
-				if(placeId != -1)
+				if(placeId != -1){
 					mosques.addAll(jdManager.getMosquesByPlace(placeId));
+					allMosques.addAll(mosques);
+				}
 //				if(placeId != -1)
 //					mosques.addAll(jdManager.getJanaezByPlace(placeId));
 //				else
@@ -176,5 +192,34 @@ public class MosqueFragment extends Fragment implements IJana2zListener {
 		jdManager.setSelectedMosque(mosques.get(position));
 		((MainActivity) getActivity()).goToJanaezFragment();
 		
+	}
+
+
+	@Override
+	public void onSearchBykeyword(String keyword) {
+		if(!keyword.equals("")){
+			ArrayList<Mosque> filteredList = new ArrayList<Mosque>();
+			for (Mosque mosque : mosques) {
+				if(mosque.getPlace().contains(keyword)
+						|| mosque.getTitle().contains(keyword))
+				{
+					filteredList.add(mosque);
+				}
+			}
+			
+			if(filteredList.size() > 0){
+				mosques.clear();
+				mosques.addAll(filteredList);
+				adapter.notifyDataSetChanged();
+			}else
+			{
+				Toast.makeText(getActivity(), "No item found for \""+keyword+"\"", Toast.LENGTH_LONG).show();
+			}
+		}
+		else{
+			mosques.clear();
+			mosques.addAll(allMosques);
+			adapter.notifyDataSetChanged();
+		}
 	}
 }

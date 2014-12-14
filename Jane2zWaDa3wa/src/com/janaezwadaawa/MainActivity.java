@@ -16,6 +16,7 @@ import android.widget.ImageView;
 
 import com.janaezwadaawa.SearchDialog.EditNameDialogListener;
 import com.janaezwadaawa.adapters.IMenuListener;
+import com.janaezwadaawa.externals.JDManager;
 
 public class MainActivity extends FragmentActivity implements IMenuListener, OnTouchListener, EditNameDialogListener{
 
@@ -44,13 +45,15 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 	private String currentFragment;
 	
 	private boolean isBackEnabled = false;
-	
+	private JDManager mManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		mManager = JDManager.getInstance(this);
+		
 		header = (ImageView) findViewById(R.id.header);
 //		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 //		mDrawerList = (ListView) findViewById(R.id.right_drawer);
@@ -273,6 +276,11 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 
 		@Override
 		public void onFinishEditDialog(String inputText) {
+			
+			if(mManager.getSearchListener() != null)
+			{
+				mManager.getSearchListener().onSearchBykeyword(inputText);
+			}
 
 //			lastText = inputText;
 //

@@ -16,6 +16,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.janaezwadaawa.adapters.IFragmentNotifier;
+import com.janaezwadaawa.adapters.ISearchListener;
 import com.janaezwadaawa.entity.Address;
 import com.janaezwadaawa.entity.Da3wa;
 import com.janaezwadaawa.entity.Janeza;
@@ -66,10 +67,10 @@ public class JDManager {
 	private Context mContext;
 	
 	private Mosque selectedMosque;
-	private Place selectedPlace;
 	private Da3wa selectedDa3wa;
 	
 	private ArrayList<Place> places;
+	private ISearchListener searchListener;
 	
 	public JDManager(Context context) {
 		
@@ -392,11 +393,28 @@ public class JDManager {
 	}
 
 	public Place getSelectedPlace() {
+		
+		Place selectedPlace = null;
+		int placeID = settings.getInt("place_id", -1);
+		if(placeID != -1){
+			selectedPlace = new Place();
+			selectedPlace.setId(placeID);
+			selectedPlace.setTitle(settings.getString("place_title", null));
+			selectedPlace.setPlaceEn(settings.getString("place_en", null));
+		}
+		
 		return selectedPlace;
 	}
 
 	public void setSelectedPlace(Place selectedPlace) {
-		this.selectedPlace = selectedPlace;
+//		this.selectedPlace = selectedPlace;
+		
+		editor.putInt("place_id", selectedPlace.getId());
+		editor.putString("place_title", selectedPlace.getTitle());
+		editor.putString("place_en", selectedPlace.getPlaceEn());
+		
+		editor.commit();
+		
 	}
 
 	public Da3wa getSelectedDa3wa() {
@@ -413,5 +431,13 @@ public class JDManager {
 
 	public void setPlaces(ArrayList<Place> places) {
 		this.places = places;
+	}
+
+	public ISearchListener getSearchListener() {
+		return searchListener;
+	}
+
+	public void setSearchListener(ISearchListener searchListener) {
+		this.searchListener = searchListener;
 	}
 }

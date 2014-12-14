@@ -21,8 +21,6 @@ import com.janaezwadaawa.utils.JDFonts;
 
 public class PlacesFragment extends ListFragment {
 
-	public static final String ARG_BOOKID = "arg_bookid";
-	
 	private PlacesAdapter adapter;
 	private ArrayList<Place> places = new ArrayList<Place>();
 	private TextView txv_empty, top_header ;
