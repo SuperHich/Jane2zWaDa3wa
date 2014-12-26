@@ -8,7 +8,7 @@ public class Janeza extends JDEntity{
 	private String prayerTime;
 	private String latitude;
 	private String longitude;
-	
+	private String gender;
 	
 	public String getPlace() {
 		return place;
@@ -60,6 +60,14 @@ public class Janeza extends JDEntity{
 		sb.append("Latitude " + getLatitude() + "\n");
 		sb.append("Longitude " + getLongitude() + "\n");
 		return sb.toString();
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 
 }

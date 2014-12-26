@@ -56,7 +56,7 @@ public class JDManager {
 	private static final String PLACE_EN	 	= "place_en";
 	private static final String TOKEN	 		= "token";
 	private static final String TYPE	 		= "type";
-	
+	private static final String GENDER			 	= "gender";
 	
 	private IFragmentNotifier fragmentNotifier;
 	
@@ -105,6 +105,7 @@ public class JDManager {
 					janeza.setPrayerTime(jObj.getString(PRAYER_TIME));
 					janeza.setLatitude(jObj.getString(LAT));
 					janeza.setLongitude(jObj.getString(LONG));
+					janeza.setGender(jObj.getString(GENDER));
 
 					Log.i(TAG, janeza.toString());
 
@@ -142,13 +143,14 @@ public class JDManager {
 			try {
 				JSONObject jObj = array.getJSONObject(i);
 				Janeza janeza = new Janeza();
-//				janeza.setId(Integer.valueOf(jObj.getString(ID)));
+				janeza.setId(Integer.valueOf(jObj.getString(ID)));
 				janeza.setTitle(jObj.getString(TITLE));
 				janeza.setMosque(jObj.getString(MOSQUE));
 				janeza.setPlace(jObj.getString(PLACE));
 				janeza.setPrayerTime(jObj.getString(PRAYER_TIME));
 				janeza.setLatitude(jObj.getString(LAT));
 				janeza.setLongitude(jObj.getString(LONG));
+				janeza.setGender(jObj.getString(GENDER));
 				
 				Log.i(TAG, janeza.toString());
 				
@@ -192,6 +194,7 @@ public class JDManager {
 					janeza.setPrayerTime(jObj.getString(PRAYER_TIME));
 					janeza.setLatitude(jObj.getString(LAT));
 					janeza.setLongitude(jObj.getString(LONG));
+					janeza.setGender(jObj.getString(GENDER));
 
 					Log.i(TAG, janeza.toString());
 

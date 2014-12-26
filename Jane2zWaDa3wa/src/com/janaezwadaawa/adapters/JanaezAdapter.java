@@ -67,7 +67,7 @@ public class JanaezAdapter extends ArrayAdapter<Janeza> {
 		
 		holder.txv_index.setText(""+(position+1));
 		holder.txv_name_value.setText(janeza.getTitle());
-//		holder.txv_gender_value.setText();
+		holder.txv_gender_value.setText(janeza.getGender());
 
 		return convertView;
 	}
