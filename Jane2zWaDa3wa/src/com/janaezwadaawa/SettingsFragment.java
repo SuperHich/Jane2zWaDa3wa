@@ -7,6 +7,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,6 +20,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.janaezwadaawa.externals.JDManager;
+import com.janaezwadaawa.gcm.GcmManager;
+import com.janaezwadaawa.gcm.GcmManager.GcmListener;
 import com.janaezwadaawa.utils.JDFonts;
 
 
@@ -32,6 +35,8 @@ public class SettingsFragment extends Fragment {
 	private Switch notif_switch ;
 	private JDManager mManager;
 	private TextView title, notif_text;
+
+	private GcmManager gcmManager;
 
 	public SettingsFragment() {
 		// Empty constructor required for fragment subclasses
@@ -84,9 +89,12 @@ public class SettingsFragment extends Fragment {
 
 				if(isChecked){
 					//Switch is currently ON
-					mManager.updateDeviceToken(mManager.getDeviceToken());
+//					mManager.updateDeviceToken(mManager.getDeviceToken());
+					resetGcm();
 				}else{
 					//Switch is currently OFF"
+					unregisterGCM();
+					
 				}
 				
 				mManager.setNotificationSettings(isChecked);
@@ -149,6 +157,32 @@ public class SettingsFragment extends Fragment {
 
 		transaction.commit();
 
+
+	}
+	
+	private void initGCM() {
+
+		gcmManager = new GcmManager(getActivity());
+		gcmManager.setOnGcmListener(new GcmListener() {
+			@Override
+			public void onRegistrationComplete(String registrationId) {
+				Log.e("XX", "" + registrationId) ;
+				mManager.updateDeviceToken("" + registrationId);
+			}
+
+		});
+
+	}
+	
+	private void unregisterGCM() {		
+		if(gcmManager != null)
+			gcmManager.unregisterGCM();
+	}
+	
+	protected void resetGcm(){
+
+		gcmManager = null ;
+		initGCM();
 
 	}
 

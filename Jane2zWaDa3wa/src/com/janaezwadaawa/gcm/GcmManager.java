@@ -54,7 +54,7 @@ public class GcmManager {
 			Log.i(TAG, "No valid Google Play Services APK found.");
 		}
 	}
-
+	
 	private void registerInBackground() {
 
 		new AsyncTask<Object, Object, Object>() {
@@ -85,6 +85,51 @@ public class GcmManager {
 				} catch (IOException ex) {
 					msg = "Error :" + ex.getMessage();
 					Log.e(TAG, "Error Registration > " + regid);
+				}
+				return msg;
+			}
+		}.execute(null, null, null);
+
+	}
+	
+	public void unregisterGCM() {
+
+		if (checkPlayServices()) {
+			unregisterInBackground();
+		} else {
+			Log.i(TAG, "No valid Google Play Services APK found.");
+		}
+	}
+	
+	private void unregisterInBackground() {
+
+		new AsyncTask<Object, Object, Object>() {
+			@Override
+			protected void onPostExecute(Object result) {
+				super.onPostExecute(result);
+			}
+
+			@Override
+			protected Object doInBackground(Object... params) {
+				String msg = "";
+				try {
+
+					if (gcm == null) {
+						gcm = GoogleCloudMessaging.getInstance(context);
+					}
+
+					gcm.unregister();
+					
+					regid = "";
+
+					msg = "Device unregistered";
+
+					// Persist the regID - no need to register again.
+					storeRegistrationId(context, regid);
+
+				} catch (IOException ex) {
+					msg = "Error :" + ex.getMessage();
+					Log.e(TAG, "Error unregistration > " + regid);
 				}
 				return msg;
 			}

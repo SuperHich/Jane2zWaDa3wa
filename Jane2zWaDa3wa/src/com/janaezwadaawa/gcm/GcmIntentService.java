@@ -68,9 +68,12 @@ public class GcmIntentService extends IntentService {
                 // Post notification of received message.
                 //TODO Implement proper notifications 
                 //sendNotification("Received: " +  extras.toString() + "");
-                sendNotification(true,extras);
-                Log.i(TAG, "Received: " + extras.toString());
                 
+                if(extras != null)
+                {
+                	Log.i(TAG, "Received: " + extras.toString());
+                	sendNotification(true,extras);
+                }
                 
             }
         }
@@ -126,13 +129,13 @@ public class GcmIntentService extends IntentService {
         intent.addFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP ); // Flag added to resume running app.
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent , PendingIntent.FLAG_UPDATE_CURRENT); //TODO PEnding IOntent
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
-        .setSmallIcon(R.drawable.ic_launcher)
+        .setSmallIcon(R.drawable.janaez_logo)
         .setPriority(Notification.PRIORITY_MAX)
         .setTicker( "Janaez Wa Da3wa Notification" )
         
         .setContentTitle("Janaez Wa Da3wa Notification" )
         .setStyle(new NotificationCompat.BigTextStyle()
-        .bigText(extras.getString( "msg" )))
+        .bigText(extras.getString( "message" )))
 //        .setSummaryText(extras.getString( "msg" )))
         .setOnlyAlertOnce( true )
         .setAutoCancel( true )
@@ -142,7 +145,8 @@ public class GcmIntentService extends IntentService {
 //        mBuilder.getNotification().defaults|= Notification.DEFAULT_VIBRATE;
         mBuilder.setContentIntent(contentIntent);
         
-        Log.e("NOTIFICATION alert", extras.getString( "alert" ));
+//        Log.e("NOTIFICATION title", extras.getString( "title" ));
+//        Log.e("NOTIFICATION message", extras.getString( "message" ));
         
          ;
 //         Uri.parse("android.resource://" + this.getPackageName() + "/" + R.raw.sound_file)
