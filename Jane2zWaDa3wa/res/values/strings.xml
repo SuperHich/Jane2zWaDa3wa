@@ -65,4 +65,5 @@
     <string name="notifications">الاخطارات :</string>
     <string name="yes">نعم</string>
     <string name="no">لا</string>
+    <string name="push_notif">اخطارات جنائز ودعوة</string>
 </resources>

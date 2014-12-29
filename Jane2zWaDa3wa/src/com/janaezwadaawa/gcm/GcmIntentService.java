@@ -15,6 +15,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.janaezwadaawa.IndexActivity;
 import com.janaezwadaawa.MainActivity;
 import com.janaezwadaawa.R;
 
@@ -123,7 +124,7 @@ public class GcmIntentService extends IntentService {
 
 //        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, 
 //			MainActivity.class), 0); //TODO PEnding IOntent
-        Intent intent = new Intent(this, MainActivity.class) ;
+        Intent intent = new Intent(this, IndexActivity.class) ;
 //        Bundle bundle =  new Bundle();
         intent.putExtras( extras );
         intent.addFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP ); // Flag added to resume running app.
@@ -131,9 +132,9 @@ public class GcmIntentService extends IntentService {
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
         .setSmallIcon(R.drawable.janaez_logo)
         .setPriority(Notification.PRIORITY_MAX)
-        .setTicker( "Janaez Wa Da3wa Notification" )
+        .setTicker( getString(R.string.push_notif) )
         
-        .setContentTitle("Janaez Wa Da3wa Notification" )
+        .setContentTitle(getString(R.string.push_notif) )
         .setStyle(new NotificationCompat.BigTextStyle()
         .bigText(extras.getString( "message" )))
 //        .setSummaryText(extras.getString( "msg" )))

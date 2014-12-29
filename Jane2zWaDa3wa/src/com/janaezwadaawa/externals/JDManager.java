@@ -56,7 +56,7 @@ public class JDManager {
 	private static final String PLACE_EN	 	= "place_en";
 	private static final String TOKEN	 		= "token";
 	private static final String TYPE	 		= "type";
-	private static final String GENDER			 	= "gender";
+	private static final String GENDER			= "gender";
 	
 	private IFragmentNotifier fragmentNotifier;
 	
