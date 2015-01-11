@@ -379,6 +379,15 @@ public class JDManager {
 		return settings.getBoolean("notifs", false);
 	}
 	
+	public void setBadgeCounter(int counter){
+		editor.putInt("badge_counter", counter);
+		editor.commit();
+	}
+	
+	public int getBadgeCounter(){
+		return settings.getInt("badge_counter", 0);
+	}
+	
 	public IFragmentNotifier getFragmentNotifier() {
 		return fragmentNotifier;
 	}

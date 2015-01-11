@@ -1,5 +1,7 @@
 package com.janaezwadaawa.gcm;
 
+import me.leolin.shortcutbadger.ShortcutBadgeException;
+import me.leolin.shortcutbadger.ShortcutBadger;
 import android.annotation.TargetApi;
 import android.app.IntentService;
 import android.app.Notification;
@@ -18,6 +20,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.janaezwadaawa.IndexActivity;
 import com.janaezwadaawa.MainActivity;
 import com.janaezwadaawa.R;
+import com.janaezwadaawa.externals.JDManager;
 
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 public class GcmIntentService extends IntentService {
@@ -74,6 +77,15 @@ public class GcmIntentService extends IntentService {
                 {
                 	Log.i(TAG, "Received: " + extras.toString());
                 	sendNotification(true,extras);
+                	
+                	try {
+                		int badgeCounter = JDManager.getInstance(this).getBadgeCounter();
+            			JDManager.getInstance(this).setBadgeCounter(badgeCounter++);
+            			ShortcutBadger.setBadge(getApplicationContext(), JDManager.getInstance(this).getBadgeCounter());
+            		} catch (ShortcutBadgeException e) {
+            			// TODO Auto-generated catch block
+            			e.printStackTrace();
+            		}
                 }
                 
             }

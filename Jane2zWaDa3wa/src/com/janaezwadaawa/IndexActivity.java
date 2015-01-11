@@ -3,6 +3,8 @@ package com.janaezwadaawa;
 import java.util.Calendar;
 import java.util.Locale;
 
+import me.leolin.shortcutbadger.ShortcutBadgeException;
+import me.leolin.shortcutbadger.ShortcutBadger;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -55,6 +57,14 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 		mLocationManager = MyLocationManager.getIntance(this);
 		mLocationManager.start();
 		mLocationManager.register(this);
+		
+		try {
+			mManager.setBadgeCounter(0);
+			ShortcutBadger.setBadge(getApplicationContext(), mManager.getBadgeCounter());
+		} catch (ShortcutBadgeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		settings 		= (Button) findViewById(R.id.settings);
 		share 			= (Button) findViewById(R.id.share);
