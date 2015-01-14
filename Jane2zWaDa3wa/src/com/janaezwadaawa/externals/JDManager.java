@@ -28,13 +28,14 @@ public class JDManager {
 
 	static final String TAG = "JDManager";
 	
-	private static final String URL_BASE 		= "http://smartlives.ws/projects/exequyApp/api/";
+//	private static final String URL_BASE 		= "http://smartlives.ws/projects/exequyApp/api/";
+	private static final String URL_BASE 		= "http://gheras.net/exequyApp/api/";
 	private static final String URL_JANA2Z 		= URL_BASE + "exequy/";
 	private static final String URL_DA3WA 		= URL_BASE + "lectures/";
 	private static final String URL_MOSQUES 	= URL_BASE + "mosques";
 	private static final String URL_PLACES 		= URL_BASE + "places/";	
 	private static final String URL_ADDRESSES 	= URL_BASE + "addresses/";	
-	private static final String URL_PUSH_REGISTER	= "http://smartlives.ws/projects/exequyApp/mobile_data/push_notifications";
+	private static final String URL_PUSH_REGISTER	= "http://gheras.net/exequyApp/mobile_data/push_notifications";
 	
 	private static final String ID 				= "id";
 	private static final String TITLE 			= "title";

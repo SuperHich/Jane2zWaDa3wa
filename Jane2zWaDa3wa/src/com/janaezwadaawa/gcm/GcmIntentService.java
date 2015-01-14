@@ -1,5 +1,7 @@
 package com.janaezwadaawa.gcm;
 
+import org.json.JSONObject;
+
 import me.leolin.shortcutbadger.ShortcutBadgeException;
 import me.leolin.shortcutbadger.ShortcutBadger;
 import android.annotation.TargetApi;
@@ -80,8 +82,10 @@ public class GcmIntentService extends IntentService {
                 	
                 	try {
                 		int badgeCounter = JDManager.getInstance(this).getBadgeCounter();
-            			JDManager.getInstance(this).setBadgeCounter(badgeCounter++);
-            			ShortcutBadger.setBadge(getApplicationContext(), JDManager.getInstance(this).getBadgeCounter());
+                		badgeCounter = badgeCounter+1;
+            			JDManager.getInstance(this).setBadgeCounter(badgeCounter);
+            			Log.e(TAG, "badgeCounter: " + badgeCounter);
+            			ShortcutBadger.setBadge(getApplicationContext(), badgeCounter);
             		} catch (ShortcutBadgeException e) {
             			// TODO Auto-generated catch block
             			e.printStackTrace();
@@ -131,6 +135,14 @@ public class GcmIntentService extends IntentService {
 		
 		soundUri = Uri.parse("android.resource://" + this.getPackageName() + "/" + sound );
 		
+		String message = "";
+		try{
+			JSONObject json = new JSONObject(extras.getString( "aps"));
+			message = json.getString("alert");
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 				
         mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -144,24 +156,22 @@ public class GcmIntentService extends IntentService {
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
         .setSmallIcon(R.drawable.janaez_logo)
         .setPriority(Notification.PRIORITY_MAX)
-        .setTicker( getString(R.string.push_notif) )
-        
+        .setContentText(message)
+        .setTicker(message)
         .setContentTitle(getString(R.string.push_notif) )
-        .setStyle(new NotificationCompat.BigTextStyle()
-        .bigText(extras.getString( "message" )))
+//        .setStyle(new NotificationCompat.BigTextStyle()
+//        .bigText(extras.getString( "alert" )))
 //        .setSummaryText(extras.getString( "msg" )))
         .setOnlyAlertOnce( true )
         .setAutoCancel( true )
-         .setSound( soundUri ) 
-   //     .setContentText(extras.getString( "msg" ))
-         ;
+         .setSound( soundUri );
+		
 //        mBuilder.getNotification().defaults|= Notification.DEFAULT_VIBRATE;
         mBuilder.setContentIntent(contentIntent);
         
 //        Log.e("NOTIFICATION title", extras.getString( "title" ));
 //        Log.e("NOTIFICATION message", extras.getString( "message" ));
         
-         ;
 //         Uri.parse("android.resource://" + this.getPackageName() + "/" + R.raw.sound_file)
         
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
