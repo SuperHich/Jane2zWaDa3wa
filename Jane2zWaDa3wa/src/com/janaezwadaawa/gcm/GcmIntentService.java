@@ -1,9 +1,10 @@
 package com.janaezwadaawa.gcm;
 
-import org.json.JSONObject;
-
 import me.leolin.shortcutbadger.ShortcutBadgeException;
 import me.leolin.shortcutbadger.ShortcutBadger;
+
+import org.json.JSONObject;
+
 import android.annotation.TargetApi;
 import android.app.IntentService;
 import android.app.Notification;
@@ -75,7 +76,7 @@ public class GcmIntentService extends IntentService {
                 //TODO Implement proper notifications 
                 //sendNotification("Received: " +  extras.toString() + "");
                 
-                if(extras != null)
+                if(extras != null && JDManager.getInstance(this).isNotificationEnabled())
                 {
                 	Log.i(TAG, "Received: " + extras.toString());
                 	sendNotification(true,extras);

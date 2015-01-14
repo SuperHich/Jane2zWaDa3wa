@@ -214,7 +214,9 @@ public class JDManager {
 	
 	public ArrayList<Mosque> getMosquesByPlace(int placeId) {
 		ArrayList<Mosque> mosques = new ArrayList<Mosque>();
-		JSONArray array = jsonParser.getJSONFromUrl(URL_MOSQUES.concat("/place/?place=".concat(String.valueOf(placeId))));
+		String url = URL_MOSQUES.concat("/place/?place=".concat(String.valueOf(placeId)));
+		JSONArray array = jsonParser.getJSONFromUrl(url);
+		Log.i(TAG, ">>> url : " + url);
 		if (array != null) 
 		for (int i = 0; i < array.length(); i++) {
 			try {
