@@ -106,11 +106,10 @@ public class PlacesFragment extends ListFragment {
 			
 			@Override
 			protected ArrayList<Place> doInBackground(Void... params) {
-				if(mManager.getPlaces() != null)
-					places.addAll(mManager.getPlaces());
-				else
-					places.addAll(mManager.getAllPlaces());
-				return places;
+				if(mManager.getPlaces() == null)
+					mManager.setPlaces(mManager.getAllPlaces());
+				
+				return mManager.getPlaces();
 			}
 			
 			@Override
@@ -118,6 +117,7 @@ public class PlacesFragment extends ListFragment {
 //				loading.dismiss();
 				
 				if(result != null){
+					places.addAll(result);
 					adapter.notifyDataSetChanged();
 				}
 				toggleEmptyMessage();

@@ -2,6 +2,7 @@ package com.janaezwadaawa.externals;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -21,20 +22,29 @@ import com.janaezwadaawa.entity.Address;
 import com.janaezwadaawa.entity.Da3wa;
 import com.janaezwadaawa.entity.Janeza;
 import com.janaezwadaawa.entity.Mosque;
+import com.janaezwadaawa.entity.Mosque2;
 import com.janaezwadaawa.entity.Place;
+import com.janaezwadaawa.entity.Prayer;
 import com.janaezwadaawa.gcm.GcmResponse;
 
 public class JDManager {
 
 	static final String TAG = "JDManager";
 	
-//	private static final String URL_BASE 		= "http://smartlives.ws/projects/exequyApp/api/";
-	private static final String URL_BASE 		= "http://gheras.net/exequyApp/api/";
-	private static final String URL_JANA2Z 		= URL_BASE + "exequy/";
-	private static final String URL_DA3WA 		= URL_BASE + "lectures/";
-	private static final String URL_MOSQUES 	= URL_BASE + "mosques";
-	private static final String URL_PLACES 		= URL_BASE + "places/";	
-	private static final String URL_ADDRESSES 	= URL_BASE + "addresses/";	
+//	private static final String URL_BASE 				= "http://smartlives.ws/projects/exequyApp/api/";
+	private static final String URL_BASE 				= "http://gheras.net/exequyApp/api/";
+	private static final String URL_JANA2Z 				= URL_BASE + "exequy/";
+	private static final String URL_DA3WA 				= URL_BASE + "lectures/";
+	private static final String URL_MOSQUES 			= URL_BASE + "mosques";
+	private static final String URL_PLACES 				= URL_BASE + "places/";	
+	private static final String URL_ADDRESSES 			= URL_BASE + "addresses/";	
+	private static final String URL_PLACE 				= URL_BASE + "place/%d";
+	private static final String URL_MOSQUE 				= URL_BASE + "mosque/%d";
+	private static final String URL_MOSQUE_SALAT_GENDER = URL_BASE + "mosque_salat_gender/%d/%d/%d";
+	private static final String URL_LOGIN 				= URL_BASE + "login/%d/%d";
+	private static final String URL_ADD_JANEZA 			= URL_BASE + "addExequy";
+	private static final String URL_ADD_DA3WA 			= URL_BASE + "addLicuter";
+	
 	private static final String URL_PUSH_REGISTER	= "http://gheras.net/exequyApp/mobile_data/push_notifications";
 	
 	private static final String ID 				= "id";
@@ -58,6 +68,13 @@ public class JDManager {
 	private static final String TOKEN	 		= "token";
 	private static final String TYPE	 		= "type";
 	private static final String GENDER			= "gender";
+	
+	private static final String ID_MOSQUE 		= "id_mosque";
+	private static final String NAME	 		= "name";
+	private static final String ID_SALAT	 	= "id_salat";
+	private static final String MEN	 			= "men";
+	private static final String WOMEN	 		= "women";
+	private static final String CHILD	 		= "child";
 	
 	private IFragmentNotifier fragmentNotifier;
 	
@@ -109,7 +126,7 @@ public class JDManager {
 					janeza.setGender(jObj.getString(GENDER));
 
 					Log.i(TAG, janeza.toString());
-
+					
 					ArrayList<Janeza> list = hashJana2z.get(janeza.getMosque());
 					if(list == null)
 						list = new ArrayList<Janeza>();
@@ -226,6 +243,35 @@ public class JDManager {
 				mosque.setCount(Integer.valueOf(jObj.getString(COUNT)));
 				mosque.setTitle(jObj.getString(MOSQUE));
 				mosque.setPlace(jObj.getString(PLACE));
+				mosque.setPlaceEn(jObj.getString(PLACE_EN));
+				
+				Log.i(TAG, mosque.toString());
+				
+				if(mosque.getPlaceEn() == null 
+						|| mosque.getPlaceEn() != null && mosque.getPlaceEn().equals("null"))
+					mosques.add(mosque);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return mosques;
+	}
+	
+	public ArrayList<Mosque2> getMosques2ByPlace(int placeId) {
+		ArrayList<Mosque2> mosques = new ArrayList<Mosque2>();
+		String url = String.format(URL_PLACE, placeId);
+		JSONArray array = jsonParser.getJSONFromUrl(url);
+		Log.i(TAG, ">>> url : " + url);
+		if (array != null) 
+		for (int i = 0; i < array.length(); i++) {
+			try {
+				JSONObject jObj = array.getJSONObject(i);
+				Mosque2 mosque = new Mosque2();
+				mosque.setId(Integer.valueOf(jObj.getString(ID_MOSQUE)));
+				mosque.setCount(Integer.valueOf(jObj.getString(COUNT)));
+				mosque.setTitle(jObj.getString(NAME));
 				
 				Log.i(TAG, mosque.toString());
 				
@@ -238,6 +284,110 @@ public class JDManager {
 		
 		return mosques;
 	}
+	
+	public ArrayList<Prayer> getPrayerByMosque(int placeId, int mosqueId) {
+		ArrayList<Prayer> result = new ArrayList<Prayer>();
+		String url = String.format(URL_MOSQUE, placeId, mosqueId);
+		JSONArray array = jsonParser.getJSONFromUrl(url);
+		Log.i(TAG, ">>> url : " + url);
+		if (array != null) 
+		for (int i = 0; i < array.length(); i++) {
+			try {
+				JSONObject jObj = array.getJSONObject(i);
+				Prayer item = new Prayer();
+				item.setId(Integer.valueOf(jObj.getString(ID_SALAT)));
+				item.setCount(jObj.getInt(COUNT));
+				item.setTitle(jObj.getString(NAME));
+				item.setCount_men(jObj.getInt(MEN));
+				item.setCount_women(jObj.getInt(WOMEN));
+				item.setCount_child(jObj.getInt(CHILD));
+				
+				Log.i(TAG, item.toString());
+				
+				result.add(item);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return result;
+	}
+	
+	public ArrayList<String> getZanaezNames(int mosqueId, int prayerId, int genderId) {
+		ArrayList<String> result = new ArrayList<String>();
+		String url = String.format(URL_MOSQUE_SALAT_GENDER, mosqueId, prayerId, genderId);
+		JSONArray array = jsonParser.getJSONFromUrl(url);
+		Log.i(TAG, ">>> url : " + url);
+		if (array != null) 
+		for (int i = 0; i < array.length(); i++) {
+			try {
+				String item = array.getString(i);
+				
+				Log.i(TAG, item);
+				
+				result.add(item);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return result;
+	}
+	
+	public String login(int username, int password) {
+		String uid = null;
+		String url = String.format(URL_LOGIN, username, password);
+		String response = jsonParser.getStringFromUrl(url);
+		Log.i(TAG, ">>> url : " + url);
+		if (response != null) 
+		{
+			if(!response.equalsIgnoreCase("false"))
+				uid = response.replaceAll("\"", "");
+		}
+		
+		return uid;
+	}
+	
+	public boolean addJaneza(String uid, String title, String body, int place, int mosque, int salat, String salat_time, int gender){
+
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("uid", uid));
+		params.add(new BasicNameValuePair("title", title));
+		params.add(new BasicNameValuePair("body", body));
+		params.add(new BasicNameValuePair("place", String.valueOf(place)));
+		params.add(new BasicNameValuePair("mosque", String.valueOf(mosque)));
+		params.add(new BasicNameValuePair("salat", String.valueOf(salat)));
+		params.add(new BasicNameValuePair("salat_time", salat_time));
+		params.add(new BasicNameValuePair("gender", String.valueOf(gender)));
+		
+		String response = jsonParser.post(URL_ADD_JANEZA, params);
+		if(response != null)
+			return response.contains("success");
+		
+		return false;
+	}
+	
+	public boolean addDa3wa(String uid, String title, String body, int place, int mosque, int trainer, String time_from, String time_to){
+
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("uid", uid));
+		params.add(new BasicNameValuePair("title", title));
+		params.add(new BasicNameValuePair("body", body));
+		params.add(new BasicNameValuePair("place", String.valueOf(place)));
+		params.add(new BasicNameValuePair("mosque", String.valueOf(mosque)));
+		params.add(new BasicNameValuePair("trainer", String.valueOf(trainer)));
+		params.add(new BasicNameValuePair("time_from", time_from));
+		params.add(new BasicNameValuePair("time_to", time_to));
+		
+		String response = jsonParser.post(URL_ADD_DA3WA, params);
+		if(response != null)
+			return response.contains("success");
+		
+		return false;
+	}
+	
 	
 	public ArrayList<Da3wa> getAllDa3awi() {
 		ArrayList<Da3wa> da3awi = new ArrayList<Da3wa>();
@@ -364,7 +514,8 @@ public class JDManager {
 		if(getPlaces() != null)
 			for(Place place : getPlaces()){
 				Log.v(TAG, ">>> Place EN " + place.getPlaceEn());
-				if(place.getPlaceEn().equalsIgnoreCase(locality)){
+				if(place.getPlaceEn().equalsIgnoreCase(locality)
+						|| place.getTitle().equalsIgnoreCase(locality)){
 					setSelectedPlace(place);
 					return true;
 				}

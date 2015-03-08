@@ -108,6 +108,98 @@ public class JSONParser {
  
     }
     
+    public String getStringFromUrl(String url) {
+    	
+    	int statusCode = -1;
+        // Making HTTP request
+        try {
+            HttpClient httpClient = new DefaultHttpClient(getHttpParams());
+            HttpGet httpGet = new HttpGet(url);
+ 
+            HttpResponse httpResponse = httpClient.execute(httpGet);
+            HttpEntity httpEntity = httpResponse.getEntity();
+            statusCode = httpResponse.getStatusLine().getStatusCode();
+            is = httpEntity.getContent();
+ 
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+ 
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    is, "iso-8859-1"), 8);
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line + "\n");
+            }
+            is.close();
+            json = sb.toString();
+            Log.e("STRING", json);
+        } catch (Exception e) {
+            Log.e("Buffer Error", "Error converting result " + e.toString());
+        }
+ 
+        if(statusCode == HttpStatus.SC_OK)
+        {
+        	return json;
+        }
+ 
+        // return JSON Array
+        return null;
+ 
+    }
+    
+    public String post(String url, List<NameValuePair> params) {
+    	
+    	int statusCode = -1;
+        // Making HTTP request
+        try {
+            HttpClient httpClient = getNewHttpClient();
+//            HttpClient httpClient = new DefaultHttpClient(getHttpParams());
+            HttpPost httpPost = new HttpPost(url);
+            httpPost.setEntity(new UrlEncodedFormEntity(params));
+ 
+            HttpResponse httpResponse = httpClient.execute(httpPost);
+            HttpEntity httpEntity = httpResponse.getEntity();
+            statusCode = httpResponse.getStatusLine().getStatusCode();
+            is = httpEntity.getContent();
+            
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+ 
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    is, "iso-8859-1"), 8);
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line + "\n");
+            }
+            is.close();
+            json = sb.toString();
+            Log.e("JSON", json);
+        } catch (Exception e) {
+            Log.e("Buffer Error", "Error converting result " + e.toString());
+        }
+        
+        if(statusCode == HttpStatus.SC_OK)
+        {
+        	return json;
+        }
+        
+        return null;
+    }
+    
     public GcmResponse getGcmResponse(String url, List<NameValuePair> params) {
     	
     	int statusCode = -1;
