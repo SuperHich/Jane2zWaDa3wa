@@ -8,21 +8,19 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:padding="5dp"
         android:text="الجنائز"
         android:textColor="#fff"
-        android:textSize="50sp" />
+        android:textSize="40sp" />
 
     <ScrollView
         android:id="@+id/edit_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="100dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="100dp" >
+        android:layout_margin="20dp"
+        android:layout_below="@id/title" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,7 +48,7 @@
                     android:maxLines="2"
                     android:padding="5dp"
                     android:textColor="@color/gold"
-                    android:textSize="30sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/lbl_address"
@@ -62,7 +60,7 @@
                     android:padding="5dp"
                     android:text="العنوان :"
                     android:textColor="@color/gold"
-                    android:textSize="30sp" />
+                    android:textSize="25sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -82,7 +80,7 @@
                     android:gravity="right|center_vertical"
                     android:padding="5dp"
                     android:textColor="@color/gold"
-                    android:textSize="30sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/lbl_body"
@@ -94,7 +92,7 @@
                     android:padding="5dp"
                     android:text="العنوان :"
                     android:textColor="@color/gold"
-                    android:textSize="30sp" />
+                    android:textSize="25sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -114,7 +112,7 @@
                     android:maxLines="2"
                     android:padding="5dp"
                     android:textColor="@color/gold"
-                    android:textSize="30sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/lbl_mantaka"
@@ -126,7 +124,7 @@
                     android:padding="5dp"
                     android:text="المنطقة : "
                     android:textColor="@color/gold"
-                    android:textSize="30sp" />
+                    android:textSize="25sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -146,7 +144,7 @@
                     android:maxLines="2"
                     android:padding="5dp"
                     android:textColor="@color/gold"
-                    android:textSize="30sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/lbl_jamaa"
@@ -158,7 +156,7 @@
                     android:padding="5dp"
                     android:text="الجامع : "
                     android:textColor="@color/gold"
-                    android:textSize="30sp" />
+                    android:textSize="25sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -178,7 +176,7 @@
                     android:maxLines="2"
                     android:padding="5dp"
                     android:textColor="@color/gold"
-                    android:textSize="30sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/lbl_salat"
@@ -190,7 +188,7 @@
                     android:padding="5dp"
                     android:text="الصلاة : "
                     android:textColor="@color/gold"
-                    android:textSize="30sp" />
+                    android:textSize="25sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -210,7 +208,7 @@
                     android:maxLines="2"
                     android:padding="5dp"
                     android:textColor="@color/gold"
-                    android:textSize="30sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/lbl_wakt_salat"
@@ -222,7 +220,7 @@
                     android:padding="5dp"
                     android:text="وقت الصلاة : "
                     android:textColor="@color/gold"
-                    android:textSize="30sp" />
+                    android:textSize="25sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -242,7 +240,7 @@
                     android:maxLines="2"
                     android:padding="5dp"
                     android:textColor="@color/gold"
-                    android:textSize="30sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/lbl_genre"
@@ -254,7 +252,7 @@
                     android:padding="5dp"
                     android:text="النوع : "
                     android:textColor="@color/gold"
-                    android:textSize="30sp" />
+                    android:textSize="25sp" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

@@ -272,7 +272,7 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 						break;
 						
 					case 3:
-						goToLoginFragment();
+						goToAddMouhadharaFragment();
 						mDrawerLayout.closeDrawers();
 						break;
 					case 4:
@@ -417,6 +417,24 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 
 	}
 	
+	public void goToAddMouhadharaFragment(){
+
+		FragmentManager fragmentManager = getFragmentManager();
+		FragmentTransaction transaction = fragmentManager.beginTransaction();
+		//		transaction.setCustomAnimations(R.anim.left_in, R.anim.left_out, R.anim.right_in, R.anim.right_out);
+		transaction.setCustomAnimations(R.animator.card_flip_left_in, R.animator.card_flip_left_out, R.animator.card_flip_right_in, R.animator.card_flip_right_out);
+
+
+		fragment = new AddMouhadhraFragment();
+
+		transaction.replace(R.id.fragment_view, fragment, LOGIN_FRAGMENT);
+		transaction.addToBackStack(null);
+
+		transaction.commit();
+
+		setEnableState(false);
+
+	}
 	
 
 
