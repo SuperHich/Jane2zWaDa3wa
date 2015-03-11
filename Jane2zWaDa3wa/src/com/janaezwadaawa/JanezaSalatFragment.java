@@ -7,14 +7,19 @@ import java.util.Locale;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.janaezwadaawa.adapters.ISearchListener;
@@ -27,7 +32,7 @@ import com.janaezwadaawa.entity.Prayer;
 import com.janaezwadaawa.externals.JDManager;
 import com.janaezwadaawa.utils.JDFonts;
 
-public class JanezaSalatFragment extends Fragment implements ISearchListener {
+public class JanezaSalatFragment extends Fragment implements ISearchListener, OnTouchListener {
 
 	protected static final String TAG = JanezaSalatFragment.class.getSimpleName();
 	private JanezaGenderAdapter adapter;
@@ -41,6 +46,7 @@ public class JanezaSalatFragment extends Fragment implements ISearchListener {
 	private TextView txv_emptyList, txv_total, txv_title, txv_salat, txv_douaa, txv_share,
 					txv_day, txv_day_name,
 					txv_date, txv_date_name;
+	private ImageView img_share;
 	
 	private JDManager jdManager;
 	private ProgressDialog loading;
@@ -112,17 +118,12 @@ public class JanezaSalatFragment extends Fragment implements ISearchListener {
 		footer = vi.inflate(R.layout.janeza_footer, null);
 		txv_douaa 		= (TextView) footer.findViewById(R.id.txv_douaa);
 		txv_share 		= (TextView) footer.findViewById(R.id.txv_share);
+		img_share 		= (ImageView) footer.findViewById(R.id.img_share);
 		txv_douaa		.setTypeface(JDFonts.getBDRFont());
 		txv_share		.setTypeface(JDFonts.getBDRFont());
 		txv_douaa.setSelected(true);
 		
-		footer.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				
-			}
-		});
+		footer.setOnTouchListener(this);
 		
 		if(prayer.getCount() > 0)
 			listView.addFooterView(footer, null, true);
@@ -255,5 +256,51 @@ public class JanezaSalatFragment extends Fragment implements ISearchListener {
 //			items.addAll(allItems);
 //			adapter.notifyDataSetChanged();
 //		}
+	}
+	
+	@Override
+	public boolean onTouch(View v, MotionEvent event) {
+		switch (event.getAction()) {
+		case MotionEvent.ACTION_DOWN: {
+			RelativeLayout view = (RelativeLayout) v;
+			view.getBackground().setColorFilter(0x7785dda8, PorterDuff.Mode.SRC_ATOP);
+			v.invalidate();
+			break;
+		}
+		case MotionEvent.ACTION_UP: {
+			
+			StringBuilder sb = new StringBuilder();
+			sb.append(mosque.getTitle()+ " - " + prayer.getTitle() + "\n\n");
+			
+			for(JanezaGender jg : items){
+				sb.append(jg.getCount() + " " + jg.getTitle());
+				for(String str : jg.getNames()){
+					sb.append("\n-" + str);
+				}
+				sb.append("\n\n");
+			}
+
+//			Log.i(TAG, ">>> msg " + sb.toString());
+			shareJanaez(sb.toString());
+
+		}
+		case MotionEvent.ACTION_CANCEL: {
+			RelativeLayout view = (RelativeLayout) v;
+			view.getBackground().clearColorFilter();
+			view.invalidate();
+			break;
+		}
+		}
+		return true;
+	}
+	
+	private void shareJanaez(String text){
+
+		Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+		sharingIntent.setType("text/plain");
+		sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+		sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, text);
+		startActivity(Intent.createChooser(sharingIntent, getString(R.string.share)));
+
 	}
 }

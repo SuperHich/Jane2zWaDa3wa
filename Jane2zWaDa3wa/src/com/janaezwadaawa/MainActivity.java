@@ -167,7 +167,7 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 		switch (position) {
 		case 0:
 			fragment = new JanezaPlacesFragment();
-			btn_search.setVisibility(View.VISIBLE);
+			btn_search.setVisibility(View.GONE);
 			currentFragment = JANEZA_PLACES_FRAGMENT;
 			header.setBackgroundResource(R.drawable.jana2ez);
 			break;
@@ -416,7 +416,7 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 			}
 			else if(currentFragment.equals(JANEZA_SALAT_FRAGMENT)){
 				currentFragment = JANEZA_MOSQUES_FRAGMENT;
-				btn_menu.setBackgroundResource(R.drawable.menu);
+				btn_menu.setBackgroundResource(R.drawable.back_list);
 				
 				isBackEnabled = false;
 				super.onBackPressed();

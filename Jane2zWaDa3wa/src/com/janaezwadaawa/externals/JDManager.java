@@ -16,6 +16,7 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.janaezwadaawa.R;
 import com.janaezwadaawa.adapters.IFragmentNotifier;
 import com.janaezwadaawa.adapters.ISearchListener;
 import com.janaezwadaawa.entity.Address;
@@ -25,6 +26,10 @@ import com.janaezwadaawa.entity.Mosque;
 import com.janaezwadaawa.entity.Mosque2;
 import com.janaezwadaawa.entity.Place;
 import com.janaezwadaawa.entity.Prayer;
+import com.janaezwadaawa.entity.SelectGender;
+import com.janaezwadaawa.entity.SelectMosque;
+import com.janaezwadaawa.entity.SelectSalat;
+import com.janaezwadaawa.entity.SelectTrainer;
 import com.janaezwadaawa.gcm.GcmResponse;
 
 public class JDManager {
@@ -44,6 +49,9 @@ public class JDManager {
 	private static final String URL_LOGIN 				= URL_BASE + "login/%s/%s";
 	private static final String URL_ADD_JANEZA 			= URL_BASE + "addExequy";
 	private static final String URL_ADD_DA3WA 			= URL_BASE + "addLicuter";
+	private static final String URL_SELECT_MOSQUES 		= URL_BASE + "select/mosques";
+	private static final String URL_SELECT_TRAINERS 	= URL_BASE + "select/trainers";
+	private static final String URL_SELECT_SALATS 		= URL_BASE + "select/salat";
 	
 	private static final String URL_PUSH_REGISTER	= "http://gheras.net/exequyApp/mobile_data/push_notifications";
 	
@@ -97,6 +105,10 @@ public class JDManager {
 	private Prayer selectedPrayer;
 	
 	private ArrayList<Place> places;
+	private ArrayList<SelectMosque> selectMosques;
+	private ArrayList<SelectTrainer> selectTrainers;
+	private ArrayList<SelectSalat> selectSalats;
+	private ArrayList<SelectGender> selectGenders;
 	private ISearchListener searchListener;
 	
 	private boolean loggedIn ;
@@ -108,6 +120,12 @@ public class JDManager {
 		jsonParser = new JSONParser();
 		settings = PreferenceManager.getDefaultSharedPreferences(context);
 		editor = settings.edit();
+		
+		selectGenders = new ArrayList<SelectGender>();
+		selectGenders.add(new SelectGender(0, mContext.getString(R.string.men)));
+		selectGenders.add(new SelectGender(1, mContext.getString(R.string.women)));
+		selectGenders.add(new SelectGender(2, mContext.getString(R.string.child_male)));
+		selectGenders.add(new SelectGender(3, mContext.getString(R.string.child_female)));
 	}
 
 	public synchronized static JDManager getInstance(Context context) {
@@ -481,6 +499,81 @@ public class JDManager {
 		return addresses;
 	}
 	
+	public ArrayList<SelectMosque> getAllSelectMosques() {
+		ArrayList<SelectMosque> result = new ArrayList<SelectMosque>();
+		JSONArray array = jsonParser.getJSONFromUrl(URL_SELECT_MOSQUES);
+		if (array != null) 
+		
+			for (int i = 0; i < array.length(); i++) {
+			try {
+				JSONObject jObj = array.getJSONObject(i);
+				SelectMosque item = new SelectMosque();
+				item.setId(jObj.getInt(ID));
+				item.setTitle(jObj.getString(NAME));
+				
+//				Log.i(TAG, item.toString());
+				
+				result.add(item);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		setSelectMosques(result);
+		
+		return result;
+	}
+	
+	public ArrayList<SelectTrainer> getAllSelectTrainers() {
+		ArrayList<SelectTrainer> result = new ArrayList<SelectTrainer>();
+		JSONArray array = jsonParser.getJSONFromUrl(URL_SELECT_TRAINERS);
+		if (array != null) 
+		
+			for (int i = 0; i < array.length(); i++) {
+			try {
+				JSONObject jObj = array.getJSONObject(i);
+				SelectTrainer item = new SelectTrainer();
+				item.setId(jObj.getInt(ID));
+				item.setTitle(jObj.getString(NAME));
+				
+//				Log.i(TAG, item.toString());
+				
+				result.add(item);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		setSelectTrainers(result);
+		
+		return result;
+	}
+	
+	public ArrayList<SelectSalat> getAllSelectSalats() {
+		ArrayList<SelectSalat> result = new ArrayList<SelectSalat>();
+		JSONArray array = jsonParser.getJSONFromUrl(URL_SELECT_SALATS);
+		if (array != null) 
+		
+			for (int i = 0; i < array.length(); i++) {
+			try {
+				JSONObject jObj = array.getJSONObject(i);
+				SelectSalat item = new SelectSalat();
+				item.setId(jObj.getInt(ID));
+				item.setTitle(jObj.getString(NAME));
+				
+//				Log.i(TAG, item.toString());
+				
+				result.add(item);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		setSelectSalats(result);
+		
+		return result;
+	}
+	
 	public boolean registerPush(String regID) {
 		boolean isOK = false;
 		
@@ -625,6 +718,38 @@ public class JDManager {
 
 	public void setPlaces(ArrayList<Place> places) {
 		this.places = places;
+	}
+
+	public ArrayList<SelectMosque> getSelectMosques() {
+		return selectMosques;
+	}
+
+	public void setSelectMosques(ArrayList<SelectMosque> selectMosques) {
+		this.selectMosques = selectMosques;
+	}
+
+	public ArrayList<SelectTrainer> getSelectTrainers() {
+		return selectTrainers;
+	}
+
+	public void setSelectTrainers(ArrayList<SelectTrainer> selectTrainers) {
+		this.selectTrainers = selectTrainers;
+	}
+
+	public ArrayList<SelectSalat> getSelectSalats() {
+		return selectSalats;
+	}
+
+	public void setSelectSalats(ArrayList<SelectSalat> selectSalats) {
+		this.selectSalats = selectSalats;
+	}
+
+	public ArrayList<SelectGender> getSelectGenders() {
+		return selectGenders;
+	}
+
+	public void setSelectGenders(ArrayList<SelectGender> selectGenders) {
+		this.selectGenders = selectGenders;
 	}
 
 	public ISearchListener getSearchListener() {
