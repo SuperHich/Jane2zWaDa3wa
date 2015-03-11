@@ -1,0 +1,12 @@
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/txv_name_value"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:layout_alignParentRight="true"
+    android:background="@drawable/list_white_selector"
+    android:gravity="center_vertical"
+    android:maxLines="1"
+    android:text="@string/name"
+    android:textColor="@color/color_green"
+    android:textSize="18sp" />

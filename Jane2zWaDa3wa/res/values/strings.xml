@@ -66,4 +66,11 @@
     <string name="yes">نعم</string>
     <string name="no">لا</string>
     <string name="push_notif">اخطارات جنائز ودعوة</string>
+    
+    <string name="men">رجل</string>
+    <string name="women">إمراة</string>
+    <string name="child_male">طفل</string>
+    <string name="child_female">طفلة</string>
+    <string name="janeza_douaa">اللهم نقهم من الخطايا كما ينقى الثوب الأبيض من الدنس</string>
+    <string name="share_info">أنشر الخبر</string>
 </resources>

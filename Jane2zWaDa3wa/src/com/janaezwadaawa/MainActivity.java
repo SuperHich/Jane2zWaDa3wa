@@ -20,6 +20,9 @@ import com.janaezwadaawa.externals.JDManager;
 
 public class MainActivity extends FragmentActivity implements IMenuListener, OnTouchListener, EditNameDialogListener{
 
+	public static final String JANEZA_PLACES_FRAGMENT = "janeza_places_fragment";
+	public static final String JANEZA_MOSQUES_FRAGMENT = "janeza_mosques_fragment";
+	public static final String JANEZA_SALAT_FRAGMENT = "janeza_salat_fragment";
 	public static final String MOSQUES_FRAGMENT = "mosques_fragment";
 	public static final String JANAEZ_FRAGMENT = "janaez_fragment";
 	public static final String DA3AWI_FRAGMENT = "da3awi_fragment";
@@ -163,9 +166,9 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 		
 		switch (position) {
 		case 0:
-			fragment = new MosqueFragment();
+			fragment = new JanezaPlacesFragment();
 			btn_search.setVisibility(View.VISIBLE);
-			currentFragment = MOSQUES_FRAGMENT;
+			currentFragment = JANEZA_PLACES_FRAGMENT;
 			header.setBackgroundResource(R.drawable.jana2ez);
 			break;
 		case 1:
@@ -301,8 +304,45 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 //			ft.commit();
 
 		}
-
 		
+		private Fragment getFragmentInstance(String tag){
+			if(tag.equals(JANEZA_PLACES_FRAGMENT))
+				return new JanezaPlacesFragment();
+			else if(tag.equals(JANEZA_MOSQUES_FRAGMENT))
+				return new JanezaMosquesFragment();
+			else if(tag.equals(JANEZA_SALAT_FRAGMENT))
+				return new JanezaSalatFragment();
+			else 
+				return null;
+		}
+		
+		public void goToFragment(String fragmentTAG){
+			
+			FragmentManager fragmentManager = getSupportFragmentManager();
+			FragmentTransaction transaction = fragmentManager.beginTransaction();
+			transaction.setCustomAnimations(R.anim.left_in, R.anim.left_out, R.anim.right_in, R.anim.right_out);
+
+			fragment1 = (Fragment) getSupportFragmentManager().findFragmentByTag(fragmentTAG);
+
+			if(fragment1 == null){
+				fragment1 = getFragmentInstance(fragmentTAG);
+
+				transaction.replace(R.id.fragment_view, fragment1, fragmentTAG);
+				transaction.addToBackStack(fragmentTAG);
+			}else{
+				transaction.attach(fragment1);
+			}
+
+			transaction.commit();
+			
+			header.setBackgroundResource(R.drawable.jana2ez);
+			btn_menu.setBackgroundResource(R.drawable.back_list);
+			currentFragment = fragmentTAG;
+			
+			isBackEnabled = true;
+
+		}
+
 		public void goToJanaezFragment(){
 			
 			FragmentManager fragmentManager = getSupportFragmentManager();
@@ -367,8 +407,15 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 				isBackEnabled = false;
 				super.onBackPressed();
 			}
-			else if(currentFragment.equals(JANAEZ_FRAGMENT)){
-				currentFragment = MOSQUES_FRAGMENT;
+			else if(currentFragment.equals(JANEZA_MOSQUES_FRAGMENT)){
+				currentFragment = JANEZA_PLACES_FRAGMENT;
+				btn_menu.setBackgroundResource(R.drawable.menu);
+				
+				isBackEnabled = false;
+				super.onBackPressed();
+			}
+			else if(currentFragment.equals(JANEZA_SALAT_FRAGMENT)){
+				currentFragment = JANEZA_MOSQUES_FRAGMENT;
 				btn_menu.setBackgroundResource(R.drawable.menu);
 				
 				isBackEnabled = false;

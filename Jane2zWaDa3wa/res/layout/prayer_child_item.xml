@@ -1,0 +1,98 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:background="@drawable/list_gray_selector" >
+    
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp" 
+        android:orientation="horizontal"
+        android:layout_toRightOf="@+id/center_layout">
+
+        <TextView
+            android:id="@+id/txv_men"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:padding="5dp"
+            android:text="@string/men"
+            android:textColor="@color/color_green"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/txv_men_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:padding="5dp"
+            android:textColor="@color/color_beige"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/center_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp" 
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txv_women"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:padding="5dp"
+            android:text="@string/women"
+            android:textColor="@color/color_green"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/txv_women_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:padding="5dp"
+            android:textColor="@color/color_beige"
+            android:textSize="16sp" />
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp" 
+        android:orientation="horizontal"
+        android:layout_toLeftOf="@+id/center_layout">
+
+        <TextView
+            android:id="@+id/txv_child"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:padding="5dp"
+            android:text="@string/child_male"
+            android:textColor="@color/color_green"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/txv_child_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:padding="5dp"
+            android:textColor="@color/color_beige"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+</RelativeLayout>

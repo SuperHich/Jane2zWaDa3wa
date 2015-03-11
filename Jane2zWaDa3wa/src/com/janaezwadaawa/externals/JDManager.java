@@ -75,6 +75,13 @@ public class JDManager {
 	private static final String MEN	 			= "men";
 	private static final String WOMEN	 		= "women";
 	private static final String CHILD	 		= "child";
+	private static final String UID	 			= "uid";
+	private static final String BODY	 		= "body";
+	private static final String SALAT	 		= "salat";
+	private static final String SALAT_TIME	 	= "salat_time";
+	private static final String TIME_FROM	 	= "time_from";
+	private static final String TIME_TO	 		= "time_to";
+	
 	
 	private IFragmentNotifier fragmentNotifier;
 	
@@ -85,7 +92,9 @@ public class JDManager {
 	private Context mContext;
 	
 	private Mosque selectedMosque;
+	private Mosque2 selectedMosque2;
 	private Da3wa selectedDa3wa;
+	private Prayer selectedPrayer;
 	
 	private ArrayList<Place> places;
 	private ISearchListener searchListener;
@@ -285,9 +294,9 @@ public class JDManager {
 		return mosques;
 	}
 	
-	public ArrayList<Prayer> getPrayerByMosque(int placeId, int mosqueId) {
+	public ArrayList<Prayer> getPrayerByMosque(int mosqueId) {
 		ArrayList<Prayer> result = new ArrayList<Prayer>();
-		String url = String.format(URL_MOSQUE, placeId, mosqueId);
+		String url = String.format(URL_MOSQUE, mosqueId);
 		JSONArray array = jsonParser.getJSONFromUrl(url);
 		Log.i(TAG, ">>> url : " + url);
 		if (array != null) 
@@ -353,14 +362,14 @@ public class JDManager {
 	public boolean addJaneza(String uid, String title, String body, int place, int mosque, int salat, String salat_time, int gender){
 
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("uid", uid));
-		params.add(new BasicNameValuePair("title", title));
-		params.add(new BasicNameValuePair("body", body));
-		params.add(new BasicNameValuePair("place", String.valueOf(place)));
-		params.add(new BasicNameValuePair("mosque", String.valueOf(mosque)));
-		params.add(new BasicNameValuePair("salat", String.valueOf(salat)));
-		params.add(new BasicNameValuePair("salat_time", salat_time));
-		params.add(new BasicNameValuePair("gender", String.valueOf(gender)));
+		params.add(new BasicNameValuePair(UID, uid));
+		params.add(new BasicNameValuePair(TITLE, title));
+		params.add(new BasicNameValuePair(BODY, body));
+		params.add(new BasicNameValuePair(PLACE, String.valueOf(place)));
+		params.add(new BasicNameValuePair(MOSQUE, String.valueOf(mosque)));
+		params.add(new BasicNameValuePair(SALAT, String.valueOf(salat)));
+		params.add(new BasicNameValuePair(SALAT_TIME, salat_time));
+		params.add(new BasicNameValuePair(GENDER, String.valueOf(gender)));
 		
 		String response = jsonParser.post(URL_ADD_JANEZA, params);
 		if(response != null)
@@ -372,14 +381,14 @@ public class JDManager {
 	public boolean addDa3wa(String uid, String title, String body, int place, int mosque, int trainer, String time_from, String time_to){
 
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("uid", uid));
-		params.add(new BasicNameValuePair("title", title));
-		params.add(new BasicNameValuePair("body", body));
-		params.add(new BasicNameValuePair("place", String.valueOf(place)));
-		params.add(new BasicNameValuePair("mosque", String.valueOf(mosque)));
-		params.add(new BasicNameValuePair("trainer", String.valueOf(trainer)));
-		params.add(new BasicNameValuePair("time_from", time_from));
-		params.add(new BasicNameValuePair("time_to", time_to));
+		params.add(new BasicNameValuePair(UID, uid));
+		params.add(new BasicNameValuePair(TITLE, title));
+		params.add(new BasicNameValuePair(BODY, body));
+		params.add(new BasicNameValuePair(PLACE, String.valueOf(place)));
+		params.add(new BasicNameValuePair(MOSQUE, String.valueOf(mosque)));
+		params.add(new BasicNameValuePair(TRAINER, String.valueOf(trainer)));
+		params.add(new BasicNameValuePair(TIME_FROM, time_from));
+		params.add(new BasicNameValuePair(TIME_TO, time_to));
 		
 		String response = jsonParser.post(URL_ADD_DA3WA, params);
 		if(response != null)
@@ -558,6 +567,22 @@ public class JDManager {
 		this.selectedMosque = selectedMosque;
 	}
 
+	public Mosque2 getSelectedMosque2() {
+		return selectedMosque2;
+	}
+
+	public void setSelectedMosque2(Mosque2 selectedMosque2) {
+		this.selectedMosque2 = selectedMosque2;
+	}
+	
+	public Prayer getSelectedPrayer() {
+		return selectedPrayer;
+	}
+
+	public void setSelectedPrayer(Prayer selectedPrayer) {
+		this.selectedPrayer = selectedPrayer;
+	}
+	
 	public Place getSelectedPlace() {
 		
 		Place selectedPlace = null;

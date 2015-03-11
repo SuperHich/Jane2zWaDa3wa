@@ -1,0 +1,150 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="50dp"
+    android:background="@color/color_green" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="3dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
+        android:background="#FFF" >
+
+        <RelativeLayout
+            android:id="@+id/top_layout"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/color_gray"
+            android:gravity="center_horizontal" >
+
+            <TextView
+                android:id="@+id/txv_date_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:maxLines="1"
+                android:padding="2dp"
+                android:text="@string/date"
+                android:textColor="@color/color_green" />
+
+            <TextView
+                android:id="@+id/txv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/txv_date_name"
+                android:maxLines="1"
+                android:padding="2dp"
+                android:text="@string/date"
+                android:textColor="@color/color_beige" />
+
+            <TextView
+                android:id="@+id/txv_day_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@+id/txv_date"
+                android:maxLines="1"
+                android:padding="2dp"
+                android:text="@string/day"
+                android:textColor="@color/color_green" />
+
+            <TextView
+                android:id="@+id/txv_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/txv_day_name"
+                android:maxLines="1"
+                android:padding="2dp"
+                android:text="@string/day"
+                android:textColor="@color/color_beige" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txv_emptyList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="@string/empty_list"
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:id="@+id/title_layout"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="30dp"
+            android:background="#fff" >
+
+            <TextView
+                android:id="@+id/txv_total"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/txv_title"
+                android:background="@drawable/circle_shape"
+                android:gravity="center"
+                android:text="10"
+                android:textColor="#fff"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/txv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:maxLines="1"
+                android:text="@string/mosque_name"
+                android:textColor="@color/color_beige"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="150dp"
+                android:layout_height="1px"
+                android:layout_below="@+id/txv_title"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:background="@color/color_green" />
+        </RelativeLayout>
+        
+         <TextView
+                android:id="@+id/txv_salat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title_layout"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="10dp"
+                android:paddingRight="5dp"
+                android:singleLine="true"
+                android:text="@string/mosque_name"
+                android:textColor="@color/color_green"
+                android:textSize="20sp" />
+
+        <ExpandableListView
+            android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txv_salat"
+            android:layout_marginTop="5dp"
+            android:dividerHeight="1px"
+            android:divider="@color/color_green"
+            android:gravity="center"
+            android:groupIndicator="@drawable/group_indicator_selector" />
+    </RelativeLayout>
+
+</RelativeLayout>

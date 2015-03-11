@@ -1,0 +1,81 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center_horizontal"
+        android:layout_alignParentTop="true" 
+        android:background="@color/color_gray"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp">
+        
+         <TextView
+            android:id="@+id/txv_date_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:maxLines="1"
+            android:padding="2dp"
+            android:text="@string/date"
+            android:textColor="@color/color_green" 
+            android:layout_marginLeft="15dp"/>
+
+        <TextView
+            android:id="@+id/txv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:maxLines="1"
+            android:padding="2dp"
+            android:text="@string/date"
+            android:textColor="@color/color_beige" 
+            android:layout_toRightOf="@+id/txv_date_name"/>
+        
+         <TextView
+            android:id="@+id/txv_day_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:maxLines="1"
+            android:padding="2dp"
+            android:text="@string/day"
+            android:textColor="@color/color_green" 
+            android:layout_toRightOf="@+id/txv_date"
+            android:layout_marginLeft="15dp"/>
+
+        <TextView
+            android:id="@+id/txv_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:maxLines="1"
+            android:padding="2dp"
+            android:text="@string/day"
+            android:textColor="@color/color_beige" 
+            android:layout_toRightOf="@+id/txv_day_name"/>
+    </RelativeLayout>
+    
+    <TextView
+        android:id="@+id/txv_emptyList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="@string/empty_list"
+        android:textSize="20sp"
+        android:maxLines="1"
+        android:textColor="#FFF"
+        android:visibility="gone" />
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/top_layout"
+        android:layout_centerInParent="true"
+        android:layout_margin="5dp"/>
+
+</RelativeLayout>

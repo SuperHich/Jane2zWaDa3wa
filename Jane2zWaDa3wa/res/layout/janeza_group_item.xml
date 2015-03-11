@@ -1,0 +1,27 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_gray_selector" >
+
+    <TextView
+        android:id="@+id/txv_gender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:maxLines="1"
+        android:padding="5dp"
+        android:text="@string/men"
+        android:textColor="@color/color_green"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/txv_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/txv_gender"
+        android:maxLines="1"
+        android:padding="5dp"
+        android:textColor="@color/color_beige"
+        android:textSize="18sp" />
+
+</RelativeLayout>
