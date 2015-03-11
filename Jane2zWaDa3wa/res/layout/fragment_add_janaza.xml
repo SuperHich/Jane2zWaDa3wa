@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/blank_bg" >
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="الجنائز"
+        android:textColor="#fff"
+        android:textSize="50sp" />
+
+    <ScrollView
+        android:id="@+id/edit_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="100dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="100dp" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/layout_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:weightSum="3" >
+
+                <EditText
+                    android:id="@+id/txv_address"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:background="#fff"
+                    android:gravity="right|center_vertical"
+                    android:maxLines="2"
+                    android:padding="5dp"
+                    android:textColor="@color/gold"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/lbl_address"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
+                    android:maxLines="2"
+                    android:padding="5dp"
+                    android:text="العنوان :"
+                    android:textColor="@color/gold"
+                    android:textSize="30sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:weightSum="3" >
+
+                <EditText
+                    android:id="@+id/txv_body"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="2"
+                    android:background="#fff"
+                    android:gravity="right|center_vertical"
+                    android:padding="5dp"
+                    android:textColor="@color/gold"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/lbl_body"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
+                    android:maxLines="2"
+                    android:padding="5dp"
+                    android:text="العنوان :"
+                    android:textColor="@color/gold"
+                    android:textSize="30sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_mantaka"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:weightSum="3" >
+
+                <Spinner
+                    android:id="@+id/spinner_mantaka"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="right|center_vertical"
+                    android:maxLines="2"
+                    android:padding="5dp"
+                    android:textColor="@color/gold"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/lbl_mantaka"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
+                    android:maxLines="2"
+                    android:padding="5dp"
+                    android:text="المنطقة : "
+                    android:textColor="@color/gold"
+                    android:textSize="30sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_jamaa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:weightSum="3" >
+
+                <Spinner
+                    android:id="@+id/spinner_jamaa"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="right|center_vertical"
+                    android:maxLines="2"
+                    android:padding="5dp"
+                    android:textColor="@color/gold"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/lbl_jamaa"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
+                    android:maxLines="2"
+                    android:padding="5dp"
+                    android:text="الجامع : "
+                    android:textColor="@color/gold"
+                    android:textSize="30sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_salat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:weightSum="3" >
+
+                <Spinner
+                    android:id="@+id/spinner_salat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="right|center_vertical"
+                    android:maxLines="2"
+                    android:padding="5dp"
+                    android:textColor="@color/gold"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/lbl_salat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
+                    android:maxLines="2"
+                    android:padding="5dp"
+                    android:text="الصلاة : "
+                    android:textColor="@color/gold"
+                    android:textSize="30sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_wakt_salat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:weightSum="3" >
+
+                <Spinner
+                    android:id="@+id/spinner_wakt_salat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="right|center_vertical"
+                    android:maxLines="2"
+                    android:padding="5dp"
+                    android:textColor="@color/gold"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/lbl_wakt_salat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
+                    android:maxLines="2"
+                    android:padding="5dp"
+                    android:text="وقت الصلاة : "
+                    android:textColor="@color/gold"
+                    android:textSize="30sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_genre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:weightSum="3" >
+
+                <Spinner
+                    android:id="@+id/spinner_genre"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="right|center_vertical"
+                    android:maxLines="2"
+                    android:padding="5dp"
+                    android:textColor="@color/gold"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/lbl_genre"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
+                    android:maxLines="2"
+                    android:padding="5dp"
+                    android:text="النوع : "
+                    android:textColor="@color/gold"
+                    android:textSize="30sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/edit_layout" >
+
+        <Button
+            android:id="@+id/btn_add"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="40dp"
+            android:background="#264631"
+            android:padding="5dp"
+            android:text="@string/login"
+            android:textColor="@color/gold"
+            android:textSize="25sp" />
+    </RelativeLayout>
+
+</RelativeLayout>

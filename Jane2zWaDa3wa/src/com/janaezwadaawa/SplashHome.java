@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import com.janaezwadaawa.entity.Place;
 import com.janaezwadaawa.externals.JDManager;
 import com.janaezwadaawa.utils.Utils;
+import com.pixplicity.easyprefs.library.Prefs;
 
 
 /**
@@ -31,6 +32,8 @@ public class SplashHome extends Activity {
 	public static final int MESSAGE_FINISH = 2;
 	
 	private RelativeLayout principal_layout;
+	
+	private JDManager mManager ;
 	
 	private Handler splashHandler = new Handler() {
 		public void handleMessage(Message msg) {
@@ -61,6 +64,18 @@ public class SplashHome extends Activity {
 //		Message msg = Message.obtain();
 //		msg.what = MESSAGE_FINISH;
 //	    splashHandler.sendMessageDelayed(msg, SPLASHTIME);
+		
+		mManager = JDManager.getInstance(this);
+		Prefs.initPrefs(SplashHome.this);
+		
+		String uid = Prefs.getString("uid", "");
+		
+		if (!uid.equalsIgnoreCase("")){
+			
+			mManager.setLoggedIn(true);
+			mManager.setUid(uid);
+		
+		}
 		
 		initPlaces();
 		

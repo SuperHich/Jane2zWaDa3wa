@@ -41,7 +41,7 @@ public class JDManager {
 	private static final String URL_PLACE 				= URL_BASE + "place/%d";
 	private static final String URL_MOSQUE 				= URL_BASE + "mosque/%d";
 	private static final String URL_MOSQUE_SALAT_GENDER = URL_BASE + "mosque_salat_gender/%d/%d/%d";
-	private static final String URL_LOGIN 				= URL_BASE + "login/%d/%d";
+	private static final String URL_LOGIN 				= URL_BASE + "login/%s/%s";
 	private static final String URL_ADD_JANEZA 			= URL_BASE + "addExequy";
 	private static final String URL_ADD_DA3WA 			= URL_BASE + "addLicuter";
 	
@@ -98,6 +98,9 @@ public class JDManager {
 	
 	private ArrayList<Place> places;
 	private ISearchListener searchListener;
+	
+	private boolean loggedIn ;
+	private String Uid ;
 	
 	public JDManager(Context context) {
 		
@@ -345,7 +348,7 @@ public class JDManager {
 		return result;
 	}
 	
-	public String login(int username, int password) {
+	public String login(String username, String password) {
 		String uid = null;
 		String url = String.format(URL_LOGIN, username, password);
 		String response = jsonParser.getStringFromUrl(url);
@@ -630,5 +633,21 @@ public class JDManager {
 
 	public void setSearchListener(ISearchListener searchListener) {
 		this.searchListener = searchListener;
+	}
+
+	public boolean isLoggedIn() {
+		return loggedIn;
+	}
+
+	public void setLoggedIn(boolean loggedIn) {
+		this.loggedIn = loggedIn;
+	}
+
+	public String getUid() {
+		return Uid;
+	}
+
+	public void setUid(String uid) {
+		Uid = uid;
 	}
 }

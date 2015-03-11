@@ -11,16 +11,16 @@
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
-  limitations under the License.
-  -->
+  limitations under the License.
+-->
 
 <resources>
+
     <string name="app_name">جنائز ودعوة</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="action_websearch">Web search</string>
     <string name="app_not_available">Sorry, there\'s no web browser available</string>
-    
     <string name="mosque_name">إسم الجامع :</string>
     <string name="janaez_number">عدد الجنائز :</string>
     <string name="please_wait">الرجاء الانتظار...</string>
@@ -30,7 +30,6 @@
     <string name="prayer">صلاة :</string>
     <string name="name">الاسم :</string>
     <string name="gender">الجنس :</string>
-    
     <string name="added_to_fav">تمت إضافة الحديث إلى المفضلة</string>
     <string name="removed_from_fav">تم حذف الحديث من المفضلة</string>
     <string name="to_search">ابحث على</string>
@@ -57,7 +56,6 @@
     <string name="update">تحديث</string>
     <string name="modifications">تعديل التعليق</string>
     <string name="select_place">الرجاء إختيار مدينة</string>
-    
     <string name="address">العنوان :</string>
     <string name="phones">الإتصال :</string>
     <string name="call_title">إختر الرقم الذي تريد الإتصال به :</string>
@@ -66,11 +64,20 @@
     <string name="yes">نعم</string>
     <string name="no">لا</string>
     <string name="push_notif">اخطارات جنائز ودعوة</string>
-    
     <string name="men">رجل</string>
     <string name="women">إمراة</string>
     <string name="child_male">طفل</string>
     <string name="child_female">طفلة</string>
     <string name="janeza_douaa">اللهم نقهم من الخطايا كما ينقى الثوب الأبيض من الدنس</string>
     <string name="share_info">أنشر الخبر</string>
+    <string name="principal">الرئيسية</string>
+    <string name="share_app">ساهم بنشر التطبيق</string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="add_janaza">إضافة جنازة</string>
+    <string name="add_mouhadhra">إضافة محاضرة</string>
+    <string name="quit">الخروج</string>
+    <string name="hint_login">إسم المستخدم</string>
+    <string name="hint_pwd">كلمة السر</string>
+    <string name="login_empty">الرجاء إدخال إسم المستخدم وكلمة السر للتسجيل !</string>
+
 </resources>
