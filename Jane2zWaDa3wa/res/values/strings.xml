@@ -80,4 +80,8 @@
     <string name="hint_pwd">كلمة السر</string>
     <string name="login_empty">الرجاء إدخال إسم المستخدم وكلمة السر للتسجيل !</string>
 
+    <string name="empty_add_janaza_mouhadhra">الرجاء ملء جميع الفراغات !</string>
+    
+    <string name="error_add">خطأ في الإضافة ! الرجاء المحاولة لاحقاً !</string>
+    
 </resources>

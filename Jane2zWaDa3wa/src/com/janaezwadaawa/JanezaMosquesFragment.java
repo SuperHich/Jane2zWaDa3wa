@@ -170,7 +170,7 @@ public class JanezaMosquesFragment extends Fragment implements ISearchListener {
 			@Override
 			protected ArrayList<Prayer> doInBackground(Void... params) {
 				if(placeId != -1){
-					items.addAll(jdManager.getPrayerByMosque(mosque.getId()));
+					items.addAll(jdManager.getPrayerByMosque(placeId, mosque.getId()));
 					allItems.addAll(items);
 				}
 				return items;

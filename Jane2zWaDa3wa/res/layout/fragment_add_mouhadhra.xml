@@ -11,7 +11,7 @@
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:padding="5dp"
-        android:text="الجنائز"
+        android:text="المحاضرات"
         android:textColor="#fff"
         android:textSize="40sp" />
 
@@ -171,7 +171,7 @@
                 android:weightSum="3" >
 
                 <Spinner
-                    android:id="@+id/spinner_salat"
+                    android:id="@+id/spinner_trainer"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
@@ -182,20 +182,20 @@
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/lbl_salat"
+                    android:id="@+id/lbl_trainer"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="right|center_vertical"
                     android:maxLines="2"
                     android:padding="5dp"
-                    android:text="الصلاة : "
+                    android:text="المحاضر :"
                     android:textColor="@color/gold"
                     android:textSize="25sp" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/layout_wakt_salat"
+                android:id="@+id/layout_begin_wakt_salat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -203,7 +203,7 @@
                 android:weightSum="3" >
 
                 <TextView
-                    android:id="@+id/wakt_salat_time"
+                    android:id="@+id/wakt_salat_begin_time"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.68"
@@ -222,7 +222,7 @@
                     android:background="@android:color/transparent" />
                 
                 <TextView
-                    android:id="@+id/wakt_salat_date"
+                    android:id="@+id/wakt_salat_begin_date"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.28"
@@ -235,48 +235,69 @@
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/lbl_wakt_salat"
+                    android:id="@+id/lbl_wakt_salat_begin"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="right|center_vertical"
                     android:maxLines="2"
                     android:padding="5dp"
-                    android:text="وقت الصلاة : "
+                    android:text="الوقت من :"
                     android:textColor="@color/gold"
                     android:textSize="20sp" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/layout_genre"
+                android:id="@+id/layout_final_wakt_salat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:orientation="horizontal"
                 android:weightSum="3" >
 
-                <Spinner
-                    android:id="@+id/spinner_genre"
+                <TextView
+                    android:id="@+id/wakt_salat_final_time"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
+                    android:layout_weight="0.68"
                     android:gravity="right|center_vertical"
+                    android:background="#fff"
+                    android:hint="الوقت"
+                    android:maxLines="2"
+                    android:padding="5dp"
+                    android:textColor="@color/gold"
+                    android:textSize="18sp" />
+                
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.04"
+                    android:background="@android:color/transparent" />
+                
+                <TextView
+                    android:id="@+id/wakt_salat_final_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.28"
+                    android:hint="اليوم"
+                    android:gravity="right|center_vertical"
+                    android:background="#fff"
                     android:maxLines="2"
                     android:padding="5dp"
                     android:textColor="@color/gold"
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/lbl_genre"
+                    android:id="@+id/lbl_wakt_salat_final"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="right|center_vertical"
                     android:maxLines="2"
                     android:padding="5dp"
-                    android:text="النوع : "
+                    android:text="الوقت إلى :"
                     android:textColor="@color/gold"
-                    android:textSize="25sp" />
+                    android:textSize="20sp" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
@@ -293,7 +314,7 @@
             android:layout_centerInParent="true"
             android:background="#264631"
             android:padding="5dp"
-            android:text="@string/add_janaza"
+            android:text="@string/add_mouhadhra"
             android:textColor="@color/gold"
             android:textSize="25sp" />
     </RelativeLayout>

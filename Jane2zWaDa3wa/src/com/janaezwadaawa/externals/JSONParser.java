@@ -159,8 +159,8 @@ public class JSONParser {
     	int statusCode = -1;
         // Making HTTP request
         try {
-            HttpClient httpClient = getNewHttpClient();
-//            HttpClient httpClient = new DefaultHttpClient(getHttpParams());
+//            HttpClient httpClient = getNewHttpClient();
+            HttpClient httpClient = new DefaultHttpClient(getHttpParams());
             HttpPost httpPost = new HttpPost(url);
             httpPost.setEntity(new UrlEncodedFormEntity(params));
  
@@ -188,14 +188,15 @@ public class JSONParser {
             is.close();
             json = sb.toString();
             Log.e("JSON", json);
+            return json;
         } catch (Exception e) {
             Log.e("Buffer Error", "Error converting result " + e.toString());
         }
         
-        if(statusCode == HttpStatus.SC_OK)
-        {
-        	return json;
-        }
+//        if(statusCode == HttpStatus.SC_OK)
+//        {
+//        	return json;
+//        }
         
         return null;
     }

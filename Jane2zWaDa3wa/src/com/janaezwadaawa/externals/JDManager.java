@@ -44,7 +44,7 @@ public class JDManager {
 	private static final String URL_PLACES 				= URL_BASE + "places/";	
 	private static final String URL_ADDRESSES 			= URL_BASE + "addresses/";	
 	private static final String URL_PLACE 				= URL_BASE + "place/%d";
-	private static final String URL_MOSQUE 				= URL_BASE + "mosque/%d";
+	private static final String URL_MOSQUE 				= URL_BASE + "mosque/%d/%d";
 	private static final String URL_MOSQUE_SALAT_GENDER = URL_BASE + "mosque_salat_gender/%d/%d/%d";
 	private static final String URL_LOGIN 				= URL_BASE + "login/%s/%s";
 	private static final String URL_ADD_JANEZA 			= URL_BASE + "addExequy";
@@ -105,10 +105,10 @@ public class JDManager {
 	private Prayer selectedPrayer;
 	
 	private ArrayList<Place> places;
-	private ArrayList<SelectMosque> selectMosques;
-	private ArrayList<SelectTrainer> selectTrainers;
-	private ArrayList<SelectSalat> selectSalats;
-	private ArrayList<SelectGender> selectGenders;
+	private ArrayList<SelectMosque> selectMosques = new ArrayList<SelectMosque>();
+	private ArrayList<SelectTrainer> selectTrainers = new ArrayList<SelectTrainer>();
+	private ArrayList<SelectSalat> selectSalats = new ArrayList<SelectSalat>();
+	private ArrayList<SelectGender> selectGenders = new ArrayList<SelectGender>();
 	private ISearchListener searchListener;
 	
 	private boolean loggedIn ;
@@ -315,9 +315,9 @@ public class JDManager {
 		return mosques;
 	}
 	
-	public ArrayList<Prayer> getPrayerByMosque(int mosqueId) {
+	public ArrayList<Prayer> getPrayerByMosque(int placeId, int mosqueId) {
 		ArrayList<Prayer> result = new ArrayList<Prayer>();
-		String url = String.format(URL_MOSQUE, mosqueId);
+		String url = String.format(URL_MOSQUE, placeId, mosqueId);
 		JSONArray array = jsonParser.getJSONFromUrl(url);
 		Log.i(TAG, ">>> url : " + url);
 		if (array != null) 
@@ -393,8 +393,14 @@ public class JDManager {
 		params.add(new BasicNameValuePair(GENDER, String.valueOf(gender)));
 		
 		String response = jsonParser.post(URL_ADD_JANEZA, params);
+		
+		Log.e("TEST JSON JANAZA", response+" ");
+		
 		if(response != null)
-			return response.contains("success");
+			return response.equals("1");
+		
+		
+		
 		
 		return false;
 	}
@@ -413,7 +419,7 @@ public class JDManager {
 		
 		String response = jsonParser.post(URL_ADD_DA3WA, params);
 		if(response != null)
-			return response.contains("success");
+			return response.equals("1");
 		
 		return false;
 	}
