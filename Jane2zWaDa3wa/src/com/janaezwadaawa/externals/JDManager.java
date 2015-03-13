@@ -393,14 +393,8 @@ public class JDManager {
 		params.add(new BasicNameValuePair(GENDER, String.valueOf(gender)));
 		
 		String response = jsonParser.post(URL_ADD_JANEZA, params);
-		
-		Log.e("TEST JSON JANAZA", response+" ");
-		
 		if(response != null)
-			return response.equals("1");
-		
-		
-		
+			return response.trim().contains("1");
 		
 		return false;
 	}
@@ -419,7 +413,7 @@ public class JDManager {
 		
 		String response = jsonParser.post(URL_ADD_DA3WA, params);
 		if(response != null)
-			return response.equals("1");
+			return response.trim().contains("1");
 		
 		return false;
 	}

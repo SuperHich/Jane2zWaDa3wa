@@ -12,15 +12,11 @@ import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
-import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -37,12 +33,9 @@ import com.janaezwadaawa.entity.SelectMosque;
 import com.janaezwadaawa.entity.SelectSalat;
 import com.janaezwadaawa.externals.JDManager;
 import com.janaezwadaawa.utils.JDFonts;
-import com.pixplicity.easyprefs.library.Prefs;
 
 
 public class AddJanazaFragment extends Fragment {
-
-	private Fragment fragment;
 
 	private JDManager mManager;
 
@@ -50,7 +43,6 @@ public class AddJanazaFragment extends Fragment {
 	private EditText txv_address, txv_body;
 	private Spinner spinner_genre,  spinner_salat, spinner_jamaa , spinner_mantaka;
 	private TextView lbl_genre, lbl_wakt_salat, lbl_salat, lbl_jamaa, lbl_mantaka, lbl_body, lbl_address, title,salat_time, salat_date ;
-	private TimePicker pickerSalawatTime ;
 
 	private ArrayList<SelectGender> listGenres = new ArrayList<SelectGender>();
 	private ArrayList<SelectSalat> listSalawat = new ArrayList<SelectSalat>();
@@ -201,8 +193,6 @@ public class AddJanazaFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 
-
-
 				final String addressTxt = txv_address.getText().toString();
 				final String bodyTxt = txv_body.getText().toString();
 
@@ -244,12 +234,9 @@ public class AddJanazaFragment extends Fragment {
 
 							loading.dismiss();
 
-							Log.e("TEST TEST", result+" ");
-
 							if (result ) {
-
+								Toast.makeText(getActivity(), getString(R.string.success_add), Toast.LENGTH_SHORT).show();
 								getActivity().onBackPressed();
-
 							}else
 								Toast.makeText(getActivity(), getString(R.string.error_add), Toast.LENGTH_SHORT).show();
 
@@ -259,89 +246,6 @@ public class AddJanazaFragment extends Fragment {
 
 				}
 			}});
-
-		//		btn_add.setOnTouchListener(new OnTouchListener() {
-		//
-		//			@Override
-		//			public boolean onTouch(View v, MotionEvent event) {
-		//				switch (event.getAction()) {
-		//				case MotionEvent.ACTION_DOWN: {
-		//					Button view = (Button) v;
-		//					view.getBackground().setColorFilter(0x55ffffff, PorterDuff.Mode.SRC_ATOP);
-		//					v.invalidate();
-		//					break;
-		//				}
-		//				case MotionEvent.ACTION_UP: {
-		//
-		//
-		//					final String addressTxt = txv_address.getText().toString();
-		//					final String bodyTxt = txv_body.getText().toString();
-		//
-		//
-		//					if (addressTxt.equalsIgnoreCase("") ||bodyTxt.equalsIgnoreCase("") || time.equalsIgnoreCase("")|| date.equalsIgnoreCase("")) {
-		//
-		//						Toast.makeText(getActivity(), getString(R.string.empty_add_janaza_mouhadhra), Toast.LENGTH_SHORT).show();
-		//					}
-		//					else {
-		//
-		//						new AsyncTask<Void, Void, Boolean>() {
-		//
-		//							ProgressDialog loading ;
-		//
-		//							protected void onPreExecute() {
-		//
-		//								loading = new ProgressDialog(getActivity());
-		//								loading.setMessage(getString(R.string.please_wait));
-		//								loading.show();
-		//
-		//							};
-		//
-		//							@Override
-		//							protected Boolean doInBackground(Void... params) {
-		//
-		//
-		//								int place = listManatek.get(spinner_mantaka.getSelectedItemPosition()).getId();
-		//								int mosque = listJawamaa.get(spinner_jamaa.getSelectedItemPosition()).getId();
-		//								int salat = listSalawat.get(spinner_salat.getSelectedItemPosition()).getId();
-		//								int gender = listGenres.get(spinner_genre.getSelectedItemPosition()).getId();
-		//
-		//								String salat_time = date + " "+ time ;
-		//
-		//								return mManager.addJaneza(mManager.getUid(), addressTxt, bodyTxt, place, mosque, salat, salat_time, gender);
-		//
-		//							}
-		//
-		//							protected void onPostExecute(Boolean result) {
-		//
-		//								loading.dismiss();
-		//
-		//								Log.e("TEST TEST", result+" ");
-		//								
-		//								if (result ) {
-		//
-		//									getActivity().onBackPressed();
-		//
-		//								}else
-		//									Toast.makeText(getActivity(), getString(R.string.error_add), Toast.LENGTH_SHORT).show();
-		//
-		//							};
-		//						}.execute();
-		//
-		//
-		//					}
-		//					break;
-		//				}
-		//				case MotionEvent.ACTION_CANCEL: {
-		//					Button view = (Button) v;
-		//					view.getBackground().clearColorFilter();
-		//					view.invalidate();
-		//					break;
-		//				}
-		//				}
-		//				return true;
-		//			}
-		//		});
-
 
 		return rootView;
 	}
@@ -358,12 +262,14 @@ public class AddJanazaFragment extends Fragment {
 		listManatek = mManager.getPlaces();
 		listGenres = mManager.getSelectGenders();
 
-		if (mManager.getSelectMosques().size() > 0||mManager.getSelectSalats().size()> 0) {
+		if (mManager.getSelectMosques().size() > 0 && mManager.getSelectSalats().size()> 0) {
 
 			//			Toast.makeText(getActivity(), getString(R.string.login_empty), Toast.LENGTH_SHORT).show();
 
 			listSalawat = mManager.getSelectSalats();
 			listJawamaa = mManager.getSelectMosques();
+			
+			initiateSpinners();
 
 		}
 		else {

@@ -48,7 +48,7 @@
                     android:layout_weight="2"
                     android:background="#fff"
                     android:gravity="right|center_vertical"
-                    android:maxLines="2"
+                    android:maxLines="1"
                     android:padding="5dp"
                     android:textColor="@color/gold"
                     android:textSize="18sp" />
@@ -59,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="right|center_vertical"
-                    android:maxLines="2"
+                    android:maxLines="1"
                     android:padding="5dp"
                     android:text="العنوان :"
                     android:textColor="@color/gold"
@@ -80,7 +80,7 @@
                     android:layout_height="120dp"
                     android:layout_weight="2"
                     android:background="#fff"
-                    android:gravity="right|center_vertical"
+                    android:gravity="right"
                     android:padding="5dp"
                     android:textColor="@color/gold"
                     android:textSize="18sp" />
@@ -289,7 +289,7 @@
         <Button
             android:id="@+id/btn_add"
             android:layout_width="wrap_content"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:layout_centerInParent="true"
             android:background="#264631"
             android:padding="5dp"

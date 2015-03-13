@@ -87,6 +87,9 @@ public class JSONParser {
             }
             is.close();
             json = sb.toString();
+            
+            json = json.substring(json.indexOf("["), json.length());
+            
             Log.e("JSON", json);
         } catch (Exception e) {
             Log.e("Buffer Error", "Error converting result " + e.toString());
@@ -248,6 +251,8 @@ public class JSONParser {
             }
             is.close();
             json = sb.toString();
+            
+            json = json.substring(json.indexOf("{"), json.length());
             Log.e("JSON", json);
         } catch (Exception e) {
             Log.e("Buffer Error", "Error converting result " + e.toString());

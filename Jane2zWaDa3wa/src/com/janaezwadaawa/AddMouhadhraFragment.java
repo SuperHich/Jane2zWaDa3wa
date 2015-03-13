@@ -14,7 +14,6 @@ import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,17 +28,13 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.janaezwadaawa.entity.Place;
-import com.janaezwadaawa.entity.SelectGender;
 import com.janaezwadaawa.entity.SelectMosque;
-import com.janaezwadaawa.entity.SelectSalat;
 import com.janaezwadaawa.entity.SelectTrainer;
 import com.janaezwadaawa.externals.JDManager;
 import com.janaezwadaawa.utils.JDFonts;
 
 
 public class AddMouhadhraFragment extends Fragment {
-
-	private Fragment fragment;
 
 	private JDManager mManager;
 
@@ -104,7 +99,7 @@ public class AddMouhadhraFragment extends Fragment {
 
 		salat_time_begin	= (TextView) rootView.findViewById(R.id.wakt_salat_begin_time);
 		salat_date_begin	= (TextView) rootView.findViewById(R.id.wakt_salat_begin_date);
-		
+
 		salat_time_final	= (TextView) rootView.findViewById(R.id.wakt_salat_final_time);
 		salat_date_final	= (TextView) rootView.findViewById(R.id.wakt_salat_final_date);
 
@@ -256,7 +251,7 @@ public class AddMouhadhraFragment extends Fragment {
 
 			}
 		});
-		
+
 		btn_add.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -298,23 +293,18 @@ public class AddMouhadhraFragment extends Fragment {
 							String time_date_begin = date_begin + " "+ time_begin ;
 							String time_date_final = date_final + " "+ time_final ;
 
-//							return mManager.addJaneza(mManager.getUid(), addressTxt, bodyTxt, place, mosque, salat, salat_time, gender);
-
 							return mManager.addDa3wa(mManager.getUid(), addressTxt, bodyTxt, place, mosque, trainer, time_date_begin, time_date_final);
 
-							
+
 						}
 
 						protected void onPostExecute(Boolean result) {
 
 							loading.dismiss();
 
-							Log.e("TEST TEST", result+" ");
-
 							if (result ) {
-
+								Toast.makeText(getActivity(), getString(R.string.success_add), Toast.LENGTH_SHORT).show();
 								getActivity().onBackPressed();
-
 							}else
 								Toast.makeText(getActivity(), getString(R.string.error_add), Toast.LENGTH_SHORT).show();
 
@@ -324,89 +314,6 @@ public class AddMouhadhraFragment extends Fragment {
 
 				}
 			}});
-
-		//		btn_add.setOnTouchListener(new OnTouchListener() {
-		//
-		//			@Override
-		//			public boolean onTouch(View v, MotionEvent event) {
-		//				switch (event.getAction()) {
-		//				case MotionEvent.ACTION_DOWN: {
-		//					Button view = (Button) v;
-		//					view.getBackground().setColorFilter(0x55ffffff, PorterDuff.Mode.SRC_ATOP);
-		//					v.invalidate();
-		//					break;
-		//				}
-		//				case MotionEvent.ACTION_UP: {
-		//
-		//
-		//					final String addressTxt = txv_address.getText().toString();
-		//					final String bodyTxt = txv_body.getText().toString();
-		//
-		//
-		//					if (addressTxt.equalsIgnoreCase("") ||bodyTxt.equalsIgnoreCase("") || time.equalsIgnoreCase("")|| date.equalsIgnoreCase("")) {
-		//
-		//						Toast.makeText(getActivity(), getString(R.string.empty_add_janaza_mouhadhra), Toast.LENGTH_SHORT).show();
-		//					}
-		//					else {
-		//
-		//						new AsyncTask<Void, Void, Boolean>() {
-		//
-		//							ProgressDialog loading ;
-		//
-		//							protected void onPreExecute() {
-		//
-		//								loading = new ProgressDialog(getActivity());
-		//								loading.setMessage(getString(R.string.please_wait));
-		//								loading.show();
-		//
-		//							};
-		//
-		//							@Override
-		//							protected Boolean doInBackground(Void... params) {
-		//
-		//
-		//								int place = listManatek.get(spinner_mantaka.getSelectedItemPosition()).getId();
-		//								int mosque = listJawamaa.get(spinner_jamaa.getSelectedItemPosition()).getId();
-		//								int salat = listSalawat.get(spinner_salat.getSelectedItemPosition()).getId();
-		//								int gender = listGenres.get(spinner_genre.getSelectedItemPosition()).getId();
-		//
-		//								String salat_time = date + " "+ time ;
-		//
-		//								return mManager.addJaneza(mManager.getUid(), addressTxt, bodyTxt, place, mosque, salat, salat_time, gender);
-		//
-		//							}
-		//
-		//							protected void onPostExecute(Boolean result) {
-		//
-		//								loading.dismiss();
-		//
-		//								Log.e("TEST TEST", result+" ");
-		//								
-		//								if (result ) {
-		//
-		//									getActivity().onBackPressed();
-		//
-		//								}else
-		//									Toast.makeText(getActivity(), getString(R.string.error_add), Toast.LENGTH_SHORT).show();
-		//
-		//							};
-		//						}.execute();
-		//
-		//
-		//					}
-		//					break;
-		//				}
-		//				case MotionEvent.ACTION_CANCEL: {
-		//					Button view = (Button) v;
-		//					view.getBackground().clearColorFilter();
-		//					view.invalidate();
-		//					break;
-		//				}
-		//				}
-		//				return true;
-		//			}
-		//		});
-
 
 		return rootView;
 	}
@@ -422,13 +329,12 @@ public class AddMouhadhraFragment extends Fragment {
 
 		listManatek = mManager.getPlaces();
 
-		if (mManager.getSelectMosques().size() > 0||mManager.getSelectSalats().size()> 0) {
-
-			//			Toast.makeText(getActivity(), getString(R.string.login_empty), Toast.LENGTH_SHORT).show();
+		if (mManager.getSelectMosques().size() > 0 && mManager.getSelectTrainers().size()> 0) {
 
 			listTrainers = mManager.getSelectTrainers();
 			listJawamaa = mManager.getSelectMosques();
 
+			initiateSpinners();
 		}
 		else {
 
