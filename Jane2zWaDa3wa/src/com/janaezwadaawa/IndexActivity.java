@@ -33,8 +33,15 @@ import com.janaezwadaawa.utils.MyLocationManager;
 
 public class IndexActivity extends FragmentActivity implements OnTouchListener, LocationListener{
 
-	private static final String PLACES_FRAGMENT = null;
-	private static final String LOGIN_FRAGMENT = "login";
+	public static final String PLACES_FRAGMENT 			= "places";
+	public static final String LOGIN_FRAGMENT 			= "login";
+	public static final String ABOUT_FRAGMENT 			= "about";
+	public static final String SETTING_FRAGMENT 		= "setting";
+	public static final String ADD_JANEZA_FRAGMENT 		= "add_janeza";
+	public static final String ADD_MOHADHRA_FRAGMENT 	= "add_mohadhra";
+	public static final String ADD_I9TIRAH_FRAGMENT 	= "add_i9tirah";
+	public static final String ADMIN_FRAGMENT 			= "admin";
+	
 	private TextView txv_place , txv_date ;
 	private Button  about , medina_choice, btn_suggestions, btn_enter;
 	private Button dourouss, jana2ez ;
@@ -45,6 +52,7 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 	hDay, hMonth, hYear ;
 
 	private Fragment fragment;
+	private String currentTAG;
 
 	private JDManager mManager;
 
@@ -319,31 +327,25 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 				finish();
 				//				}
 				break;
-//			case R.id.settings:
-//				goToSettingsFragment();
-//				break;
 			case R.id.about:
-				goToAboutFragment();
+				goToFragment(ABOUT_FRAGMENT, true);
 				break;
-//			case R.id.share:
-//				shareApp("بادر بتحميل تطبيق جنائز و دعوة http://goo.gl/Hvt1jT");
-//				break;
-				
-				case R.id.btn_enter:
 
-					goToLoginFragment();
-					
+			case R.id.btn_enter:
+				if(mManager.isLoggedIn())
+					goToFragment(ADMIN_FRAGMENT, true);
+				else
+					goToFragment(LOGIN_FRAGMENT, true);
+
 				break;
-				
-				case R.id.btn_suggestions:
 
-					break;
-				
-				case R.id.medina_choice:
+			case R.id.btn_suggestions:
+				goToFragment(ADD_I9TIRAH_FRAGMENT, true);
+				break;
 
-					goToPlacesFragment();
-					
-					break;
+			case R.id.medina_choice:
+				goToFragment(PLACES_FRAGMENT, true);
+				break;
 
 			default:
 				break;
@@ -360,120 +362,50 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 		return true;
 	}
 
-
-	public void goToPlacesFragment(){
-
-		FragmentManager fragmentManager = getFragmentManager();
-		FragmentTransaction transaction = fragmentManager.beginTransaction();
-		//		transaction.setCustomAnimations(R.anim.left_in, R.anim.left_out, R.anim.right_in, R.anim.right_out);
-		transaction.setCustomAnimations(R.animator.card_flip_left_in, R.animator.card_flip_left_out, R.animator.card_flip_right_in, R.animator.card_flip_right_out);
-
-		fragment = new PlacesFragment();
-
-		transaction.replace(R.id.fragment_view, fragment, PLACES_FRAGMENT);
-		transaction.addToBackStack(null);
-
-		transaction.commit();
-
-
+	private Fragment getFragmentByTag(String tag){
+		if(tag.equals(ABOUT_FRAGMENT))
+			return new AboutFragment();
+		else if(tag.equals(LOGIN_FRAGMENT))
+			return new LoginFragment();
+		else if(tag.equals(ADD_JANEZA_FRAGMENT))
+			return new AddJanazaFragment();
+		else if(tag.equals(ADD_MOHADHRA_FRAGMENT))
+			return new AddMouhadhraFragment();
+		else if(tag.equals(SETTING_FRAGMENT))
+			return new SettingsFragment();
+		else if(tag.equals(ADMIN_FRAGMENT))
+			return new AdminMenuFragment();
+		else if(tag.equals(ADD_I9TIRAH_FRAGMENT))
+			return new AddMo9tarahatFragment();
+		else if(tag.equals(PLACES_FRAGMENT))
+			return new PlacesFragment();
+		else 
+			return null;
+			
 	}
-
-	public void goToAboutFragment(){
+	
+	public void goToFragment(String tag, boolean withCard){
 
 		FragmentManager fragmentManager = getFragmentManager();
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
-		//		transaction.setCustomAnimations(R.anim.left_in, R.anim.left_out, R.anim.right_in, R.anim.right_out);
-		transaction.setCustomAnimations(R.animator.card_flip_left_in, R.animator.card_flip_left_out, R.animator.card_flip_right_in, R.animator.card_flip_right_out);
+		if(withCard)
+			transaction.setCustomAnimations(R.animator.card_flip_left_in, R.animator.card_flip_left_out, R.animator.card_flip_right_in, R.animator.card_flip_right_out);
+//		else
+//			transaction.setCustomAnimations(R.anim.left_in, R.anim.left_out, R.anim.right_in, R.anim.right_out);
 
 
-		fragment = new AboutFragment();
+		fragment = getFragmentByTag(tag);
 
-		transaction.replace(R.id.fragment_view, fragment, PLACES_FRAGMENT);
-		transaction.addToBackStack(null);
+		transaction.replace(R.id.fragment_view, fragment, tag);
+		transaction.addToBackStack(tag);
 
 		transaction.commit();
+		
+		currentTAG = tag;
 
 		setEnableState(false);
 
 	}
-	
-	public void goToLoginFragment(){
-
-		FragmentManager fragmentManager = getFragmentManager();
-		FragmentTransaction transaction = fragmentManager.beginTransaction();
-		//		transaction.setCustomAnimations(R.anim.left_in, R.anim.left_out, R.anim.right_in, R.anim.right_out);
-		transaction.setCustomAnimations(R.animator.card_flip_left_in, R.animator.card_flip_left_out, R.animator.card_flip_right_in, R.animator.card_flip_right_out);
-
-
-		fragment = new LoginFragment();
-
-		transaction.replace(R.id.fragment_view, fragment, LOGIN_FRAGMENT);
-		transaction.addToBackStack(null);
-
-		transaction.commit();
-
-		setEnableState(false);
-
-	}
-	
-	public void goToAddJanazaFragment(){
-
-		FragmentManager fragmentManager = getFragmentManager();
-		FragmentTransaction transaction = fragmentManager.beginTransaction();
-		//		transaction.setCustomAnimations(R.anim.left_in, R.anim.left_out, R.anim.right_in, R.anim.right_out);
-		transaction.setCustomAnimations(R.animator.card_flip_left_in, R.animator.card_flip_left_out, R.animator.card_flip_right_in, R.animator.card_flip_right_out);
-
-
-		fragment = new AddJanazaFragment();
-
-		transaction.replace(R.id.fragment_view, fragment, LOGIN_FRAGMENT);
-		transaction.addToBackStack(null);
-
-		transaction.commit();
-
-		setEnableState(false);
-
-	}
-	
-	public void goToAddMouhadharaFragment(){
-
-		FragmentManager fragmentManager = getFragmentManager();
-		FragmentTransaction transaction = fragmentManager.beginTransaction();
-		//		transaction.setCustomAnimations(R.anim.left_in, R.anim.left_out, R.anim.right_in, R.anim.right_out);
-		transaction.setCustomAnimations(R.animator.card_flip_left_in, R.animator.card_flip_left_out, R.animator.card_flip_right_in, R.animator.card_flip_right_out);
-
-
-		fragment = new AddMouhadhraFragment();
-
-		transaction.replace(R.id.fragment_view, fragment, LOGIN_FRAGMENT);
-		transaction.addToBackStack(null);
-
-		transaction.commit();
-
-		setEnableState(false);
-
-	}
-	
-
-
-//	public void goToSettingsFragment(){
-//
-//		FragmentManager fragmentManager = getFragmentManager();
-//		FragmentTransaction transaction = fragmentManager.beginTransaction();
-//		//		transaction.setCustomAnimations(R.anim.left_in, R.anim.left_out, R.anim.right_in, R.anim.right_out);
-//		transaction.setCustomAnimations(R.animator.card_flip_left_in, R.animator.card_flip_left_out, R.animator.card_flip_right_in, R.animator.card_flip_right_out);
-//
-//
-//		fragment = new SettingsFragment();
-//
-//		transaction.replace(R.id.fragment_view, fragment, PLACES_FRAGMENT);
-//		transaction.addToBackStack(null);
-//
-//		transaction.commit();
-//
-//		setEnableState(false);
-//
-//	}
 
 	public void onPlaceSelected(Place place){
 
@@ -495,11 +427,16 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 	public void onBackPressed() {
 
 		if(fragment != null){
-			getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-			setEnableState(true);
-			fragment = null;
-			
-//			prepareDrawerItems();
+			if(currentTAG.equals(ADD_JANEZA_FRAGMENT) || currentTAG.equals(ADD_MOHADHRA_FRAGMENT))
+				goToFragment(ADMIN_FRAGMENT, false);
+			else{
+
+				getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+				setEnableState(true);
+				fragment = null;
+
+//				prepareDrawerItems();
+			}
 		}else
 			super.onBackPressed();
 	}

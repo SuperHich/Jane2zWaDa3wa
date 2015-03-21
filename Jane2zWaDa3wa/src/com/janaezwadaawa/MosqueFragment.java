@@ -190,7 +190,7 @@ public class MosqueFragment extends Fragment implements IJana2zListener, ISearch
 	public void onItemDetailsClicked(int position) {
 		// TODO Auto-generated method stub
 		jdManager.setSelectedMosque(mosques.get(position));
-		((MainActivity) getActivity()).goToJanaezFragment();
+		((MainActivity) getActivity()).goToFragment(MainActivity.JANAEZ_FRAGMENT);
 		
 	}
 

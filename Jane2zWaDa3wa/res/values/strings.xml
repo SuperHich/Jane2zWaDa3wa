@@ -90,4 +90,14 @@
     <string name="drawer_share">شارك التطبيق</string>
     <string name="drawer_settings">الإعدادات</string>
     
+    <string name="send">إرسال</string>
+    <string name="prop_title">عنوان الرسالة</string>
+    <string name="prop_number">رقم الموبايل</string>
+    <string name="prop_message">الرسالة</string>
+    <string name="save">حفظ</string>
+    <string name="preview">معاينة</string>
+    <string name="propositions">إقتراحات</string>
+    <string name="admin_menu">لوحة التحكم</string>
+    <string name="login_title">تسجيل الدخول</string>
+    
 </resources>

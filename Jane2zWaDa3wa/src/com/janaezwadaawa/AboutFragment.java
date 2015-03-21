@@ -4,9 +4,7 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.ProgressDialog;
 import android.graphics.Color;
-import android.graphics.LinearGradient;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,9 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.janaezwadaawa.adapters.AddressesAdapter;
-import com.janaezwadaawa.adapters.Da3waAdapter;
 import com.janaezwadaawa.entity.Address;
-import com.janaezwadaawa.entity.Janeza;
 import com.janaezwadaawa.externals.JDManager;
 import com.janaezwadaawa.utils.JDFonts;
 

@@ -3,299 +3,325 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/blank_bg" >
-
-    <TextView
-        android:id="@+id/title"
+    
+    <RelativeLayout
+        android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:padding="5dp"
-        android:text="الجنائز"
-        android:textColor="#fff"
-        android:textSize="40sp" />
+        android:layout_alignParentTop="true"
+        android:background="@color/color_green" >
 
-    <ScrollView
-        android:id="@+id/edit_layout"
+        <TextView
+            android:id="@+id/top_header"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:background="@color/color_green"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="@string/add_janaza"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            android:textSize="25sp" />
+        
+          <Button
+            android:id="@+id/btn_back"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/back_list" />
+    </RelativeLayout>
+    
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="150dp"
-        android:layout_below="@id/title" >
+        android:layout_margin="10dp"
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        android:layout_below="@+id/top" >
 
-        <LinearLayout
+        <ScrollView
+            android:id="@+id/edit_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:orientation="vertical" >
+            android:layout_height="match_parent"
+            android:layout_marginBottom="70dp" >
 
             <LinearLayout
-                android:id="@+id/layout_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal"
-                android:weightSum="3" >
+                android:orientation="vertical" >
 
-                <EditText
-                    android:id="@+id/txv_address"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:id="@+id/layout_address"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:background="#fff"
-                    android:gravity="right|center_vertical"
-                    android:maxLines="1"
-                    android:padding="5dp"
-                    android:textColor="@color/gold"
-                    android:textSize="18sp" />
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical" >
 
-                <TextView
-                    android:id="@+id/lbl_address"
-                    android:layout_width="0dp"
+                    <TextView
+                        android:id="@+id/lbl_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right|center_vertical"
+                        android:maxLines="1"
+                        android:padding="5dp"
+                        android:text="العنوان :"
+                        android:textColor="@color/jd_green"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/txv_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/bkg_rounded_border"
+                        android:gravity="right|center_vertical"
+                        android:maxLines="1"
+                        android:padding="5dp"
+                        android:textColor="@color/gold"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_body"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="right|center_vertical"
-                    android:maxLines="1"
-                    android:padding="5dp"
-                    android:text="العنوان :"
-                    android:textColor="@color/gold"
-                    android:textSize="25sp" />
-            </LinearLayout>
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical" >
 
-            <LinearLayout
-                android:id="@+id/layout_body"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal"
-                android:weightSum="3" >
+                    <TextView
+                        android:id="@+id/lbl_body"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right|center_vertical"
+                        android:maxLines="1"
+                        android:padding="5dp"
+                        android:text="المحتوى :"
+                        android:textColor="@color/jd_green"
+                        android:textSize="20sp" />
 
-                <EditText
-                    android:id="@+id/txv_body"
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_weight="2"
-                    android:background="#fff"
-                    android:gravity="right"
-                    android:padding="5dp"
-                    android:textColor="@color/gold"
-                    android:textSize="18sp" />
+                    <EditText
+                        android:id="@+id/txv_body"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/bkg_rounded_border"
+                        android:gravity="right"
+                        android:padding="5dp"
+                        android:textColor="@color/gold"
+                        android:textSize="18sp" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/lbl_body"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:id="@+id/layout_mantaka"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="right|center_vertical"
-                    android:maxLines="2"
-                    android:padding="5dp"
-                    android:text="المحتوى :"
-                    android:textColor="@color/gold"
-                    android:textSize="25sp" />
-            </LinearLayout>
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical" >
 
-            <LinearLayout
-                android:id="@+id/layout_mantaka"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal"
-                android:weightSum="3" >
+                    <TextView
+                        android:id="@+id/lbl_mantaka"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right|center_vertical"
+                        android:maxLines="1"
+                        android:padding="5dp"
+                        android:text="المنطقة : "
+                        android:textColor="@color/jd_green"
+                        android:textSize="20sp" />
 
-                <Spinner
-                    android:id="@+id/spinner_mantaka"
-                    android:layout_width="0dp"
+                    <Spinner
+                        android:id="@+id/spinner_mantaka"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/bkg_rounded_border"
+                        android:gravity="right|center_vertical"
+                        android:padding="5dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_jamaa"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:gravity="right|center_vertical"
-                    android:maxLines="2"
-                    android:padding="5dp"
-                    android:textColor="@color/gold"
-                    android:textSize="18sp" />
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical" >
 
-                <TextView
-                    android:id="@+id/lbl_mantaka"
-                    android:layout_width="0dp"
+                    <TextView
+                        android:id="@+id/lbl_jamaa"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right|center_vertical"
+                        android:maxLines="1"
+                        android:padding="5dp"
+                        android:text="الجامع : "
+                        android:textColor="@color/jd_green"
+                        android:textSize="20sp" />
+
+                    <Spinner
+                        android:id="@+id/spinner_jamaa"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/bkg_rounded_border"
+                        android:gravity="right|center_vertical"
+                        android:padding="5dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_salat"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="right|center_vertical"
-                    android:maxLines="2"
-                    android:padding="5dp"
-                    android:text="المنطقة : "
-                    android:textColor="@color/gold"
-                    android:textSize="25sp" />
-            </LinearLayout>
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical" >
 
-            <LinearLayout
-                android:id="@+id/layout_jamaa"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal"
-                android:weightSum="3" >
+                    <TextView
+                        android:id="@+id/lbl_salat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right|center_vertical"
+                        android:maxLines="2"
+                        android:padding="5dp"
+                        android:text="الصلاة : "
+                        android:textColor="@color/jd_green"
+                        android:textSize="20sp" />
 
-                <Spinner
-                    android:id="@+id/spinner_jamaa"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:gravity="right|center_vertical"
-                    android:maxLines="2"
-                    android:padding="5dp"
-                    android:textColor="@color/gold"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/lbl_jamaa"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="right|center_vertical"
-                    android:maxLines="2"
-                    android:padding="5dp"
-                    android:text="الجامع : "
-                    android:textColor="@color/gold"
-                    android:textSize="25sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layout_salat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal"
-                android:weightSum="3" >
-
-                <Spinner
-                    android:id="@+id/spinner_salat"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:gravity="right|center_vertical"
-                    android:maxLines="2"
-                    android:padding="5dp"
-                    android:textColor="@color/gold"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/lbl_salat"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="right|center_vertical"
-                    android:maxLines="2"
-                    android:padding="5dp"
-                    android:text="الصلاة : "
-                    android:textColor="@color/gold"
-                    android:textSize="25sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layout_wakt_salat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal"
-                android:weightSum="3" >
-
-                <TextView
-                    android:id="@+id/wakt_salat_time"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.68"
-                    android:gravity="right|center_vertical"
-                    android:background="#fff"
-                    android:hint="الوقت"
-                    android:maxLines="2"
-                    android:padding="5dp"
-                    android:textColor="@color/gold"
-                    android:textSize="18sp" />
-                
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.04"
-                    android:background="@android:color/transparent" />
-                
-                <TextView
-                    android:id="@+id/wakt_salat_date"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.28"
-                    android:hint="اليوم"
-                    android:gravity="right|center_vertical"
-                    android:background="#fff"
-                    android:maxLines="2"
-                    android:padding="5dp"
-                    android:textColor="@color/gold"
-                    android:textSize="18sp" />
+                    <Spinner
+                        android:id="@+id/spinner_salat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/bkg_rounded_border"
+                        android:gravity="right|center_vertical"
+                        android:padding="5dp" />
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/lbl_wakt_salat"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_marginTop="5dp"
                     android:gravity="right|center_vertical"
-                    android:maxLines="2"
+                    android:maxLines="1"
                     android:padding="5dp"
                     android:text="وقت الصلاة : "
-                    android:textColor="@color/gold"
+                    android:textColor="@color/jd_green"
                     android:textSize="20sp" />
-            </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/layout_genre"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal"
-                android:weightSum="3" >
-
-                <Spinner
-                    android:id="@+id/spinner_genre"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:id="@+id/layout_wakt_salat"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:gravity="right|center_vertical"
-                    android:maxLines="2"
-                    android:padding="5dp"
-                    android:textColor="@color/gold"
-                    android:textSize="18sp" />
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2" >
 
-                <TextView
-                    android:id="@+id/lbl_genre"
-                    android:layout_width="0dp"
+                    <TextView
+                        android:id="@+id/wakt_salat_time"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.68"
+                        android:background="@drawable/bkg_rounded_border"
+                        android:gravity="right|center_vertical"
+                        android:hint="الوقت"
+                        android:maxLines="2"
+                        android:padding="5dp"
+                        android:textColor="@color/gold"
+                        android:textSize="18sp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.04"
+                        android:background="@android:color/transparent" />
+
+                    <TextView
+                        android:id="@+id/wakt_salat_date"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.28"
+                        android:background="@drawable/bkg_rounded_border"
+                        android:gravity="right|center_vertical"
+                        android:hint="اليوم"
+                        android:maxLines="2"
+                        android:padding="5dp"
+                        android:textColor="@color/gold"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_genre"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="right|center_vertical"
-                    android:maxLines="2"
-                    android:padding="5dp"
-                    android:text="النوع : "
-                    android:textColor="@color/gold"
-                    android:textSize="25sp" />
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/lbl_genre"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right|center_vertical"
+                        android:maxLines="1"
+                        android:padding="5dp"
+                        android:text="النوع : "
+                        android:textColor="@color/jd_green"
+                        android:textSize="20sp" />
+
+                    <Spinner
+                        android:id="@+id/spinner_genre"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/bkg_rounded_border"
+                        android:gravity="right|center_vertical"
+                        android:padding="5dp" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+        </ScrollView>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_alignParentBottom="true">
-
-        <Button
-            android:id="@+id/btn_add"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_centerInParent="true"
-            android:background="#264631"
-            android:padding="5dp"
-            android:text="@string/add_janaza"
-            android:textColor="@color/gold"
-            android:textSize="25sp" />
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp" >
+
+            <Button
+                android:id="@+id/btn_preview"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_margin="5dp"
+                android:layout_weight="0.5"
+                android:background="@color/jd_green"
+                android:padding="5dp"
+                android:text="@string/preview"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:layout_gravity="center" />
+
+            <Button
+                android:id="@+id/btn_add"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_margin="5dp"
+                android:layout_weight="0.5"
+                android:background="@color/jd_green"
+                android:padding="5dp"
+                android:text="@string/save"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" 
+                android:gravity="center"
+                android:layout_gravity="center"/>
+        </LinearLayout>
     </RelativeLayout>
 
 </RelativeLayout>

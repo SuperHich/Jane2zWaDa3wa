@@ -9,15 +9,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true" >
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_centerHorizontal="true"
-            android:background="@color/color_green" />
-
         <TextView
             android:id="@+id/top_header"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_centerHorizontal="true"
             android:background="@color/color_green"
@@ -27,6 +21,13 @@
             android:textColor="#fff"
             android:textStyle="bold"
             android:textSize="25sp" />
+        
+          <Button
+            android:id="@+id/btn_back"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/back_list" />
     </RelativeLayout>
 
     <TextView

@@ -33,6 +33,7 @@ import com.janaezwadaawa.entity.SelectMosque;
 import com.janaezwadaawa.entity.SelectSalat;
 import com.janaezwadaawa.externals.JDManager;
 import com.janaezwadaawa.utils.JDFonts;
+import com.janaezwadaawa.utils.Utils;
 
 
 public class AddJanazaFragment extends Fragment {
@@ -42,7 +43,7 @@ public class AddJanazaFragment extends Fragment {
 	private Button btn_add;
 	private EditText txv_address, txv_body;
 	private Spinner spinner_genre,  spinner_salat, spinner_jamaa , spinner_mantaka;
-	private TextView lbl_genre, lbl_wakt_salat, lbl_salat, lbl_jamaa, lbl_mantaka, lbl_body, lbl_address, title,salat_time, salat_date ;
+	private TextView lbl_genre, lbl_wakt_salat, lbl_salat, lbl_jamaa, lbl_mantaka, lbl_body, lbl_address,salat_time, salat_date ;
 
 	private ArrayList<SelectGender> listGenres = new ArrayList<SelectGender>();
 	private ArrayList<SelectSalat> listSalawat = new ArrayList<SelectSalat>();
@@ -51,6 +52,10 @@ public class AddJanazaFragment extends Fragment {
 
 
 	String date = "", time = "" ;
+
+	private TextView top_header;
+
+	private Button btn_back, btn_preview;
 
 	public AddJanazaFragment() {
 		// Empty constructor required for fragment subclasses
@@ -65,7 +70,13 @@ public class AddJanazaFragment extends Fragment {
 	@Override
 	public void onDetach() {
 		super.onDetach();
-
+		
+	}
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		Utils.hideKeyBoardFromWindow(getActivity(), txv_body);
 	}
 
 
@@ -91,7 +102,6 @@ public class AddJanazaFragment extends Fragment {
 		txv_address 	= (EditText) rootView.findViewById(R.id.txv_address);
 		txv_body	= (EditText) rootView.findViewById(R.id.txv_body);
 
-		title	= (TextView) rootView.findViewById(R.id.title);
 		lbl_genre	= (TextView) rootView.findViewById(R.id.lbl_genre);
 		lbl_wakt_salat	= (TextView) rootView.findViewById(R.id.lbl_wakt_salat);
 		lbl_salat	= (TextView) rootView.findViewById(R.id.lbl_salat);
@@ -107,7 +117,13 @@ public class AddJanazaFragment extends Fragment {
 		spinner_salat	= (Spinner) rootView.findViewById(R.id.spinner_salat);
 		spinner_jamaa	= (Spinner) rootView.findViewById(R.id.spinner_jamaa);
 		spinner_mantaka	= (Spinner) rootView.findViewById(R.id.spinner_mantaka);
-
+		
+		top_header	= (TextView) rootView.findViewById(R.id.top_header);
+		top_header.setTypeface(JDFonts.getBDRFont());
+		
+		btn_preview = (Button) rootView.findViewById(R.id.btn_preview);
+		btn_preview.setTypeface(JDFonts.getBDRFont());
+		
 		lbl_address.setTypeface(JDFonts.getBDRFont());
 		lbl_body.setTypeface(JDFonts.getBDRFont());
 		lbl_mantaka.setTypeface(JDFonts.getBDRFont());
@@ -118,7 +134,15 @@ public class AddJanazaFragment extends Fragment {
 		txv_body.setTypeface(JDFonts.getBDRFont());
 		txv_address.setTypeface(JDFonts.getBDRFont());
 		btn_add.setTypeface(JDFonts.getBDRFont());
-		title.setTypeface(JDFonts.getBDRFont());
+		
+		btn_back = (Button) rootView.findViewById(R.id.btn_back);
+		btn_back.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				getActivity().onBackPressed();
+			}
+		});
 
 		initiateLists();
 
@@ -342,10 +366,10 @@ public class AddJanazaFragment extends Fragment {
 			listSpinnerManatek.add(listManatek.get(i).getTitle());
 		}
 
-		ArrayAdapter<String> spinnerAdapterGenres = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, listSpinnerGenres);
-		ArrayAdapter<String> spinnerAdapterSalawat = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, listSpinnerSalawat);
-		ArrayAdapter<String> spinnerAdapterJawamaa = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, listSpinnerJawamaa);
-		ArrayAdapter<String> spinnerAdapterManatek = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, listSpinnerManatek);
+		ArrayAdapter<String> spinnerAdapterGenres = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, listSpinnerGenres);
+		ArrayAdapter<String> spinnerAdapterSalawat = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, listSpinnerSalawat);
+		ArrayAdapter<String> spinnerAdapterJawamaa = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, listSpinnerJawamaa);
+		ArrayAdapter<String> spinnerAdapterManatek = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, listSpinnerManatek);
 
 		//		ArrayAdapter<String> spinnerAdapterColors = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, colors){
 		//			public View getView(int position, View convertView, ViewGroup parent) 
@@ -403,10 +427,10 @@ public class AddJanazaFragment extends Fragment {
 		//			}
 		//		};
 
-		spinnerAdapterGenres.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinnerAdapterSalawat.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinnerAdapterJawamaa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinnerAdapterManatek.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinnerAdapterGenres.setDropDownViewResource(R.layout.spinner_item);
+		spinnerAdapterSalawat.setDropDownViewResource(R.layout.spinner_item);
+		spinnerAdapterJawamaa.setDropDownViewResource(R.layout.spinner_item);
+		spinnerAdapterManatek.setDropDownViewResource(R.layout.spinner_item);
 
 		spinner_genre.setAdapter(spinnerAdapterGenres);
 		spinner_jamaa.setAdapter(spinnerAdapterJawamaa);

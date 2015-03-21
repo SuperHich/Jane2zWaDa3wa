@@ -2,16 +2,15 @@ package com.janaezwadaawa;
 
 import java.util.ArrayList;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.ListFragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
@@ -61,6 +60,7 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 
 
 	public static final int MESSAGE_START = 1;
+	private static final String TAG = null;
 	private int lastPosition = 0, selected_placeID = -1;
 	private String lastText = "";
 	private boolean isFirstStart = true;
@@ -154,10 +154,14 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 
 			@Override
 			public void onClick(View arg0) {
-				if(!mDrawerLayout.isDrawerOpen(Gravity.RIGHT))
-					mDrawerLayout.openDrawer(Gravity.RIGHT);
+				if(currentFragment.equals(JANEZA_PLACES_FRAGMENT) || currentFragment.equals(DA3AWI_FRAGMENT) || currentFragment.equals(SETTINGS_FRAGMENT)){
+					if(!mDrawerLayout.isDrawerOpen(Gravity.RIGHT))
+						mDrawerLayout.openDrawer(Gravity.RIGHT);
+					else
+						mDrawerLayout.closeDrawer(Gravity.RIGHT);		
+				}
 				else
-					mDrawerLayout.closeDrawer(Gravity.RIGHT);		
+					onBackPressed();
 			}
 		});
 
@@ -360,7 +364,7 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 			
 		case 3:
 			fragment = new SettingsFragment();
-			btn_search.setVisibility(View.VISIBLE);
+			btn_search.setVisibility(View.GONE);
 			currentFragment = SETTINGS_FRAGMENT;
 			header.setBackgroundResource(R.drawable.settings_header);
 
@@ -386,7 +390,7 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 
 
 	private void switchTab(Fragment tab, boolean withAnimation) {
-		FragmentManager fm = getSupportFragmentManager();
+		FragmentManager fm = getFragmentManager();
 		Fragment fragment = fm.findFragmentById(R.id.content_frame);
 
 		final FragmentTransaction ft = fm.beginTransaction();
@@ -460,9 +464,9 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 	}
 
 	private void showSearchDialog() {
-		FragmentManager fm = getSupportFragmentManager();
+//		FragmentManager fm = getFragmentManager();
 		SearchDialog searchDialog = new SearchDialog(lastText);
-		searchDialog.show(fm, "fragment_search_keyword");
+		searchDialog.show(getSupportFragmentManager(), "fragment_search_keyword");
 	}
 
 	@Override
@@ -506,79 +510,26 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 
 	public void goToFragment(String fragmentTAG){
 
-		FragmentManager fragmentManager = getSupportFragmentManager();
+		FragmentManager fragmentManager = getFragmentManager();
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
-		transaction.setCustomAnimations(R.anim.left_in, R.anim.left_out, R.anim.right_in, R.anim.right_out);
+//		transaction.setCustomAnimations(R.animator.left_in, R.animator.left_out, R.animator.right_in, R.animator.right_out);
 
-		fragment1 = (Fragment) getSupportFragmentManager().findFragmentByTag(fragmentTAG);
-
-		if(fragment1 == null){
+//		fragment1 = (Fragment) fragmentManager.findFragmentByTag(fragmentTAG);
+//
+//		if(fragment1 == null){
 			fragment1 = getFragmentInstance(fragmentTAG);
 
-			transaction.replace(R.id.fragment_view, fragment1, fragmentTAG);
+			transaction.replace(R.id.content_frame, fragment1, fragmentTAG);
 			transaction.addToBackStack(fragmentTAG);
-		}else{
-			transaction.attach(fragment1);
-		}
+//		}else{
+//			transaction.attach(fragment1);
+//		}
 
 		transaction.commit();
 
-		header.setBackgroundResource(R.drawable.jana2ez);
+//		header.setBackgroundResource(R.drawable.jana2ez);
 		btn_menu.setBackgroundResource(R.drawable.back_list);
 		currentFragment = fragmentTAG;
-
-		isBackEnabled = true;
-
-	}
-
-	public void goToJanaezFragment(){
-
-		FragmentManager fragmentManager = getSupportFragmentManager();
-		FragmentTransaction transaction = fragmentManager.beginTransaction();
-		transaction.setCustomAnimations(R.anim.left_in, R.anim.left_out, R.anim.right_in, R.anim.right_out);
-
-		fragment1 = (ListFragment) getSupportFragmentManager().findFragmentByTag(JANAEZ_FRAGMENT);
-
-		if(fragment1 == null){
-			fragment1 = new JanaezFragment();
-
-			transaction.replace(R.id.fragment_view, fragment1, JANAEZ_FRAGMENT);
-			transaction.addToBackStack(JANAEZ_FRAGMENT);
-		}else{
-			transaction.attach(fragment1);
-		}
-
-		transaction.commit();
-
-		header.setBackgroundResource(R.drawable.jana2ez);
-		btn_menu.setBackgroundResource(R.drawable.back_list);
-		currentFragment = JANAEZ_FRAGMENT;
-
-		isBackEnabled = true;
-
-	}
-
-	public void goToDa3waDetailsFragment(){
-
-		FragmentManager fragmentManager = getSupportFragmentManager();
-		FragmentTransaction transaction = fragmentManager.beginTransaction();
-		transaction.setCustomAnimations(R.anim.left_in, R.anim.left_out, R.anim.right_in, R.anim.right_out);
-
-		fragment1 = (ListFragment) getSupportFragmentManager().findFragmentByTag(DA3WA_DETAILS_FRAGMENT);
-
-		if(fragment1 == null){
-			fragment1 = new Da3waDetailFragment();
-
-			transaction.replace(R.id.fragment_view, fragment1, DA3WA_DETAILS_FRAGMENT);
-			transaction.addToBackStack(DA3WA_DETAILS_FRAGMENT);
-		}else{
-			transaction.attach(fragment1);
-		}
-
-		transaction.commit();
-
-		btn_menu.setBackgroundResource(R.drawable.back_list);
-		currentFragment = DA3WA_DETAILS_FRAGMENT;
 
 		isBackEnabled = true;
 
@@ -589,25 +540,28 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 
 		if(currentFragment.equals(DA3WA_DETAILS_FRAGMENT))
 		{
-			currentFragment = DA3AWI_FRAGMENT;
+//			currentFragment = DA3AWI_FRAGMENT;
+			
+			goToFragment(DA3AWI_FRAGMENT);
 			btn_menu.setBackgroundResource(R.drawable.menu);
-
 			isBackEnabled = false;
-			super.onBackPressed();
+//			super.onBackPressed();
 		}
 		else if(currentFragment.equals(JANEZA_MOSQUES_FRAGMENT)){
-			currentFragment = JANEZA_PLACES_FRAGMENT;
-			btn_menu.setBackgroundResource(R.drawable.menu);
+//			currentFragment = JANEZA_PLACES_FRAGMENT;
 
+			goToFragment(JANEZA_PLACES_FRAGMENT);
+			btn_menu.setBackgroundResource(R.drawable.menu);
 			isBackEnabled = false;
-			super.onBackPressed();
+//			super.onBackPressed();
 		}
 		else if(currentFragment.equals(JANEZA_SALAT_FRAGMENT)){
-			currentFragment = JANEZA_MOSQUES_FRAGMENT;
+//			currentFragment = JANEZA_MOSQUES_FRAGMENT;
+			
+			goToFragment(JANEZA_MOSQUES_FRAGMENT);
 			btn_menu.setBackgroundResource(R.drawable.back_list);
-
-			isBackEnabled = false;
-			super.onBackPressed();
+			isBackEnabled = true;
+//			super.onBackPressed();
 		}else{
 			startActivity(new Intent(MainActivity.this, IndexActivity.class));
 			overridePendingTransition(R.anim.right_in, R.anim.right_out);

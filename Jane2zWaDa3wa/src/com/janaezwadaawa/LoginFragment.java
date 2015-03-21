@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import com.janaezwadaawa.externals.JDManager;
 import com.janaezwadaawa.utils.JDFonts;
+import com.janaezwadaawa.utils.Utils;
 import com.pixplicity.easyprefs.library.Prefs;
 
 
@@ -29,7 +31,8 @@ public class LoginFragment extends Fragment {
 	private Button btn_login;
 	private EditText edit_pwd;
 	private EditText edit_login;
-	private TextView lbl_login, lbl_pwd ;
+	private TextView lbl_login, lbl_pwd, top_header ;
+	private Button btn_back;
 
 
 	public LoginFragment() {
@@ -46,6 +49,13 @@ public class LoginFragment extends Fragment {
 	public void onDetach() {
 		super.onDetach();
 
+	}
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		
+		Utils.hideKeyBoardFromWindow(getActivity(), edit_pwd);
 	}
 
 
@@ -67,15 +77,26 @@ public class LoginFragment extends Fragment {
 		edit_pwd	= (EditText) rootView.findViewById(R.id.edit_pwd);
 		
 		lbl_pwd		= (TextView) rootView.findViewById(R.id.lbl_pwd);
-		lbl_login		= (TextView) rootView.findViewById(R.id.lbl_login);
+		lbl_login	= (TextView) rootView.findViewById(R.id.lbl_login);
 
 		lbl_pwd.setTypeface(JDFonts.getBDRFont());
 		lbl_login.setTypeface(JDFonts.getBDRFont());
+		
+		top_header	= (TextView) rootView.findViewById(R.id.top_header);
+		top_header.setTypeface(JDFonts.getBDRFont());
 		
 		btn_login.setTypeface(JDFonts.getBDRFont());
 		edit_login.setTypeface(JDFonts.getBDRFont());
 		edit_pwd.setTypeface(JDFonts.getBDRFont());
 
+		btn_back = (Button) rootView.findViewById(R.id.btn_back);
+		btn_back.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				getActivity().onBackPressed();
+			}
+		});
 
 		btn_login.setOnTouchListener(new OnTouchListener() {
 
@@ -122,7 +143,8 @@ public class LoginFragment extends Fragment {
 								Prefs.initPrefs(getActivity());
 								Prefs.putString("uid", result);
 								
-								getActivity().onBackPressed();
+//								getActivity().onBackPressed();
+								((IndexActivity) getActivity()).goToFragment(IndexActivity.ADMIN_FRAGMENT, false);
 								
 							}
 							
@@ -147,34 +169,5 @@ public class LoginFragment extends Fragment {
 
 		return rootView;
 	}
-
-	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-
-
-	}
-
-//	@SuppressLint("NewApi")
-//	public void goToPlacesFragment(){
-//
-//		FragmentManager fragmentManager = getFragmentManager();
-//		FragmentTransaction transaction = fragmentManager.beginTransaction();
-//		//		transaction.setCustomAnimations(R.anim.left_in, R.anim.left_out, R.anim.right_in, R.anim.right_out);
-//		transaction.setCustomAnimations(R.animator.card_flip_left_in, R.animator.card_flip_left_out, R.animator.card_flip_right_in, R.animator.card_flip_right_out);
-//
-//		fragment = new PlacesFragment();
-//
-//		transaction.replace(R.id.fragment_view, fragment, PLACES_FRAGMENT);
-//		transaction.addToBackStack(null);
-//
-//		transaction.commit();
-//
-//
-//	}
-//	
-	
-
-
 
 }

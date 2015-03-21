@@ -3,11 +3,11 @@ package com.janaezwadaawa;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -128,7 +128,7 @@ public class Da3waFragment extends Fragment implements IJana2zListener, ISearchL
 	@Override
 	public void onItemDetailsClicked(int position) {
 		jdManager.setSelectedDa3wa(da3awi.get(position));
-		((MainActivity) getActivity()).goToDa3waDetailsFragment();
+		((MainActivity) getActivity()).goToFragment(MainActivity.DA3WA_DETAILS_FRAGMENT);
 	}
 
 	@Override

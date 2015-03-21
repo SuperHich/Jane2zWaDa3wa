@@ -29,6 +29,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/center_layout"
+                    android:singleLine="true"
                     android:gravity="center"
                     android:text="@string/amaken"
                     android:textColor="#85dda8"
@@ -47,6 +48,10 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="0dp"
                     android:layout_toLeftOf="@+id/center_layout"
+                    android:ellipsize="marquee"
+                    android:focusable="true"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:singleLine="true"
                     android:textColor="#fff"
                     android:textSize="23sp" />
             </RelativeLayout>
@@ -137,37 +142,37 @@
 <!--                 android:background="@drawable/btn_menu" /> -->
         </RelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/drawer_linear"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="end"
-            android:background="@drawable/blank_bg"
-            android:orientation="vertical" >
+<!--         <LinearLayout -->
+<!--             android:id="@+id/drawer_linear" -->
+<!--             android:layout_width="wrap_content" -->
+<!--             android:layout_height="match_parent" -->
+<!--             android:layout_gravity="end" -->
+<!--             android:background="@drawable/blank_bg" -->
+<!--             android:orientation="vertical" > -->
 
-            <RelativeLayout
-                android:id="@+id/drawer_header"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
+<!--             <RelativeLayout -->
+<!--                 android:id="@+id/drawer_header" -->
+<!--                 android:layout_width="wrap_content" -->
+<!--                 android:layout_height="wrap_content" > -->
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/ghiras_logo"
-                    android:scaleType="centerInside" />
-            </RelativeLayout>
+<!--                 <ImageView -->
+<!--                     android:layout_width="wrap_content" -->
+<!--                     android:layout_height="wrap_content" -->
+<!--                     android:layout_marginTop="10dp" -->
+<!--                     android:background="@drawable/ghiras_logo" -->
+<!--                     android:scaleType="centerInside" /> -->
+<!--             </RelativeLayout> -->
 
-            <ListView
-                android:id="@+id/listView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:background="@android:color/transparent"
-                android:divider="#fff"
-                android:dividerHeight="2dp"
-                android:gravity="center" />
-        </LinearLayout>
+<!--             <ListView -->
+<!--                 android:id="@+id/listView" -->
+<!--                 android:layout_width="match_parent" -->
+<!--                 android:layout_height="wrap_content" -->
+<!--                 android:layout_marginTop="30dp" -->
+<!--                 android:background="@android:color/transparent" -->
+<!--                 android:divider="#fff" -->
+<!--                 android:dividerHeight="2dp" -->
+<!--                 android:gravity="center" /> -->
+<!--         </LinearLayout> -->
     </android.support.v4.widget.DrawerLayout>
 
     <FrameLayout

@@ -3,9 +3,9 @@ package com.janaezwadaawa;
 import java.util.Calendar;
 import java.util.Locale;
 
+import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +24,6 @@ public class Da3waDetailFragment extends Fragment {
 	
 	private TextView	txv_day, txv_day_name,
 						txv_date, txv_date_name,
-						txv_prayer, txv_prayer_name,
 						txv_title, txv_trainer, txv_desc, txv_mosque, txv_da3wa_date;
 	
 	private JDManager jdManager;
@@ -53,8 +52,6 @@ public class Da3waDetailFragment extends Fragment {
 		txv_day_name 	= (TextView) rootView.findViewById(R.id.txv_day_name);
 		txv_date 		= (TextView) rootView.findViewById(R.id.txv_date);
 		txv_date_name 	= (TextView) rootView.findViewById(R.id.txv_date_name);
-		txv_prayer 		= (TextView) rootView.findViewById(R.id.txv_prayer);
-		txv_prayer_name = (TextView) rootView.findViewById(R.id.txv_prayer_name);
 		
 		txv_title		= (TextView) rootView.findViewById(R.id.txv_title);
 		txv_trainer		= (TextView) rootView.findViewById(R.id.txv_trainer); 
@@ -66,9 +63,6 @@ public class Da3waDetailFragment extends Fragment {
 		txv_day_name	.setTypeface(JDFonts.getBDRFont());
 		txv_date		.setTypeface(JDFonts.getBDRFont());
 		txv_date_name	.setTypeface(JDFonts.getBDRFont());
-		txv_prayer		.setTypeface(JDFonts.getBDRFont());
-		txv_prayer_name	.setTypeface(JDFonts.getBDRFont());
-		
 		txv_title		.setTypeface(JDFonts.getBDRFont());
 		txv_trainer		.setTypeface(JDFonts.getBDRFont());
 		txv_desc		.setTypeface(JDFonts.getBDRFont());
