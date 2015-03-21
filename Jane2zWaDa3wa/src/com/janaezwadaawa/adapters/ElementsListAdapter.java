@@ -8,23 +8,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.janaezwadaawa.R;
+import com.janaezwadaawa.entity.DrawerItem;
 import com.janaezwadaawa.utils.JDFonts;
 
 
 
-public class ElementsListAdapter extends ArrayAdapter<String>  
+public class ElementsListAdapter extends ArrayAdapter<DrawerItem>  
 
 {
 
 	Context mContext;
-	ArrayList<String> data = null;
+	ArrayList<DrawerItem> data = new ArrayList<DrawerItem>();
 	LayoutInflater inflater;
 
-	public ElementsListAdapter(Context mContext, ArrayList<String> data) {
+	public ElementsListAdapter(Context mContext, ArrayList<DrawerItem> data) {
 
 		super(mContext, 0, data);
 		this.mContext = mContext;
@@ -41,7 +43,8 @@ public class ElementsListAdapter extends ArrayAdapter<String>
 			holder = new ViewHolder();
 			convertView = inflater.inflate(R.layout.list_item_drawer, parent, false);
 
-			holder.txv_title 		= (TextView) convertView.findViewById(R.id.txv_title); 
+			holder.txv_title 		= (TextView) convertView.findViewById(R.id.txv_title);
+			holder.icon_txv			= (ImageView) convertView.findViewById(R.id.icon_txv);
 			holder.list_item		= (RelativeLayout) convertView.findViewById(R.id.list_item); 
 
 
@@ -51,13 +54,14 @@ public class ElementsListAdapter extends ArrayAdapter<String>
 			holder = (ViewHolder)convertView.getTag();
 		}
 
+		holder.icon_txv.setImageResource(data.get(position).getIcon());
+		
 		holder.txv_title.setTypeface(JDFonts.getBDRFont());
 
 		
-		holder.txv_title.setText(data.get(position));
+		holder.txv_title.setText(data.get(position).getText());
 		
 		holder.list_item.setTag(position);
-
 
 
 		return convertView;
@@ -67,6 +71,7 @@ public class ElementsListAdapter extends ArrayAdapter<String>
 	{
 		TextView txv_title;
 		RelativeLayout list_item ;
+		ImageView icon_txv ;
 	}
 
 

@@ -72,17 +72,22 @@
     <string name="share_info">أنشر الخبر</string>
     <string name="principal">الرئيسية</string>
     <string name="share_app">ساهم بنشر التطبيق</string>
-    <string name="login">تسجيل الدخول</string>
+    <string name="login">دخول</string>
     <string name="add_janaza">إضافة جنازة</string>
     <string name="add_mouhadhra">إضافة محاضرة</string>
     <string name="quit">الخروج</string>
-    <string name="hint_login">إسم المستخدم</string>
-    <string name="hint_pwd">كلمة السر</string>
+    <string name="hint_login">رقم الجوال</string>
+    <string name="hint_pwd">كلمة المرور</string>
     <string name="login_empty">الرجاء إدخال إسم المستخدم وكلمة السر للتسجيل !</string>
 
     <string name="empty_add_janaza_mouhadhra">الرجاء ملء جميع الفراغات !</string>
     
     <string name="success_add">تمت الاضافة بنجاح</string>
     <string name="error_add">خطأ في الإضافة ! الرجاء المحاولة لاحقاً !</string>
+    
+    <string name="drawer_janaez">الجنائز</string>
+    <string name="drawer_mouhadhrat">المحاظرات والدروس</string>
+    <string name="drawer_share">شارك التطبيق</string>
+    <string name="drawer_settings">الإعدادات</string>
     
 </resources>

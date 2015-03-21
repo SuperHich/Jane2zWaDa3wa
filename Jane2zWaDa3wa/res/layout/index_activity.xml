@@ -68,43 +68,73 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/btn_dourouss" />
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="10dp" >
+                android:layout_marginBottom="10dp"
+                android:weightSum="4" >
 
-                <Button
-                    android:id="@+id/settings"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:layout_toLeftOf="@+id/share"
-                    android:background="@drawable/btn_settings" />
+                    android:layout_weight="1" >
 
-                <Button
-                    android:id="@+id/share"
-                    android:layout_width="wrap_content"
+                    <Button
+                        android:id="@+id/btn_enter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/btn_enter" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:background="@drawable/btn_share" />
+                    android:layout_weight="1" >
 
-                <Button
-                    android:id="@+id/about"
-                    android:layout_width="wrap_content"
+                    <Button
+                        android:id="@+id/btn_suggestions"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/btn_suggestions" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/share"
-                    android:background="@drawable/btn_about" />
-            </RelativeLayout>
+                    android:layout_weight="1" >
 
-            <Button
-                android:id="@+id/btn_menu_outside"
-                android:layout_width="35dp"
-                android:layout_height="30dp"
-                android:layout_alignParentRight="true"
-                android:layout_margin="25dp"
-                android:background="@drawable/btn_menu" />
+                    <Button
+                        android:id="@+id/about"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/btn_about" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" >
+
+                    <Button
+                        android:id="@+id/medina_choice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/btn_choice_medina" />
+                </RelativeLayout>
+            </LinearLayout>
+
+<!--             <Button -->
+<!--                 android:id="@+id/btn_menu_outside" -->
+<!--                 android:layout_width="35dp" -->
+<!--                 android:layout_height="30dp" -->
+<!--                 android:layout_alignParentRight="true" -->
+<!--                 android:layout_margin="25dp" -->
+<!--                 android:background="@drawable/btn_menu" /> -->
         </RelativeLayout>
 
         <LinearLayout

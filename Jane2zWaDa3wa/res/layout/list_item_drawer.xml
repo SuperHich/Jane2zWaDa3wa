@@ -6,19 +6,27 @@
     <RelativeLayout
         android:id="@+id/list_item"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:background="@drawable/list_drawer_selector" >
+
+        <ImageView
+            android:id="@+id/icon_txv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30dp" />
 
         <TextView
             android:id="@+id/txv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@id/icon_txv"
             android:gravity="right|center_vertical"
-            android:paddingRight="20dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:textColor="#a98333"
-            android:textSize="28sp" />
+            android:padding="5dp"
+            android:textColor="#fff"
+            android:textSize="22sp" />
     </RelativeLayout>
 
 </RelativeLayout>

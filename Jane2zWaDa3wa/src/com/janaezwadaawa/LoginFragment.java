@@ -1,30 +1,22 @@
 package com.janaezwadaawa;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.janaezwadaawa.externals.JDManager;
-import com.janaezwadaawa.gcm.GcmManager;
-import com.janaezwadaawa.gcm.GcmManager.GcmListener;
 import com.janaezwadaawa.utils.JDFonts;
 import com.pixplicity.easyprefs.library.Prefs;
 
@@ -37,6 +29,7 @@ public class LoginFragment extends Fragment {
 	private Button btn_login;
 	private EditText edit_pwd;
 	private EditText edit_login;
+	private TextView lbl_login, lbl_pwd ;
 
 
 	public LoginFragment() {
@@ -72,7 +65,13 @@ public class LoginFragment extends Fragment {
 		btn_login 	= (Button) rootView.findViewById(R.id.btn_login);
 		edit_login 	= (EditText) rootView.findViewById(R.id.edit_login);
 		edit_pwd	= (EditText) rootView.findViewById(R.id.edit_pwd);
+		
+		lbl_pwd		= (TextView) rootView.findViewById(R.id.lbl_pwd);
+		lbl_login		= (TextView) rootView.findViewById(R.id.lbl_login);
 
+		lbl_pwd.setTypeface(JDFonts.getBDRFont());
+		lbl_login.setTypeface(JDFonts.getBDRFont());
+		
 		btn_login.setTypeface(JDFonts.getBDRFont());
 		edit_login.setTypeface(JDFonts.getBDRFont());
 		edit_pwd.setTypeface(JDFonts.getBDRFont());
