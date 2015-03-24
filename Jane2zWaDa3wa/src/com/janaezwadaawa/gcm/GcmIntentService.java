@@ -20,7 +20,6 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.janaezwadaawa.IndexActivity;
 import com.janaezwadaawa.MainActivity;
 import com.janaezwadaawa.R;
 import com.janaezwadaawa.externals.JDManager;
@@ -149,7 +148,12 @@ public class GcmIntentService extends IntentService {
 
 //        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, 
 //			MainActivity.class), 0); //TODO PEnding IOntent
-        Intent intent = new Intent(this, IndexActivity.class) ;
+        Intent intent = new Intent(this, MainActivity.class) ;
+        if(message.contains("وفيات"))
+        	intent.putExtra(MainActivity.DEFAULT_FRAG_POSITION, 0);
+        else
+        	intent.putExtra(MainActivity.DEFAULT_FRAG_POSITION, 1);
+        
 //        Bundle bundle =  new Bundle();
         intent.putExtras( extras );
         intent.addFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP ); // Flag added to resume running app.

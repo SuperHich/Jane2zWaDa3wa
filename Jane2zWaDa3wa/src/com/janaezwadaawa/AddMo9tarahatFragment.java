@@ -100,7 +100,7 @@ public class AddMo9tarahatFragment extends Fragment {
 
 				String addressTxt = txv_address.getText().toString();
 				String bodyTxt = txv_body.getText().toString();
-				String mobileTxt = txv_body.getText().toString();
+				String mobileTxt = txv_mobile.getText().toString();
 
 				if (addressTxt.equalsIgnoreCase("") ||bodyTxt.equalsIgnoreCase("")) {
 

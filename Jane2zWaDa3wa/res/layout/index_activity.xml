@@ -19,7 +19,7 @@
                 android:id="@+id/top_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/jana2ez"
+                android:layout_above="@+id/layout_janaez"
                 android:layout_marginBottom="7dp" >
 
                 <TextView
@@ -29,8 +29,8 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/center_layout"
-                    android:singleLine="true"
                     android:gravity="center"
+                    android:singleLine="true"
                     android:text="@string/amaken"
                     android:textColor="#85dda8"
                     android:textSize="23sp" />
@@ -56,22 +56,62 @@
                     android:textSize="23sp" />
             </RelativeLayout>
 
-            <Button
-                android:id="@+id/jana2ez"
+            <RelativeLayout
+                android:id="@+id/layout_janaez"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/btn_jana2ez" />
+                android:layout_centerInParent="true" >
 
-            <Button
-                android:id="@+id/dourouss"
+                <Button
+                    android:id="@+id/jana2ez"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/btn_jana2ez" />
+
+                <TextView
+                    android:id="@+id/txv_janaez_total"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/circle_shape_red"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="#fff"
+                    android:textSize="16sp"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layout_da3awi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/jana2ez"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/btn_dourouss" />
+                android:layout_below="@+id/layout_janaez" >
+
+                <Button
+                    android:id="@+id/dourouss"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/btn_dourouss" />
+
+                <TextView
+                    android:id="@+id/txv_da3awi_total"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/circle_shape_red"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="#fff"
+                    android:textSize="16sp"
+                    android:visibility="gone" />
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -133,46 +173,49 @@
                 </RelativeLayout>
             </LinearLayout>
 
-<!--             <Button -->
-<!--                 android:id="@+id/btn_menu_outside" -->
-<!--                 android:layout_width="35dp" -->
-<!--                 android:layout_height="30dp" -->
-<!--                 android:layout_alignParentRight="true" -->
-<!--                 android:layout_margin="25dp" -->
-<!--                 android:background="@drawable/btn_menu" /> -->
+            <!-- <Button -->
+            <!-- android:id="@+id/btn_menu_outside" -->
+            <!-- android:layout_width="35dp" -->
+            <!-- android:layout_height="30dp" -->
+            <!-- android:layout_alignParentRight="true" -->
+            <!-- android:layout_margin="25dp" -->
+            <!-- android:background="@drawable/btn_menu" /> -->
         </RelativeLayout>
 
-<!--         <LinearLayout -->
-<!--             android:id="@+id/drawer_linear" -->
-<!--             android:layout_width="wrap_content" -->
-<!--             android:layout_height="match_parent" -->
-<!--             android:layout_gravity="end" -->
-<!--             android:background="@drawable/blank_bg" -->
-<!--             android:orientation="vertical" > -->
+        <!-- <LinearLayout -->
+        <!-- android:id="@+id/drawer_linear" -->
+        <!-- android:layout_width="wrap_content" -->
+        <!-- android:layout_height="match_parent" -->
+        <!-- android:layout_gravity="end" -->
+        <!-- android:background="@drawable/blank_bg" -->
+        <!-- android:orientation="vertical" > -->
 
-<!--             <RelativeLayout -->
-<!--                 android:id="@+id/drawer_header" -->
-<!--                 android:layout_width="wrap_content" -->
-<!--                 android:layout_height="wrap_content" > -->
 
-<!--                 <ImageView -->
-<!--                     android:layout_width="wrap_content" -->
-<!--                     android:layout_height="wrap_content" -->
-<!--                     android:layout_marginTop="10dp" -->
-<!--                     android:background="@drawable/ghiras_logo" -->
-<!--                     android:scaleType="centerInside" /> -->
-<!--             </RelativeLayout> -->
+        <!-- <RelativeLayout -->
+        <!-- android:id="@+id/drawer_header" -->
+        <!-- android:layout_width="wrap_content" -->
+        <!-- android:layout_height="wrap_content" > -->
 
-<!--             <ListView -->
-<!--                 android:id="@+id/listView" -->
-<!--                 android:layout_width="match_parent" -->
-<!--                 android:layout_height="wrap_content" -->
-<!--                 android:layout_marginTop="30dp" -->
-<!--                 android:background="@android:color/transparent" -->
-<!--                 android:divider="#fff" -->
-<!--                 android:dividerHeight="2dp" -->
-<!--                 android:gravity="center" /> -->
-<!--         </LinearLayout> -->
+
+        <!-- <ImageView -->
+        <!-- android:layout_width="wrap_content" -->
+        <!-- android:layout_height="wrap_content" -->
+        <!-- android:layout_marginTop="10dp" -->
+        <!-- android:background="@drawable/ghiras_logo" -->
+        <!-- android:scaleType="centerInside" /> -->
+        <!-- </RelativeLayout> -->
+
+
+        <!-- <ListView -->
+        <!-- android:id="@+id/listView" -->
+        <!-- android:layout_width="match_parent" -->
+        <!-- android:layout_height="wrap_content" -->
+        <!-- android:layout_marginTop="30dp" -->
+        <!-- android:background="@android:color/transparent" -->
+        <!-- android:divider="#fff" -->
+        <!-- android:dividerHeight="2dp" -->
+        <!-- android:gravity="center" /> -->
+        <!-- </LinearLayout> -->
     </android.support.v4.widget.DrawerLayout>
 
     <FrameLayout

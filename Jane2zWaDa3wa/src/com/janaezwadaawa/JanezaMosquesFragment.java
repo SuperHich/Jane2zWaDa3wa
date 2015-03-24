@@ -171,7 +171,7 @@ public class JanezaMosquesFragment extends Fragment implements ISearchListener {
 					items.addAll(jdManager.getPrayerByMosque(placeId, mosque.getId()));
 					allItems.addAll(items);
 				}
-				return items;
+				return orderedPrayers(items);
 			}
 			
 			@Override
@@ -215,5 +215,41 @@ public class JanezaMosquesFragment extends Fragment implements ISearchListener {
 			items.addAll(allItems);
 			adapter.notifyDataSetChanged();
 		}
+	}
+	
+	private ArrayList<Prayer> orderedPrayers(ArrayList<Prayer> prayers){
+		ArrayList<Prayer> result = new ArrayList<Prayer>();
+		
+		Prayer p0 = getPrayerById(prayers, 54);
+		if(p0 != null)
+			result.add(p0);
+		
+		Prayer p1 = getPrayerById(prayers, 50);
+		if(p1 != null)
+			result.add(p1);
+		
+		Prayer p2 = getPrayerById(prayers, 51);
+		if(p2 != null)
+			result.add(p2);
+		
+		Prayer p3 = getPrayerById(prayers, 52);
+		if(p3 != null)
+			result.add(p3);
+		
+		Prayer p4 = getPrayerById(prayers, 53);
+		if(p4 != null)
+			result.add(p4);
+		
+		return result;
+	}
+	
+	private Prayer getPrayerById(ArrayList<Prayer> prayers, int id){
+		for (int i = 0; i < prayers.size(); i++) {
+			Prayer p = prayers.get(i);
+			if(p.getId() == id)
+				return p;
+		}
+		
+		return null;
 	}
 }

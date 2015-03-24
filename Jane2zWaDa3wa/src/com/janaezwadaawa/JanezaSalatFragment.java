@@ -187,7 +187,7 @@ public class JanezaSalatFragment extends Fragment implements ISearchListener, On
 			@Override
 			protected ArrayList<JanezaGender> doInBackground(Void... params) {
 				if(placeId != -1){
-					for (int i = 0; i < 4; i++) {
+					for (int i = 0; i < 3; i++) {
 						JanezaGender jg = new JanezaGender();
 						jg.setTitle(getGenderName(i));
 						ArrayList<String> names = jdManager.getZanaezNames(mosque.getId(), prayer.getId(), i);

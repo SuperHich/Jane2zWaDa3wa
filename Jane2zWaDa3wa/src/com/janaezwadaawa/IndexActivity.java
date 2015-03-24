@@ -1,5 +1,6 @@
 package com.janaezwadaawa;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -12,6 +13,7 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.location.Location;
 import android.location.LocationListener;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -23,7 +25,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.janaezwadaawa.dateconverter.Hijri;
+import com.janaezwadaawa.entity.Da3wa;
 import com.janaezwadaawa.entity.GHTDate;
+import com.janaezwadaawa.entity.Mosque2;
 import com.janaezwadaawa.entity.Place;
 import com.janaezwadaawa.externals.JDManager;
 import com.janaezwadaawa.gcm.GcmManager;
@@ -42,7 +46,7 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 	public static final String ADD_I9TIRAH_FRAGMENT 	= "add_i9tirah";
 	public static final String ADMIN_FRAGMENT 			= "admin";
 	
-	private TextView txv_place , txv_date ;
+	private TextView txv_place , txv_date, txv_janaez_total, txv_da3awi_total  ;
 	private Button  about , medina_choice, btn_suggestions, btn_enter;
 	private Button dourouss, jana2ez ;
 
@@ -98,6 +102,8 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 
 		txv_place = (TextView) findViewById(R.id.txv_place);
 		txv_date = (TextView) findViewById(R.id.txv_date);
+		txv_janaez_total = (TextView) findViewById(R.id.txv_janaez_total);
+		txv_da3awi_total = (TextView) findViewById(R.id.txv_da3awi_total);
 		
 //		btn_menu_outside 	= (Button) findViewById(R.id.btn_menu_outside);
 //		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -144,6 +150,8 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 
 		initGCM();
 
+		initData();
+		
 //		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 //
 //		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, 
@@ -503,5 +511,56 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 
 	}
 	
+	
+	private void initData(){
+		
+		new AsyncTask<Void, Void, Boolean>() {
+			ArrayList<Mosque2> mosques = new ArrayList<Mosque2>();
+			ArrayList<Da3wa> da3awi = new ArrayList<Da3wa>();
+			
+			@Override
+			protected void onPreExecute() {
+//				loading = new ProgressDialog(getActivity());
+//				loading.setCancelable(false);
+//				loading.setMessage(getString(R.string.please_wait));
+//				loading.show();
+			}
+			
+			@Override
+			protected Boolean doInBackground(Void... params) {
+				if(mManager.getSelectedPlace().getId() != -1){
+					mosques.addAll(mManager.getMosques2ByPlace(mManager.getSelectedPlace().getId()));
+					da3awi.addAll(mManager.getAllDa3awi());
+					return true;
+				}
+				return false;
+			}
+			
+			@Override
+			protected void onPostExecute(Boolean result) {
+//				loading.dismiss();
+				
+				if(result){
+					
+					int janaezNb = 0;
+					for(Mosque2 m : mosques){
+						janaezNb += m.getCount();
+					}
+					
+					if(janaezNb > 0){
+						txv_janaez_total.setVisibility(View.VISIBLE);
+						txv_janaez_total.setText("" + janaezNb);
+					}
+					
+					if(da3awi.size() > 0){
+						txv_da3awi_total.setVisibility(View.VISIBLE);
+						txv_da3awi_total.setText("" + da3awi.size());
+					}
+				}
+			}
+		}.execute();
+
+	}
+
 
 }

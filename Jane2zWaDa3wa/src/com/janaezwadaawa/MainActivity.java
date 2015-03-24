@@ -31,6 +31,7 @@ import com.janaezwadaawa.adapters.ElementsListAdapter;
 import com.janaezwadaawa.adapters.IMenuListener;
 import com.janaezwadaawa.entity.DrawerItem;
 import com.janaezwadaawa.externals.JDManager;
+import com.janaezwadaawa.utils.JDFonts;
 
 public class MainActivity extends FragmentActivity implements IMenuListener, OnTouchListener, EditNameDialogListener{
 
@@ -56,7 +57,7 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 
 
 	private Button btn_menu, btn_search;
-	private ImageView header ;
+	private ImageView header, img_header;
 
 
 	public static final int MESSAGE_START = 1;
@@ -77,8 +78,10 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 		setContentView(R.layout.activity_main);
 
 		mManager = JDManager.getInstance(this);
+		JDFonts.Init(this);
 
 		header = (ImageView) findViewById(R.id.header);
+		img_header = (ImageView) findViewById(R.id.img_header);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerLinear = (LinearLayout) findViewById(R.id.drawer_linear);
 		moving_layout = (RelativeLayout) findViewById(R.id.moving_layout);
@@ -111,6 +114,16 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 		adapter = new ElementsListAdapter(this, drawerItems);
 		listView.setAdapter(adapter);
 		listView.setCacheColorHint(Color.TRANSPARENT);
+		
+		img_header.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(MainActivity.this, IndexActivity.class));
+				overridePendingTransition(R.anim.right_in, R.anim.right_out);
+				finish();
+			}
+		});
 
 		//		MenuCustomAdapter adapter = new MenuCustomAdapter(this, getResources
 		//
@@ -504,6 +517,10 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 			return new JanezaMosquesFragment();
 		else if(tag.equals(JANEZA_SALAT_FRAGMENT))
 			return new JanezaSalatFragment();
+		else if(tag.equals(DA3WA_DETAILS_FRAGMENT))
+			return new Da3waDetailFragment();
+		else if(tag.equals(DA3AWI_FRAGMENT))
+			return new Da3waFragment();
 		else 
 			return null;
 	}

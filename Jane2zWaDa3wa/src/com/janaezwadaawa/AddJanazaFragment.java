@@ -11,7 +11,6 @@ import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Fragment;
 import android.app.ProgressDialog;
-import android.app.TimePickerDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,7 +23,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.janaezwadaawa.entity.Place;
@@ -146,35 +144,40 @@ public class AddJanazaFragment extends Fragment {
 
 		initiateLists();
 
-		salat_time.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Calendar mcurrentTime = Calendar.getInstance();
-				int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-				int minute = mcurrentTime.get(Calendar.MINUTE);
-
-				TimePickerDialog mTimePicker;
-
-				mTimePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
-					@Override
-					public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-
-						Calendar mCalendar = Calendar.getInstance();
-						mCalendar.set(Calendar.HOUR_OF_DAY, selectedHour);
-						mCalendar.set(Calendar.MINUTE, selectedMinute);
-						time = new SimpleDateFormat("HH:mm").format(mCalendar.getTime());
-
-						salat_time.setText( time);
-					}
-				}, hour, minute, true);//Yes 24 hour time
-
-				mTimePicker.setTitle("إختيار وقت الصلاة :");
-				mTimePicker.show();
-
-			}
-		});
+		
+		lbl_body.setVisibility(View.GONE);
+		txv_body.setVisibility(View.GONE);
+		
+		salat_time.setVisibility(View.INVISIBLE);
+//		salat_time.setOnClickListener(new OnClickListener() {
+//
+//			@Override
+//			public void onClick(View v) {
+//				// TODO Auto-generated method stub
+//				Calendar mcurrentTime = Calendar.getInstance();
+//				int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+//				int minute = mcurrentTime.get(Calendar.MINUTE);
+//
+//				TimePickerDialog mTimePicker;
+//
+//				mTimePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+//					@Override
+//					public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+//
+//						Calendar mCalendar = Calendar.getInstance();
+//						mCalendar.set(Calendar.HOUR_OF_DAY, selectedHour);
+//						mCalendar.set(Calendar.MINUTE, selectedMinute);
+//						time = new SimpleDateFormat("HH:mm").format(mCalendar.getTime());
+//
+//						salat_time.setText( time);
+//					}
+//				}, hour, minute, true);//Yes 24 hour time
+//
+//				mTimePicker.setTitle("إختيار وقت الصلاة :");
+//				mTimePicker.show();
+//
+//			}
+//		});
 
 		salat_date.setOnClickListener(new OnClickListener() {
 
@@ -221,7 +224,7 @@ public class AddJanazaFragment extends Fragment {
 				final String bodyTxt = txv_body.getText().toString();
 
 
-				if (addressTxt.equalsIgnoreCase("") ||bodyTxt.equalsIgnoreCase("") || time.equalsIgnoreCase("")|| date.equalsIgnoreCase("")) {
+				if (addressTxt.equalsIgnoreCase("") || date.equalsIgnoreCase("")) {
 
 					Toast.makeText(getActivity(), getString(R.string.empty_add_janaza_mouhadhra), Toast.LENGTH_SHORT).show();
 				}
