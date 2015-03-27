@@ -22,6 +22,7 @@ import com.janaezwadaawa.adapters.ISearchListener;
 import com.janaezwadaawa.entity.Address;
 import com.janaezwadaawa.entity.Da3wa;
 import com.janaezwadaawa.entity.Janeza;
+import com.janaezwadaawa.entity.JanezaPerson;
 import com.janaezwadaawa.entity.Mosque;
 import com.janaezwadaawa.entity.Mosque2;
 import com.janaezwadaawa.entity.Place;
@@ -45,7 +46,7 @@ public class JDManager {
 	private static final String URL_ADDRESSES 			= URL_BASE + "addresses/";	
 	private static final String URL_PLACE 				= URL_BASE + "place/%d";
 	private static final String URL_MOSQUE 				= URL_BASE + "mosque/%d/%d";
-	private static final String URL_MOSQUE_SALAT_GENDER = URL_BASE + "mosque_salat_gender/%d/%d/%d";
+	private static final String URL_MOSQUE_SALAT_GENDER = URL_BASE + "mosque_salat_gender/%d/%d/%d/%d";
 	private static final String URL_LOGIN 				= URL_BASE + "login/%s/%s";
 	private static final String URL_ADD_JANEZA 			= URL_BASE + "addExequy";
 	private static final String URL_ADD_DA3WA 			= URL_BASE + "addLicuter";
@@ -89,7 +90,7 @@ public class JDManager {
 	private static final String SALAT_TIME	 	= "salat_time";
 	private static final String TIME_FROM	 	= "time_from";
 	private static final String TIME_TO	 		= "time_to";
-	
+	private static final String DATE	 		= "date";
 	
 	private IFragmentNotifier fragmentNotifier;
 	
@@ -104,7 +105,7 @@ public class JDManager {
 	private Da3wa selectedDa3wa;
 	private Prayer selectedPrayer;
 	
-	private ArrayList<Place> places;
+	private ArrayList<Place> places = new ArrayList<Place>();
 	private ArrayList<SelectMosque> selectMosques = new ArrayList<SelectMosque>();
 	private ArrayList<SelectTrainer> selectTrainers = new ArrayList<SelectTrainer>();
 	private ArrayList<SelectSalat> selectSalats = new ArrayList<SelectSalat>();
@@ -344,17 +345,21 @@ public class JDManager {
 		return result;
 	}
 	
-	public ArrayList<String> getZanaezNames(int mosqueId, int prayerId, int genderId) {
-		ArrayList<String> result = new ArrayList<String>();
-		String url = String.format(URL_MOSQUE_SALAT_GENDER, mosqueId, prayerId, genderId);
+	public ArrayList<JanezaPerson> getZanaezNames(int placeId, int mosqueId, int prayerId, int genderId) {
+		ArrayList<JanezaPerson> result = new ArrayList<JanezaPerson>();
+		String url = String.format(URL_MOSQUE_SALAT_GENDER, placeId, mosqueId, prayerId, genderId);
 		JSONArray array = jsonParser.getJSONFromUrl(url);
 		Log.i(TAG, ">>> url : " + url);
 		if (array != null) 
 		for (int i = 0; i < array.length(); i++) {
 			try {
-				String item = array.getString(i);
+				JanezaPerson item = new JanezaPerson(); 
 				
-				Log.i(TAG, item);
+				JSONObject pObj = array.getJSONObject(i);
+				item.setTitle(pObj.getString(NAME));
+				item.setDate(pObj.getString(DATE));
+				
+				Log.i(TAG, item.toString());
 				
 				result.add(item);
 			} catch (JSONException e) {
@@ -373,8 +378,10 @@ public class JDManager {
 		Log.i(TAG, ">>> url : " + url);
 		if (response != null) 
 		{
-			if(!response.equalsIgnoreCase("false"))
+			if(!response.equalsIgnoreCase("false")){
+				response = response.substring(response.indexOf("\""));
 				uid = response.replaceAll("\"", "");
+			}
 		}
 		
 		return uid;

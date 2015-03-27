@@ -109,7 +109,7 @@ public class SplashHome extends Activity {
 			@Override
 			protected ArrayList<Place> doInBackground(Void... params) {
 
-				return JDManager.getInstance(SplashHome.this).getAllPlaces();
+				return mManager.getAllPlaces();
 			}
 
 			@Override

@@ -512,7 +512,7 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 	}
 	
 	
-	private void initData(){
+	public void initData(){
 		
 		new AsyncTask<Void, Void, Boolean>() {
 			ArrayList<Mosque2> mosques = new ArrayList<Mosque2>();

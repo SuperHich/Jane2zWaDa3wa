@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class JanezaGender extends JDEntity{
 	private int count;
-	private ArrayList<String> names = new ArrayList<String>();
+	private ArrayList<JanezaPerson> names = new ArrayList<JanezaPerson>();
 
 	public int getCount() {
 		return count;
@@ -15,11 +15,11 @@ public class JanezaGender extends JDEntity{
 		this.count = count;
 	}
 
-	public ArrayList<String> getNames() {
+	public ArrayList<JanezaPerson> getNames() {
 		return names;
 	}
 
-	public void setNames(ArrayList<String> names) {
+	public void setNames(ArrayList<JanezaPerson> names) {
 		this.names = names;
 	}
 

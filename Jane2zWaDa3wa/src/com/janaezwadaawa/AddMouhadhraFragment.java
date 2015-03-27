@@ -302,6 +302,7 @@ public class AddMouhadhraFragment extends Fragment {
 
 							loading = new ProgressDialog(getActivity());
 							loading.setMessage(getString(R.string.please_wait));
+							loading.setCancelable(false);
 							loading.show();
 
 						};
@@ -319,7 +320,6 @@ public class AddMouhadhraFragment extends Fragment {
 
 							return mManager.addDa3wa(mManager.getUid(), addressTxt, bodyTxt, place, mosque, trainer, time_date_begin, time_date_final);
 
-
 						}
 
 						protected void onPostExecute(Boolean result) {
@@ -328,6 +328,7 @@ public class AddMouhadhraFragment extends Fragment {
 
 							if (result ) {
 								Toast.makeText(getActivity(), getString(R.string.success_add), Toast.LENGTH_SHORT).show();
+								((IndexActivity)getActivity()).initData();
 								getActivity().onBackPressed();
 							}else
 								Toast.makeText(getActivity(), getString(R.string.error_add), Toast.LENGTH_SHORT).show();
@@ -351,12 +352,13 @@ public class AddMouhadhraFragment extends Fragment {
 
 	private void initiateLists() {
 
-		listManatek = mManager.getPlaces();
+//		listManatek = mManager.getPlaces();
 
-		if (mManager.getSelectMosques().size() > 0 && mManager.getSelectTrainers().size()> 0) {
+		if (!mManager.getSelectMosques().isEmpty() && !mManager.getSelectTrainers().isEmpty() && !mManager.getPlaces().isEmpty()) {
 
 			listTrainers = mManager.getSelectTrainers();
 			listJawamaa = mManager.getSelectMosques();
+			listManatek = mManager.getPlaces();
 
 			initiateSpinners();
 		}
@@ -370,6 +372,7 @@ public class AddMouhadhraFragment extends Fragment {
 
 					loading = new ProgressDialog(getActivity());
 					loading.setMessage(getString(R.string.please_wait));
+					loading.setCancelable(false);
 					loading.show();
 
 				};
@@ -377,6 +380,7 @@ public class AddMouhadhraFragment extends Fragment {
 				@Override
 				protected String doInBackground(Void... params) {
 
+					listManatek = mManager.getAllPlaces();
 					listTrainers = mManager.getAllSelectTrainers();
 					listJawamaa = mManager.getAllSelectMosques();
 
@@ -387,7 +391,7 @@ public class AddMouhadhraFragment extends Fragment {
 
 					loading.dismiss();
 
-					if (listTrainers.size() > 0 && listJawamaa.size()> 0) {
+					if (!listTrainers.isEmpty() && !listJawamaa.isEmpty() && !listManatek.isEmpty()) {
 
 						mManager.setSelectTrainers(listTrainers);
 						mManager.setSelectMosques(listJawamaa);

@@ -2,6 +2,7 @@ package com.janaezwadaawa;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -123,17 +124,23 @@ public class LoginFragment extends Fragment {
 					
 					new AsyncTask<Void, Void, String>() {
 
-						
+						private ProgressDialog loading;
+
+						protected void onPreExecute() {
+							loading = new ProgressDialog(getActivity());
+							loading.setMessage(getString(R.string.please_wait));
+							loading.setCancelable(false);
+							loading.show();
+						};
 						
 						@Override
 						protected String doInBackground(Void... params) {
 
-							String response = mManager.login(loginText, pwdText);
-							
-							return response;
+							return mManager.login(loginText, pwdText);
 						}
 						
 						protected void onPostExecute(String result) {
+							loading.dismiss();
 							
 							if (result != null ) {
 								

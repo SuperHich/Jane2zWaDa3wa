@@ -1,6 +1,11 @@
 package com.janaezwadaawa.adapters;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,7 +15,10 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.janaezwadaawa.R;
+import com.janaezwadaawa.dateconverter.Hijri;
+import com.janaezwadaawa.entity.GHTDate;
 import com.janaezwadaawa.entity.JanezaGender;
+import com.janaezwadaawa.entity.JanezaPerson;
 import com.janaezwadaawa.utils.JDFonts;
 
 public class JanezaGenderAdapter extends BaseExpandableListAdapter {
@@ -39,6 +47,8 @@ public class JanezaGenderAdapter extends BaseExpandableListAdapter {
 	{
 		TextView txv_name;
 		TextView txv_name_value;
+		TextView txv_date;
+		TextView txv_date_value;
 		TextView txv_janeza_index;
 	}
 
@@ -111,10 +121,14 @@ public class JanezaGenderAdapter extends BaseExpandableListAdapter {
 			
 			holder.txv_name 			= (TextView) convertView.findViewById(R.id.txv_name);
 			holder.txv_name_value 		= (TextView) convertView.findViewById(R.id.txv_name_value);
+			holder.txv_date 			= (TextView) convertView.findViewById(R.id.txv_date);
+			holder.txv_date_value 		= (TextView) convertView.findViewById(R.id.txv_date_value);
 			holder.txv_janeza_index 	= (TextView) convertView.findViewById(R.id.txv_janeza_index);
 			
 			holder.txv_name.setTypeface(JDFonts.getBDRFont());
 			holder.txv_name_value.setTypeface(JDFonts.getBDRFont());
+			holder.txv_date.setTypeface(JDFonts.getBDRFont());
+			holder.txv_date_value.setTypeface(JDFonts.getBDRFont());
 			holder.txv_janeza_index.setTypeface(JDFonts.getBDRFont());
 			
 			convertView.setTag(holder);
@@ -123,9 +137,10 @@ public class JanezaGenderAdapter extends BaseExpandableListAdapter {
 			holder = (ViewChildHolder)convertView.getTag();
 		}
 		
-		String item = items.get(groupPosition).getNames().get(childPosition); 
+		JanezaPerson item = items.get(groupPosition).getNames().get(childPosition); 
 		
-		holder.txv_name_value.setText(""+item);
+		holder.txv_name_value.setText(""+item.getTitle());
+		holder.txv_date_value.setText(getFormattedHijriDate(item.getDate()));
 		holder.txv_janeza_index.setText(""+(childPosition+1));
 		
 		return convertView;
@@ -137,6 +152,40 @@ public class JanezaGenderAdapter extends BaseExpandableListAdapter {
 	public boolean isChildSelectable(int groupPosition, int childPosition) {
 		// TODO Auto-generated method stub
 		return true;
+	}
+	
+	
+	private String getFormattedHijriDate(String date){
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		try {
+			Date d = sdf.parse(date);
+			
+			if(d != null){
+				Calendar calendar = Calendar.getInstance(Locale.getDefault());
+				calendar.setTime(d);
+				int gDay = calendar.get(Calendar.DAY_OF_MONTH);
+				int gMonth = calendar.get(Calendar.MONTH) + 1;
+				int gYear = calendar.get(Calendar.YEAR);
+				
+				GHTDate gDate = Hijri.GregorianToHijri(gYear, gMonth, gDay);
+				
+				gDay = gDate.getDayG();
+				gMonth = gDate.getMonthG();
+				gYear = gDate.getYearG();
+				
+				int hDay = gDate.getDayH();
+				int hMonth = gDate.getMonthH();
+				int hYear = gDate.getYearH();
+				
+				return gDate.getDayNameH() + "  " + hDay + " " + gDate.getMonthNameH() + "  " + hYear + " هـ.";
+			}
+			
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return date;
+		
 	}
 
 }

@@ -27,6 +27,7 @@ import com.janaezwadaawa.adapters.JanezaGenderAdapter;
 import com.janaezwadaawa.dateconverter.Hijri;
 import com.janaezwadaawa.entity.GHTDate;
 import com.janaezwadaawa.entity.JanezaGender;
+import com.janaezwadaawa.entity.JanezaPerson;
 import com.janaezwadaawa.entity.Mosque2;
 import com.janaezwadaawa.entity.Prayer;
 import com.janaezwadaawa.externals.JDManager;
@@ -190,7 +191,7 @@ public class JanezaSalatFragment extends Fragment implements ISearchListener, On
 					for (int i = 0; i < 3; i++) {
 						JanezaGender jg = new JanezaGender();
 						jg.setTitle(getGenderName(i));
-						ArrayList<String> names = jdManager.getZanaezNames(mosque.getId(), prayer.getId(), i);
+						ArrayList<JanezaPerson> names = jdManager.getZanaezNames(placeId, mosque.getId(), prayer.getId(), i);
 						jg.setCount(names.size());
 						jg.setNames(names);
 						
@@ -274,8 +275,8 @@ public class JanezaSalatFragment extends Fragment implements ISearchListener, On
 			
 			for(JanezaGender jg : items){
 				sb.append(jg.getCount() + " " + jg.getTitle());
-				for(String str : jg.getNames()){
-					sb.append("\n-" + str);
+				for(JanezaPerson person : jg.getNames()){
+					sb.append("\n-" + person.getTitle() + " / " + person.getDate());
 				}
 				sb.append("\n\n");
 			}

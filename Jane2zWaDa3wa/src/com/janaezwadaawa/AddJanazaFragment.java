@@ -49,7 +49,7 @@ public class AddJanazaFragment extends Fragment {
 	private ArrayList<Place> listManatek = new ArrayList<Place>();
 
 
-	String date = "", time = "" ;
+	String date = "", time = "00:00" ;
 
 	private TextView top_header;
 
@@ -238,6 +238,7 @@ public class AddJanazaFragment extends Fragment {
 
 							loading = new ProgressDialog(getActivity());
 							loading.setMessage(getString(R.string.please_wait));
+							loading.setCancelable(false);
 							loading.show();
 
 						};
@@ -263,6 +264,7 @@ public class AddJanazaFragment extends Fragment {
 
 							if (result ) {
 								Toast.makeText(getActivity(), getString(R.string.success_add), Toast.LENGTH_SHORT).show();
+								((IndexActivity)getActivity()).initData();
 								getActivity().onBackPressed();
 							}else
 								Toast.makeText(getActivity(), getString(R.string.error_add), Toast.LENGTH_SHORT).show();
@@ -286,16 +288,16 @@ public class AddJanazaFragment extends Fragment {
 
 	private void initiateLists() {
 
-		listManatek = mManager.getPlaces();
 		listGenres = mManager.getSelectGenders();
 
-		if (mManager.getSelectMosques().size() > 0 && mManager.getSelectSalats().size()> 0) {
+		if (!mManager.getSelectMosques().isEmpty() && !mManager.getSelectSalats().isEmpty() && !mManager.getPlaces().isEmpty()) {
 
 			//			Toast.makeText(getActivity(), getString(R.string.login_empty), Toast.LENGTH_SHORT).show();
 
 			listSalawat = mManager.getSelectSalats();
 			listJawamaa = mManager.getSelectMosques();
-			
+			listManatek = mManager.getPlaces();
+
 			initiateSpinners();
 
 		}
@@ -309,6 +311,7 @@ public class AddJanazaFragment extends Fragment {
 
 					loading = new ProgressDialog(getActivity());
 					loading.setMessage(getString(R.string.please_wait));
+					loading.setCancelable(false);
 					loading.show();
 
 				};
@@ -316,6 +319,7 @@ public class AddJanazaFragment extends Fragment {
 				@Override
 				protected String doInBackground(Void... params) {
 
+					listManatek = mManager.getAllPlaces();
 					listSalawat = mManager.getAllSelectSalats();
 					listJawamaa = mManager.getAllSelectMosques();
 
@@ -326,7 +330,7 @@ public class AddJanazaFragment extends Fragment {
 
 					loading.dismiss();
 
-					if (listSalawat.size() > 0 && listJawamaa.size()> 0) {
+					if (!listSalawat.isEmpty() && !listJawamaa.isEmpty() && !listManatek.isEmpty()) {
 
 						mManager.setSelectSalats(listSalawat);
 						mManager.setSelectMosques(listJawamaa);

@@ -8,9 +8,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.janaezwadaawa.adapters.PlacesAdapter;
@@ -24,6 +26,7 @@ public class PlacesFragment extends ListFragment {
 	private PlacesAdapter adapter;
 	private ArrayList<Place> places = new ArrayList<Place>();
 	private TextView txv_empty, top_header ;
+	private Button btn_back;
 
 	private JDManager mManager;
 	
@@ -58,7 +61,15 @@ public class PlacesFragment extends ListFragment {
 		
 		txv_empty = (TextView) rootView.findViewById(R.id.txv_emptyList);
 		top_header =  (TextView) rootView.findViewById(R.id.top_header);
-		
+		btn_back	= (Button) rootView.findViewById(R.id.btn_back);
+		btn_back.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				getActivity().onBackPressed();
+			}
+		});
+
 		top_header.setTypeface(JDFonts.getBDRFont());
 		
 		adapter = new PlacesAdapter(getActivity(), R.layout.place_list_item, places);
@@ -106,8 +117,8 @@ public class PlacesFragment extends ListFragment {
 			
 			@Override
 			protected ArrayList<Place> doInBackground(Void... params) {
-				if(mManager.getPlaces() == null)
-					mManager.setPlaces(mManager.getAllPlaces());
+				if(mManager.getPlaces().isEmpty())
+					mManager.getAllPlaces();
 				
 				return mManager.getPlaces();
 			}
