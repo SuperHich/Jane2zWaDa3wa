@@ -476,9 +476,9 @@ public class JDManager {
 			}
 		}
 		
-		if(getPlaces() == null){
+//		if(getPlaces().isEmpty()){
 			setPlaces(places);
-		}
+//		}
 		
 		return places;
 	}

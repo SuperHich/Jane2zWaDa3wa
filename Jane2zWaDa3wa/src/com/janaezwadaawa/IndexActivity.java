@@ -528,11 +528,12 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 			
 			@Override
 			protected Boolean doInBackground(Void... params) {
-				if(mManager.getSelectedPlace().getId() != -1){
-					mosques.addAll(mManager.getMosques2ByPlace(mManager.getSelectedPlace().getId()));
-					da3awi.addAll(mManager.getAllDa3awi());
-					return true;
-				}
+				if(mManager.getSelectedPlace() != null)
+					if(mManager.getSelectedPlace().getId() != -1){
+						mosques.addAll(mManager.getMosques2ByPlace(mManager.getSelectedPlace().getId()));
+						da3awi.addAll(mManager.getAllDa3awi());
+						return true;
+					}
 				return false;
 			}
 			
