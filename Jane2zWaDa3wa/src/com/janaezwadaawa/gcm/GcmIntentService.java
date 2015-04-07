@@ -44,7 +44,8 @@ public class GcmIntentService extends IntentService {
     protected void onHandleIntent(Intent intent) {
     	
         Bundle extras = intent.getExtras();
-       
+        JDManager mManager = JDManager.getInstance(this);
+        
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
         // The getMessageType() intent parameter must be the intent you received
         // in your BroadcastReceiver.
@@ -81,11 +82,13 @@ public class GcmIntentService extends IntentService {
                 	sendNotification(true,extras);
                 	
                 	try {
-                		int badgeCounter = JDManager.getInstance(this).getBadgeCounter();
+                		int badgeCounter = mManager.getBadgeCounter();
                 		badgeCounter = badgeCounter+1;
             			JDManager.getInstance(this).setBadgeCounter(badgeCounter);
             			Log.e(TAG, "badgeCounter: " + badgeCounter);
             			ShortcutBadger.setBadge(getApplicationContext(), badgeCounter);
+            			if(mManager.getGcmDispatcher() != null)
+            				mManager.getGcmDispatcher().onNewNotificationReceived();
             		} catch (ShortcutBadgeException e) {
             			// TODO Auto-generated catch block
             			e.printStackTrace();

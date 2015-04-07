@@ -109,7 +109,7 @@ public class AddMo9tarahatFragment extends Fragment {
 				else {
 
 					String body = bodyTxt + "\n\n" + mobileTxt;
-					Utils.shareWithMail(getActivity(), "info@gheras.org.sa", addressTxt, body, getString(R.string.send));
+					Utils.shareWithMail(getActivity(), "info.gheras@gmail.com", addressTxt, body, getString(R.string.send));
 					
 				}
 			}});

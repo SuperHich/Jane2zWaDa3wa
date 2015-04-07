@@ -32,6 +32,7 @@ import com.janaezwadaawa.entity.SelectMosque;
 import com.janaezwadaawa.entity.SelectSalat;
 import com.janaezwadaawa.entity.SelectTrainer;
 import com.janaezwadaawa.gcm.GcmResponse;
+import com.janaezwadaawa.gcm.IGcmDispatcher;
 
 public class JDManager {
 
@@ -54,7 +55,8 @@ public class JDManager {
 	private static final String URL_SELECT_TRAINERS 	= URL_BASE + "select/trainers";
 	private static final String URL_SELECT_SALATS 		= URL_BASE + "select/salat";
 	
-	private static final String URL_PUSH_REGISTER	= "http://gheras.net/exequyApp/mobile_data/push_notifications";
+	private static final String URL_PUSH_REGISTER		= "http://gheras.net/exequyApp/mobile_data/push_notifications";
+	private static final String URL_CHANGE_PUSH_PLACE	= "http://gheras.net/exequyApp/api/change_place/%s/1/%d"; //...token/type/pid
 	
 	private static final String ID 				= "id";
 	private static final String TITLE 			= "title";
@@ -111,6 +113,8 @@ public class JDManager {
 	private ArrayList<SelectSalat> selectSalats = new ArrayList<SelectSalat>();
 	private ArrayList<SelectGender> selectGenders = new ArrayList<SelectGender>();
 	private ISearchListener searchListener;
+	
+	private IGcmDispatcher gcmDispatcher;
 	
 	private boolean loggedIn ;
 	private String Uid ;
@@ -401,7 +405,7 @@ public class JDManager {
 		
 		String response = jsonParser.post(URL_ADD_JANEZA, params);
 		if(response != null)
-			return response.trim().contains("1");
+			return response.trim().equals("1");
 		
 		return false;
 	}
@@ -420,7 +424,7 @@ public class JDManager {
 		
 		String response = jsonParser.post(URL_ADD_DA3WA, params);
 		if(response != null)
-			return response.trim().contains("1");
+			return response.trim().equals("1");
 		
 		return false;
 	}
@@ -598,6 +602,22 @@ public class JDManager {
 		
 		return isOK;
 	}
+	
+	public boolean changePuchPlace(String token, int placeId) {
+		boolean isOK = false;
+		
+		String url = String.format(URL_CHANGE_PUSH_PLACE, token, placeId);
+		
+		Log.i(TAG, ">>>>> changePuchPlace: " + url);
+		String result = jsonParser.getStringFromUrl(url);
+		if (result != null) 
+		{
+			isOK = result.trim().equals("1");
+		}
+		
+		return isOK;
+	}
+
 
 	private String deviceToken;
 	public String getDeviceToken() {
@@ -781,5 +801,13 @@ public class JDManager {
 
 	public void setUid(String uid) {
 		Uid = uid;
+	}
+
+	public IGcmDispatcher getGcmDispatcher() {
+		return gcmDispatcher;
+	}
+
+	public void setGcmDispatcher(IGcmDispatcher gcmDispatcher) {
+		this.gcmDispatcher = gcmDispatcher;
 	}
 }

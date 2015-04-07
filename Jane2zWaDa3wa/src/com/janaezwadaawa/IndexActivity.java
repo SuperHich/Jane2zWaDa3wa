@@ -31,11 +31,13 @@ import com.janaezwadaawa.entity.Mosque2;
 import com.janaezwadaawa.entity.Place;
 import com.janaezwadaawa.externals.JDManager;
 import com.janaezwadaawa.gcm.GcmManager;
+import com.janaezwadaawa.gcm.IGcmDispatcher;
 import com.janaezwadaawa.gcm.GcmManager.GcmListener;
 import com.janaezwadaawa.utils.JDFonts;
 import com.janaezwadaawa.utils.MyLocationManager;
+import com.janaezwadaawa.utils.Utils;
 
-public class IndexActivity extends FragmentActivity implements OnTouchListener, LocationListener{
+public class IndexActivity extends FragmentActivity implements OnTouchListener, LocationListener, IGcmDispatcher{
 
 	public static final String PLACES_FRAGMENT 			= "places";
 	public static final String LOGIN_FRAGMENT 			= "login";
@@ -45,6 +47,7 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 	public static final String ADD_MOHADHRA_FRAGMENT 	= "add_mohadhra";
 	public static final String ADD_I9TIRAH_FRAGMENT 	= "add_i9tirah";
 	public static final String ADMIN_FRAGMENT 			= "admin";
+	protected static final String TAG = null;
 	
 	private TextView txv_place , txv_date, txv_janaez_total, txv_da3awi_total  ;
 	private Button  about , medina_choice, btn_suggestions, btn_enter;
@@ -79,6 +82,8 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 		setContentView(R.layout.index_activity);
 
 		mManager = JDManager.getInstance(this);
+		mManager.setGcmDispatcher(this);
+		
 		mLocationManager = MyLocationManager.getIntance(this);
 		mLocationManager.start();
 		mLocationManager.register(this);
@@ -150,8 +155,6 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 
 		initGCM();
 
-		initData();
-		
 //		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 //
 //		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, 
@@ -191,9 +194,6 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 //		
 //		
 //		prepareDrawerItems();
-		
-		
-		
 	}
 
 //	private void prepareDrawerItems() {
@@ -299,6 +299,13 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 //		}
 //		
 //	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		initData();
+	}
 
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
@@ -417,9 +424,12 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 
 	public void onPlaceSelected(Place place){
 
+		changePushPlace(place.getId());
 		mManager.setSelectedPlace(place);
 		txv_place.setText(place.getTitle());
 		onBackPressed();
+		
+		initData();
 	}
 
 	private void setEnableState(boolean enabled){
@@ -520,10 +530,8 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 			
 			@Override
 			protected void onPreExecute() {
-//				loading = new ProgressDialog(getActivity());
-//				loading.setCancelable(false);
-//				loading.setMessage(getString(R.string.please_wait));
-//				loading.show();
+				txv_janaez_total.setVisibility(View.GONE);
+				txv_da3awi_total.setVisibility(View.GONE);
 			}
 			
 			@Override
@@ -539,7 +547,6 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 			
 			@Override
 			protected void onPostExecute(Boolean result) {
-//				loading.dismiss();
 				
 				if(result){
 					
@@ -563,5 +570,40 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 
 	}
 
+	private void changePushPlace(final int placeId){
+		new AsyncTask<Void, Void, Boolean>() {
+			@Override
+			protected Boolean doInBackground(Void... params) {
+				if(Utils.isOnline(IndexActivity.this))
+					return mManager.changePuchPlace(mManager.getDeviceToken(), placeId);
+				
+				return false;
+			}
+			
+			protected void onPostExecute(Boolean result) {
+				if(result)
+					Log.i(TAG, ">>>>> Place push changed successfully");
+				else
+					Log.i(TAG, ">>>>> Place push not changed");
+			};
+		}.execute();
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		mManager.setGcmDispatcher(null);
+	}
+
+	@Override
+	public void onNewNotificationReceived() {
+		runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				initData();				
+			}
+		});
+	}
 
 }
