@@ -5,8 +5,11 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.LabeledIntent;
 import android.content.pm.PackageManager;
@@ -22,9 +25,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.janaezwadaawa.R;
 
 public class Utils {
 
@@ -208,5 +215,40 @@ public class Utils {
 		InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
 		imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 	}
+	
+	public static void showInfoPopup(final Context context, String title, String message){
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+		if(title != null)
+			builder.setTitle(title);
+
+		builder.setMessage(message)
+		.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				return;
+			}
+		});
+
+		// Create the AlertDialog object and return it
+		final AlertDialog alert = builder.create();
+		alert.setOnShowListener(new DialogInterface.OnShowListener() {
+			@Override
+			public void onShow(DialogInterface dialog) {
+				Button btnPositive = alert.getButton(Dialog.BUTTON_POSITIVE);
+				btnPositive.setTypeface(JDFonts.getBDRFont());
+
+				int dialogTitle = context.getResources().getIdentifier( "alertTitle", "id", "android" );
+				TextView txv_title = (TextView) alert.findViewById(dialogTitle);
+				TextView txv_message = (TextView) alert.findViewById(android.R.id.message);
+
+				txv_title.setTypeface(JDFonts.getBDRFont()); 
+				txv_message.setTypeface(JDFonts.getBDRFont()); 
+			}
+		});
+
+		alert.show();
+	}
+
 
 }

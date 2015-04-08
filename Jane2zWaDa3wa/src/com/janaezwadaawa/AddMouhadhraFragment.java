@@ -18,6 +18,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -310,6 +312,8 @@ public class AddMouhadhraFragment extends Fragment {
 						@Override
 						protected Boolean doInBackground(Void... params) {
 
+							if(Utils.isOnline(getActivity()))
+								return null;
 
 							int place = listManatek.get(spinner_mantaka.getSelectedItemPosition()).getId();
 							int mosque = listJawamaa.get(spinner_jamaa.getSelectedItemPosition()).getId();
@@ -326,13 +330,16 @@ public class AddMouhadhraFragment extends Fragment {
 
 							loading.dismiss();
 
-							if (result ) {
-								Toast.makeText(getActivity(), getString(R.string.success_add), Toast.LENGTH_SHORT).show();
-								((IndexActivity)getActivity()).initData();
-								getActivity().onBackPressed();
-							}else
-								Toast.makeText(getActivity(), getString(R.string.error_add), Toast.LENGTH_SHORT).show();
-
+							if(result != null)
+								if (result ) {
+									Toast.makeText(getActivity(), getString(R.string.success_add), Toast.LENGTH_SHORT).show();
+									((IndexActivity)getActivity()).initData();
+									getActivity().onBackPressed();
+								}else
+									Toast.makeText(getActivity(), getString(R.string.error_add), Toast.LENGTH_SHORT).show();
+							else
+								Utils.showInfoPopup(getActivity(), null, getString(R.string.error_internet_connexion));
+							
 						};
 					}.execute();
 
@@ -354,10 +361,10 @@ public class AddMouhadhraFragment extends Fragment {
 
 //		listManatek = mManager.getPlaces();
 
-		if (!mManager.getSelectMosques().isEmpty() && !mManager.getSelectTrainers().isEmpty() && !mManager.getPlaces().isEmpty()) {
+		if (!mManager.getSelectTrainers().isEmpty() && !mManager.getPlaces().isEmpty()) {
 
 			listTrainers = mManager.getSelectTrainers();
-			listJawamaa = mManager.getSelectMosques();
+//			listJawamaa = mManager.getSelectMosques();
 			listManatek = mManager.getPlaces();
 
 			initiateSpinners();
@@ -379,32 +386,74 @@ public class AddMouhadhraFragment extends Fragment {
 
 				@Override
 				protected String doInBackground(Void... params) {
-
+					if(!Utils.isOnline(getActivity()))
+						return null;
+					
 					listManatek = mManager.getAllPlaces();
 					listTrainers = mManager.getAllSelectTrainers();
-					listJawamaa = mManager.getAllSelectMosques();
+//					listJawamaa = mManager.getAllSelectMosques();
 
-					return null;
+					return "";
 				}
 
 				protected void onPostExecute(String result) {
 
 					loading.dismiss();
 
-					if (!listTrainers.isEmpty() && !listJawamaa.isEmpty() && !listManatek.isEmpty()) {
-
-						mManager.setSelectTrainers(listTrainers);
-						mManager.setSelectMosques(listJawamaa);
-
-						initiateSpinners();
-
+					if(result != null)
+					{
+						if (!listTrainers.isEmpty() && !listManatek.isEmpty()) {
+						
+							mManager.setSelectTrainers(listTrainers);
+							//						mManager.setSelectMosques(listJawamaa);
+							initiateSpinners();
+						}
 					}
+					else
+						Utils.showInfoPopup(getActivity(), null, getString(R.string.error_internet_connexion));
 
 				};
 			}.execute();
 
 
 		}
+
+	}
+	
+	private void refreshMosquesByPlace(int placeId){
+		new AsyncTask<Integer, Void, String>() {
+
+			ProgressDialog loading ;
+
+			protected void onPreExecute() {
+
+				loading = new ProgressDialog(getActivity());
+				loading.setMessage(getString(R.string.please_wait));
+				loading.setCancelable(false);
+				loading.show();
+
+			};
+
+			@Override
+			protected String doInBackground(Integer... params) {
+
+				listJawamaa = mManager.getAllSelectMosques(params[0]);
+
+				return null;
+			}
+
+			protected void onPostExecute(String result) {
+
+				loading.dismiss();
+
+				if (!listJawamaa.isEmpty()) {
+
+					initiateJawamaaSpinner();
+
+				}
+
+			};
+		}.execute(placeId);
 
 	}
 
@@ -415,7 +464,7 @@ public class AddMouhadhraFragment extends Fragment {
 
 		ArrayList<String> listSpinnerGenres = new ArrayList<String>();
 		ArrayList<String> listSpinnerSalawat = new ArrayList<String>();
-		ArrayList<String> listSpinnerJawamaa = new ArrayList<String>();
+//		ArrayList<String> listSpinnerJawamaa = new ArrayList<String>();
 		ArrayList<String> listSpinnerManatek = new ArrayList<String>();
 
 
@@ -423,9 +472,9 @@ public class AddMouhadhraFragment extends Fragment {
 			listSpinnerSalawat.add(listTrainers.get(i).getTitle());
 		}
 
-		for (int i = 0; i < listJawamaa.size(); i++) {
-			listSpinnerJawamaa.add(listJawamaa.get(i).getTitle());
-		}
+//		for (int i = 0; i < listJawamaa.size(); i++) {
+//			listSpinnerJawamaa.add(listJawamaa.get(i).getTitle());
+//		}
 
 		for (int i = 0; i < listManatek.size(); i++) {
 			listSpinnerManatek.add(listManatek.get(i).getTitle());
@@ -433,76 +482,50 @@ public class AddMouhadhraFragment extends Fragment {
 
 		ArrayAdapter<String> spinnerAdapterGenres = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, listSpinnerGenres);
 		ArrayAdapter<String> spinnerAdapterSalawat = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, listSpinnerSalawat);
-		ArrayAdapter<String> spinnerAdapterJawamaa = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, listSpinnerJawamaa);
+//		ArrayAdapter<String> spinnerAdapterJawamaa = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, listSpinnerJawamaa);
 		ArrayAdapter<String> spinnerAdapterManatek = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, listSpinnerManatek);
-
-		//		ArrayAdapter<String> spinnerAdapterColors = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, colors){
-		//			public View getView(int position, View convertView, ViewGroup parent) 
-		//			{
-		//				View v = super.getView(position, convertView, parent);
-		//
-		//				((TextView) v).setTypeface(JDFonts.getBDRFont());
-		//
-		//				((TextView) v).setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
-		//
-		////				((TextView) v).setTextColor(getResources().getColor(R.color.material_blue_grey_900));
-		//
-		//				return v;
-		//			}
-		//
-		//			public View getDropDownView(int position, View convertView, ViewGroup parent) 
-		//			{
-		//				View v = super.getDropDownView(position, convertView, parent);
-		//				
-		//				((TextView) v).setTypeface(JDFonts.getBDRFont());
-		//
-		//				((TextView) v).setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
-		//
-		////				((TextView) v).setTextColor(getResources().getColor(R.color.material_blue_grey_900));
-		//
-		//				return v;
-		//			}
-		//		};
-		//		
-		//		ArrayAdapter<String> spinnerAdapterTailles = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, tailles){
-		//			public View getView(int position, View convertView, ViewGroup parent) 
-		//			{
-		//				View v = super.getView(position, convertView, parent);
-		//
-		//				((TextView) v).setTypeface(JDFonts.getBDRFont());
-		//
-		//				((TextView) v).setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
-		//
-		////				((TextView) v).setTextColor(getResources().getColor(R.color.material_blue_grey_900));
-		//
-		//				return v;
-		//			}
-		//
-		//			public View getDropDownView(int position, View convertView, ViewGroup parent) 
-		//			{
-		//				View v = super.getDropDownView(position, convertView, parent);
-		//				
-		//				((TextView) v).setTypeface(JDFonts.getBDRFont());
-		//
-		//				((TextView) v).setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
-		//
-		////				((TextView) v).setTextColor(getResources().getColor(R.color.material_blue_grey_900));
-		//
-		//				return v;
-		//			}
-		//		};
 
 		spinnerAdapterGenres.setDropDownViewResource(R.layout.spinner_item);
 		spinnerAdapterSalawat.setDropDownViewResource(R.layout.spinner_item);
-		spinnerAdapterJawamaa.setDropDownViewResource(R.layout.spinner_item);
+//		spinnerAdapterJawamaa.setDropDownViewResource(R.layout.spinner_item);
 		spinnerAdapterManatek.setDropDownViewResource(R.layout.spinner_item);
 
-		spinner_jamaa.setAdapter(spinnerAdapterJawamaa);
+//		spinner_jamaa.setAdapter(spinnerAdapterJawamaa);
 		spinner_mantaka.setAdapter(spinnerAdapterManatek);
 		spinner_trainer.setAdapter(spinnerAdapterSalawat);
+		
+		spinner_mantaka.setOnItemSelectedListener(new OnItemSelectedListener() {
 
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int position, long id) {
+				
+				refreshMosquesByPlace(listManatek.get(position).getId());
+				
+			}
 
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 
+	}	
+
+	private void initiateJawamaaSpinner() {
+
+		ArrayList<String> listSpinnerJawamaa = new ArrayList<String>();
+
+		for (int i = 0; i < listJawamaa.size(); i++) {
+			listSpinnerJawamaa.add(listJawamaa.get(i).getTitle());
+		}
+
+		ArrayAdapter<String> spinnerAdapterJawamaa = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, listSpinnerJawamaa);
+		
+		spinnerAdapterJawamaa.setDropDownViewResource(R.layout.spinner_item);
+		
+		spinner_jamaa.setAdapter(spinnerAdapterJawamaa);
 
 	}	
 

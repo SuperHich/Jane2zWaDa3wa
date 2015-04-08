@@ -51,7 +51,7 @@ public class JDManager {
 	private static final String URL_LOGIN 				= URL_BASE + "login/%s/%s";
 	private static final String URL_ADD_JANEZA 			= URL_BASE + "addExequy";
 	private static final String URL_ADD_DA3WA 			= URL_BASE + "addLicuter";
-	private static final String URL_SELECT_MOSQUES 		= URL_BASE + "select/mosques";
+	private static final String URL_SELECT_MOSQUES 		= URL_BASE + "select/mosques/%d";
 	private static final String URL_SELECT_TRAINERS 	= URL_BASE + "select/trainers";
 	private static final String URL_SELECT_SALATS 		= URL_BASE + "select/salat";
 	
@@ -349,7 +349,7 @@ public class JDManager {
 		return result;
 	}
 	
-	public ArrayList<JanezaPerson> getZanaezNames(int placeId, int mosqueId, int prayerId, int genderId) {
+	public ArrayList<JanezaPerson> getJanaezNames(int placeId, int mosqueId, int prayerId, int genderId) {
 		ArrayList<JanezaPerson> result = new ArrayList<JanezaPerson>();
 		String url = String.format(URL_MOSQUE_SALAT_GENDER, placeId, mosqueId, prayerId, genderId);
 		JSONArray array = jsonParser.getJSONFromUrl(url);
@@ -510,9 +510,9 @@ public class JDManager {
 		return addresses;
 	}
 	
-	public ArrayList<SelectMosque> getAllSelectMosques() {
+	public ArrayList<SelectMosque> getAllSelectMosques(int placeId) {
 		ArrayList<SelectMosque> result = new ArrayList<SelectMosque>();
-		JSONArray array = jsonParser.getJSONFromUrl(URL_SELECT_MOSQUES);
+		JSONArray array = jsonParser.getJSONFromUrl(String.format(URL_SELECT_MOSQUES, placeId));
 		if (array != null) 
 		
 			for (int i = 0; i < array.length(); i++) {

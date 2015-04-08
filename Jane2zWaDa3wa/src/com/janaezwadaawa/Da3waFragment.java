@@ -21,6 +21,7 @@ import com.janaezwadaawa.adapters.ISearchListener;
 import com.janaezwadaawa.entity.Da3wa;
 import com.janaezwadaawa.externals.JDManager;
 import com.janaezwadaawa.utils.JDFonts;
+import com.janaezwadaawa.utils.Utils;
 
 public class Da3waFragment extends Fragment implements IJana2zListener, ISearchListener {
 
@@ -106,6 +107,9 @@ public class Da3waFragment extends Fragment implements IJana2zListener, ISearchL
 			
 			@Override
 			protected ArrayList<Da3wa> doInBackground(Void... params) {
+				if(!Utils.isOnline(getActivity()))
+					return null;
+				
 				da3awi.addAll(jdManager.getAllDa3awi());
 				allDa3awi.addAll(da3awi);
 				return da3awi;
@@ -117,7 +121,9 @@ public class Da3waFragment extends Fragment implements IJana2zListener, ISearchL
 				
 				if(result != null){
 					adapter.notifyDataSetChanged();
-				}
+				}else
+					Utils.showInfoPopup(getActivity(), null, getString(R.string.error_internet_connexion));
+				
 				toggleEmptyMessage();
 			}
 		}.execute();

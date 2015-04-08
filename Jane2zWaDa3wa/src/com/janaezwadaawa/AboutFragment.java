@@ -18,6 +18,7 @@ import com.janaezwadaawa.adapters.AddressesAdapter;
 import com.janaezwadaawa.entity.Address;
 import com.janaezwadaawa.externals.JDManager;
 import com.janaezwadaawa.utils.JDFonts;
+import com.janaezwadaawa.utils.Utils;
 
 
 public class AboutFragment extends Fragment {
@@ -104,6 +105,9 @@ public class AboutFragment extends Fragment {
 			
 			@Override
 			protected ArrayList<Address> doInBackground(Void... params) {
+				if(!Utils.isOnline(getActivity()))
+					return null;
+				
 				allAddresses.addAll(jdManager.getAllAddresses());
 				return allAddresses;
 			}
@@ -115,7 +119,9 @@ public class AboutFragment extends Fragment {
 				
 				if(result != null){
 					adapter.notifyDataSetChanged();
-				}
+				}else
+					Utils.showInfoPopup(getActivity(), null, getString(R.string.error_internet_connexion));
+				
 				toggleEmptyMessage();
 			}
 		}.execute();

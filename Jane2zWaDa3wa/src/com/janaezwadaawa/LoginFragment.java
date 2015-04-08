@@ -135,7 +135,9 @@ public class LoginFragment extends Fragment {
 						
 						@Override
 						protected String doInBackground(Void... params) {
-
+							if(!Utils.isOnline(getActivity()))
+								return null;
+							
 							return mManager.login(loginText, pwdText);
 						}
 						
@@ -153,7 +155,8 @@ public class LoginFragment extends Fragment {
 //								getActivity().onBackPressed();
 								((IndexActivity) getActivity()).goToFragment(IndexActivity.ADMIN_FRAGMENT, false);
 								
-							}
+							}else
+								Utils.showInfoPopup(getActivity(), null, getString(R.string.error_internet_connexion));
 							
 						};
 					}.execute();

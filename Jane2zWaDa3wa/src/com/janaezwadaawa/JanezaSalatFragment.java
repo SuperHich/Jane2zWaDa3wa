@@ -32,6 +32,7 @@ import com.janaezwadaawa.entity.Mosque2;
 import com.janaezwadaawa.entity.Prayer;
 import com.janaezwadaawa.externals.JDManager;
 import com.janaezwadaawa.utils.JDFonts;
+import com.janaezwadaawa.utils.Utils;
 
 public class JanezaSalatFragment extends Fragment implements ISearchListener, OnTouchListener {
 
@@ -187,11 +188,14 @@ public class JanezaSalatFragment extends Fragment implements ISearchListener, On
 			
 			@Override
 			protected ArrayList<JanezaGender> doInBackground(Void... params) {
+				if(!Utils.isOnline(getActivity()))
+					return null;
+				
 				if(placeId != -1){
 					for (int i = 0; i < 3; i++) {
 						JanezaGender jg = new JanezaGender();
 						jg.setTitle(getGenderName(i));
-						ArrayList<JanezaPerson> names = jdManager.getZanaezNames(placeId, mosque.getId(), prayer.getId(), i);
+						ArrayList<JanezaPerson> names = jdManager.getJanaezNames(placeId, mosque.getId(), prayer.getId(), i);
 						jg.setCount(names.size());
 						jg.setNames(names);
 						
@@ -209,7 +213,9 @@ public class JanezaSalatFragment extends Fragment implements ISearchListener, On
 				if(result != null){
 					adapter = new JanezaGenderAdapter(getActivity(), items);
 					listView.setAdapter(adapter);
-				}
+				}else
+					Utils.showInfoPopup(getActivity(), null, getString(R.string.error_internet_connexion));
+				
 				toggleEmptyMessage();
 			}
 		}.execute();

@@ -33,6 +33,7 @@ public class PrayersAdapter extends BaseExpandableListAdapter {
 	class ViewGroupHolder
 	{
 		TextView txv_name_value;
+		TextView txv_total;
 	}
 	
 	class ViewChildHolder
@@ -84,8 +85,10 @@ public class PrayersAdapter extends BaseExpandableListAdapter {
 			convertView = inflater.inflate(R.layout.prayer_group_item, null);
 			
 			holder.txv_name_value = (TextView) convertView.findViewById(R.id.txv_name_value);
+			holder.txv_total = (TextView) convertView.findViewById(R.id.txv_total);
 			
 			holder.txv_name_value.setTypeface(JDFonts.getBDRFont());
+			holder.txv_total.setTypeface(JDFonts.getBDRFont());
 
 			convertView.setTag(holder);
 		}
@@ -97,6 +100,11 @@ public class PrayersAdapter extends BaseExpandableListAdapter {
 		Prayer item = items.get(groupPosition);
 		
 		holder.txv_name_value.setText(item.getTitle());
+		if(item.getCount() > 0){
+			holder.txv_total.setVisibility(View.VISIBLE);
+			holder.txv_total.setText(""+item.getCount());
+		}else
+			holder.txv_total.setVisibility(View.GONE);
 	
 		return convertView;
 	}

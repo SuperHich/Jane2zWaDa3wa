@@ -26,6 +26,7 @@ import com.janaezwadaawa.entity.GHTDate;
 import com.janaezwadaawa.entity.Mosque2;
 import com.janaezwadaawa.externals.JDManager;
 import com.janaezwadaawa.utils.JDFonts;
+import com.janaezwadaawa.utils.Utils;
 
 public class JanezaPlacesFragment extends Fragment implements ISearchListener {
 
@@ -160,6 +161,9 @@ public class JanezaPlacesFragment extends Fragment implements ISearchListener {
 			
 			@Override
 			protected ArrayList<Mosque2> doInBackground(Void... params) {
+				if(!Utils.isOnline(getActivity()))
+					return null;
+				
 				if(placeId != -1){
 					mosques.addAll(jdManager.getMosques2ByPlace(placeId));
 					allMosques.addAll(mosques);
@@ -173,7 +177,9 @@ public class JanezaPlacesFragment extends Fragment implements ISearchListener {
 				
 				if(result != null){
 					adapter.notifyDataSetChanged();
-				}
+				}else
+					Utils.showInfoPopup(getActivity(), null, getString(R.string.error_internet_connexion));
+				
 				toggleEmptyMessage();
 			}
 		}.execute();

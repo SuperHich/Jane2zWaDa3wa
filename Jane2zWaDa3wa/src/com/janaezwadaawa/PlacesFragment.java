@@ -19,6 +19,7 @@ import com.janaezwadaawa.adapters.PlacesAdapter;
 import com.janaezwadaawa.entity.Place;
 import com.janaezwadaawa.externals.JDManager;
 import com.janaezwadaawa.utils.JDFonts;
+import com.janaezwadaawa.utils.Utils;
 
 
 public class PlacesFragment extends ListFragment {
@@ -117,6 +118,9 @@ public class PlacesFragment extends ListFragment {
 			
 			@Override
 			protected ArrayList<Place> doInBackground(Void... params) {
+				if(!Utils.isOnline(getActivity()))
+					return null;
+				
 				if(mManager.getPlaces().isEmpty())
 					mManager.getAllPlaces();
 				
@@ -130,7 +134,9 @@ public class PlacesFragment extends ListFragment {
 				if(result != null){
 					places.addAll(result);
 					adapter.notifyDataSetChanged();
-				}
+				}else
+					Utils.showInfoPopup(getActivity(), null, getString(R.string.error_internet_connexion));
+				
 				toggleEmptyMessage();
 			}
 		}.execute();

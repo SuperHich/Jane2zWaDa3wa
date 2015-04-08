@@ -99,5 +99,6 @@
     <string name="propositions">إقتراحات</string>
     <string name="admin_menu">لوحة التحكم</string>
     <string name="login_title">تسجيل الدخول</string>
+    <string name="ok">تم</string>
     
 </resources>
