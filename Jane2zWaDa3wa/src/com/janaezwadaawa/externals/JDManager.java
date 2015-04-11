@@ -405,7 +405,7 @@ public class JDManager {
 		
 		String response = jsonParser.post(URL_ADD_JANEZA, params);
 		if(response != null)
-			return response.trim().equals("1");
+			return response.trim().contains("1");
 		
 		return false;
 	}
@@ -424,7 +424,7 @@ public class JDManager {
 		
 		String response = jsonParser.post(URL_ADD_DA3WA, params);
 		if(response != null)
-			return response.trim().equals("1");
+			return response.trim().contains("1");
 		
 		return false;
 	}

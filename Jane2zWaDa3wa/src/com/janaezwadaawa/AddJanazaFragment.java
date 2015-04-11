@@ -248,7 +248,7 @@ public class AddJanazaFragment extends Fragment {
 						@Override
 						protected Boolean doInBackground(Void... params) {
 
-							if(Utils.isOnline(getActivity()))
+							if(!Utils.isOnline(getActivity()))
 								return null;
 
 							int place = listManatek.get(spinner_mantaka.getSelectedItemPosition()).getId();
