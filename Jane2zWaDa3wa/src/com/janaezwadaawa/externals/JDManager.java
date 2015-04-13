@@ -592,10 +592,13 @@ public class JDManager {
 		params.add(new BasicNameValuePair(TOKEN, regID));
 		params.add(new BasicNameValuePair(TYPE, "android"));
 		
+		if(getSelectedPlace() != null)
+			params.add(new BasicNameValuePair("pid", ""+getSelectedPlace().getId()));
+		
 		GcmResponse result = jsonParser.getGcmResponse(URL_PUSH_REGISTER, params);
 		if (result != null) 
 		{
-			Log.i(TAG, "result " + result.isSuccess() + "\n" + result.getMessage());
+			Log.i(TAG, ">>> result " + result.isSuccess() + "\n" + result.getMessage());
 			isOK = result.isSuccess();
 
 		}
@@ -644,6 +647,7 @@ public class JDManager {
 
 		Log.v(TAG, ">>> locality " + locality);
 		if(getPlaces() != null)
+		{
 			for(Place place : getPlaces()){
 				Log.v(TAG, ">>> Place EN " + place.getPlaceEn());
 				if(place.getPlaceEn().equalsIgnoreCase(locality)
@@ -652,7 +656,10 @@ public class JDManager {
 					return true;
 				}
 			}
-		
+			
+			if(!getPlaces().isEmpty())
+				setSelectedPlace(getPlaces().get(0));
+		}
 		return false;
 	}
 	
