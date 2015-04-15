@@ -107,21 +107,24 @@ public class Da3waDetailFragment extends Fragment {
 	private void initData(){
 		
 		String non_formatted_date = selectedDa3wa.getStartTime() ;
-		String formatted_full_date = (non_formatted_date.split(">")[1]).split("</")[0] ;
+//		String formatted_full_date = (non_formatted_date.split(">")[1]).split("</")[0] ;
 		
-		String formatted_only_date = formatted_full_date.split(" - ")[0];
+		String formatted_only_date = non_formatted_date.split(" ")[0];
+		
+//		String formatted_only_date = formatted_full_date.split(" - ")[0];
 		
 		Log.e("DATE+++", formatted_only_date);
 	
 		
 		//////// Conversion to HIJRI /////////////////	
 		
-		String[] date = formatted_only_date.split("/");
+		String[] date = formatted_only_date.split("-");
 		
+		Log.e("CORRECTED DATE+++", "year "+date[0] +"gMonth "+date[1] +"gDay "+date[2] );
 		
-		gYear = Integer.valueOf(date[2]);
-		gMonth = Integer.valueOf(date[0]);
-		gDay = Integer.valueOf(date[1]);
+		gYear = Integer.valueOf(date[0]);
+		gMonth = Integer.valueOf(date[1]);
+		gDay = Integer.valueOf(date[2]);
 		
 		GHTDate gDate = Hijri.GregorianToHijri(gYear, gMonth, gDay);
 		Log.i("refreshGDate", gDate.toString());
@@ -134,11 +137,11 @@ public class Da3waDetailFragment extends Fragment {
 		String formatted_hijri_date = "يوم " + gDate.getDayNameH()+ " " + hDay + " " + gDate.getMonthNameH() + "  " + hYear + " هـ." ;
 		
 		
-		txv_title.setText(selectedDa3wa.getTitle());
-		txv_trainer.setText(selectedDa3wa.getTrainer());
-		txv_desc.setText(selectedDa3wa.getDescription());
+		if (!selectedDa3wa.getTitle().equalsIgnoreCase("null")) txv_title.setText(selectedDa3wa.getTitle());
+		if (!selectedDa3wa.getTrainer().equalsIgnoreCase("null")) txv_trainer.setText(selectedDa3wa.getTrainer());
+		if (!selectedDa3wa.getDescription().equalsIgnoreCase("null")) txv_desc.setText(selectedDa3wa.getDescription());
+		if (!selectedDa3wa.getMosque().equalsIgnoreCase("null")) txv_mosque.setText(selectedDa3wa.getMosque());
 		txv_da3wa_date.setText(formatted_hijri_date);
-		txv_mosque.setText(selectedDa3wa.getMosque());
 		
 //		new AsyncTask<Void, Void, ArrayList<Janeza>>() {
 //

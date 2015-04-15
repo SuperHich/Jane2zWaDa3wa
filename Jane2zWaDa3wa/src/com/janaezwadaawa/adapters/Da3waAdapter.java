@@ -91,21 +91,37 @@ public class Da3waAdapter extends ArrayAdapter<Da3wa> {
 		
 		
 		String non_formatted_date = da3wa.getStartTime() ;
-		String formatted_full_date = (non_formatted_date.split(">")[1]).split("</")[0] ;
+		Log.e("DATE+++", non_formatted_date);
 		
-		String formatted_only_date = formatted_full_date.split(" - ")[0];
+		/** OLD FORMATAGE
 		
-		Log.e("DATE+++", formatted_only_date);
+//		Log.e("DATE+++", non_formatted_date);
+//		
+//		String formatted_full_date = non_formatted_date ;
+//		///
+//		if (formatted_full_date.contains(">") && formatted_full_date.contains("</")) {
+//			formatted_full_date = (non_formatted_date.split(">")[1]).split("</")[0] ;
+//		}
+//		
+//		String formatted_only_date = formatted_full_date.split(" - ")[0];
+//		
+//		Log.e("DATE+++", formatted_only_date);
 	
+		*/
+		
+		String formatted_only_date = non_formatted_date.split(" ")[0];
+		
+		
 		
 		//////// Conversion to HIJRI /////////////////	
 		
-		String[] date = formatted_only_date.split("/");
+		String[] date = formatted_only_date.split("-");
 		
+		Log.e("CORRECTED DATE+++", "year "+date[0] +"gMonth "+date[1] +"gDay "+date[2] );
 		
-		gYear = Integer.valueOf(date[2]);
-		gMonth = Integer.valueOf(date[0]);
-		gDay = Integer.valueOf(date[1]);
+		gYear = Integer.valueOf(date[0]);
+		gMonth = Integer.valueOf(date[1]);
+		gDay = Integer.valueOf(date[2]);
 		
 		GHTDate gDate = Hijri.GregorianToHijri(gYear, gMonth, gDay);
 		Log.i("refreshGDate", gDate.toString());
@@ -118,11 +134,12 @@ public class Da3waAdapter extends ArrayAdapter<Da3wa> {
 		String formatted_hijri_date = "يوم " + gDate.getDayNameH()+ " " + hDay + " " + gDate.getMonthNameH() + "  " + hYear + " هـ." ;
 		
 		
-		holder.txv_title.setText(da3wa.getTitle());
-		holder.txv_trainer.setText(da3wa.getTrainer());
-		holder.txv_description.setText(da3wa.getDescription());
+		if (!da3wa.getTitle().equalsIgnoreCase("null")) holder.txv_title.setText(da3wa.getTitle());
+		if (!da3wa.getTrainer().equalsIgnoreCase("null")) holder.txv_trainer.setText(da3wa.getTrainer());
+		if (!da3wa.getDescription().equalsIgnoreCase("null")) holder.txv_description.setText(da3wa.getDescription());
 		holder.txv_date.setText(formatted_hijri_date);
-		holder.txv_mosque.setText(da3wa.getMosque());
+		if (!da3wa.getMosque().equalsIgnoreCase("null")) holder.txv_mosque.setText(da3wa.getMosque());
+		
 
 		return convertView;
 	}

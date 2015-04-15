@@ -28,7 +28,6 @@
             android:gravity="right"
             android:maxLines="1"
             android:padding="2dp"
-            android:text="trainer"
             android:textColor="@color/color_beige"
             android:textSize="14sp" />
 
@@ -39,7 +38,6 @@
             android:gravity="right"
             android:maxLines="1"
             android:padding="2dp"
-            android:text="description"
             android:textSize="12sp" />
 
         <RelativeLayout
