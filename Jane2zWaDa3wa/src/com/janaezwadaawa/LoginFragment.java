@@ -146,14 +146,18 @@ public class LoginFragment extends Fragment {
 							
 							if (result != null ) {
 								
-								mManager.setLoggedIn(true);
-								mManager.setUid(result);
-								
-								Prefs.initPrefs(getActivity());
-								Prefs.putString("uid", result);
-								
-//								getActivity().onBackPressed();
-								((IndexActivity) getActivity()).goToFragment(IndexActivity.ADMIN_FRAGMENT, false);
+								if(result.equals("false"))
+									Utils.showInfoPopup(getActivity(), null, getString(R.string.check_login_password));
+								else{
+									mManager.setLoggedIn(true);
+									mManager.setUid(result);
+
+									Prefs.initPrefs(getActivity());
+									Prefs.putString("uid", result);
+
+									//								getActivity().onBackPressed();
+									((IndexActivity) getActivity()).goToFragment(IndexActivity.ADMIN_FRAGMENT, false);
+								}
 								
 							}else
 								Utils.showInfoPopup(getActivity(), null, getString(R.string.error_internet_connexion));

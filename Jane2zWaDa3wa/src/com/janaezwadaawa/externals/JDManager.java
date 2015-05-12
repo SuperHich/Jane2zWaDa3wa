@@ -377,15 +377,16 @@ public class JDManager {
 	
 	public String login(String username, String password) {
 		String uid = null;
-		String url = String.format(URL_LOGIN, username, password);
+		String url = String.format(URL_LOGIN, username.replaceAll(" ", "%20"), password.replaceAll(" ", "%20"));
 		String response = jsonParser.getStringFromUrl(url);
 		Log.i(TAG, ">>> url : " + url);
 		if (response != null) 
 		{
-			if(!response.equalsIgnoreCase("false")){
-				response = response.substring(response.indexOf("\""));
+			if(!response.contains("false")){
+//				response = response.substring(response.indexOf("\""));
 				uid = response.replaceAll("\"", "");
-			}
+			}else
+				uid = "false";
 		}
 		
 		return uid;
