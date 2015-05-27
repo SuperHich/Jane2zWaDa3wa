@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
@@ -33,8 +37,10 @@ import com.janaezwadaawa.entity.Place;
 import com.janaezwadaawa.entity.SelectMosque;
 import com.janaezwadaawa.entity.SelectTrainer;
 import com.janaezwadaawa.externals.JDManager;
+import com.janaezwadaawa.externals.LoopjRestClient;
 import com.janaezwadaawa.utils.JDFonts;
 import com.janaezwadaawa.utils.Utils;
+import com.loopj.android.http.JsonHttpResponseHandler;
 
 
 public class AddMouhadhraFragment extends Fragment {
@@ -408,9 +414,11 @@ public class AddMouhadhraFragment extends Fragment {
 							//						mManager.setSelectMosques(listJawamaa);
 							initiateSpinners();
 						}
+						else
+							Utils.showInfoPopup2(getActivity(), null, getString(R.string.error_try_again));
 					}
 					else
-						Utils.showInfoPopup(getActivity(), null, getString(R.string.error_internet_connexion));
+						Utils.showInfoPopup2(getActivity(), null, getString(R.string.error_internet_connexion));
 
 				};
 			}.execute();
@@ -421,39 +429,97 @@ public class AddMouhadhraFragment extends Fragment {
 	}
 	
 	private void refreshMosquesByPlace(int placeId){
-		new AsyncTask<Integer, Void, String>() {
-
+		
+		LoopjRestClient.get(String.format(JDManager.URL_SELECT_MOSQUES, placeId), new JsonHttpResponseHandler() {
+			
 			ProgressDialog loading ;
-
-			protected void onPreExecute() {
-
+			
+			@Override
+			public void onStart() {
+				super.onStart();
+				
 				loading = new ProgressDialog(getActivity());
 				loading.setMessage(getString(R.string.please_wait));
 				loading.setCancelable(false);
 				loading.show();
-
-			};
-
-			@Override
-			protected String doInBackground(Integer... params) {
-
-				listJawamaa = mManager.getAllSelectMosques(params[0]);
-
-				return null;
+				
+				listJawamaa.clear();
 			}
-
-			protected void onPostExecute(String result) {
-
+			
+			@Override
+			public void onFinish() {
+				super.onFinish();
 				loading.dismiss();
+			}
+			
+			@Override
+			public void onSuccess(int statusCode, Header[] headers,
+					JSONArray response) {
+//				super.onSuccess(statusCode, headers, response);
+				
+				listJawamaa.addAll(mManager.getAllSelectMosques(response));
+				
+				if (listJawamaa.isEmpty()) 
+					Utils.showInfoPopup(getActivity(), null, getString(R.string.no_mosques));
+				
+				initiateJawamaaSpinner();
+			}
+			
+			@Override
+			public void onFailure(int statusCode, Header[] headers,
+					String responseString, Throwable throwable) {
+//				super.onFailure(statusCode, headers, responseString, throwable);
+				
+				Utils.showInfoPopup2(getActivity(), null, getString(R.string.error_internet_connexion));
+			}
+			
+			@Override
+			public void onFailure(int statusCode, Header[] headers,
+					Throwable throwable, JSONObject errorResponse) {
+//				super.onFailure(statusCode, headers, throwable, errorResponse);
+				
+				Utils.showInfoPopup2(getActivity(), null, getString(R.string.error_internet_connexion));
+			}
+			
+		});
 
-				if (!listJawamaa.isEmpty()) {
-
-					initiateJawamaaSpinner();
-
-				}
-
-			};
-		}.execute(placeId);
+//		new AsyncTask<Integer, Void, String>() {
+//
+//			ProgressDialog loading ;
+//
+//			protected void onPreExecute() {
+//
+//				loading = new ProgressDialog(getActivity());
+//				loading.setMessage(getString(R.string.please_wait));
+//				loading.setCancelable(false);
+//				loading.show();
+//
+//			};
+//
+//			@Override
+//			protected String doInBackground(Integer... params) {
+//				if(!Utils.isOnline(getActivity()))
+//					return null;
+//				
+//				listJawamaa = mManager.getAllSelectMosques(params[0]);
+//
+//				return null;
+//			}
+//
+//			protected void onPostExecute(String result) {
+//
+//				loading.dismiss();
+//				if(result != null){
+//					if (listJawamaa.isEmpty()) 
+//						Utils.showInfoPopup(getActivity(), null, getString(R.string.no_mosques));
+//					
+//					initiateJawamaaSpinner();
+//				}
+//				else
+//					Utils.showInfoPopup2(getActivity(), null, getString(R.string.error_internet_connexion));
+//
+//			};
+//		}.execute(placeId);
 
 	}
 

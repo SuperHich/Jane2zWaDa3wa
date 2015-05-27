@@ -249,6 +249,40 @@ public class Utils {
 
 		alert.show();
 	}
+	
+	public static void showInfoPopup2(final Activity activity, String title, String message){
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+
+		if(title != null)
+			builder.setTitle(title);
+
+		builder.setMessage(message)
+		.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				activity.onBackPressed();
+			}
+		});
+
+		// Create the AlertDialog object and return it
+		final AlertDialog alert = builder.create();
+		alert.setOnShowListener(new DialogInterface.OnShowListener() {
+			@Override
+			public void onShow(DialogInterface dialog) {
+				Button btnPositive = alert.getButton(Dialog.BUTTON_POSITIVE);
+				btnPositive.setTypeface(JDFonts.getBDRFont());
+
+				int dialogTitle = activity.getResources().getIdentifier( "alertTitle", "id", "android" );
+				TextView txv_title = (TextView) alert.findViewById(dialogTitle);
+				TextView txv_message = (TextView) alert.findViewById(android.R.id.message);
+
+				txv_title.setTypeface(JDFonts.getBDRFont()); 
+				txv_message.setTypeface(JDFonts.getBDRFont()); 
+			}
+		});
+
+		alert.show();
+	}
 
 
 }

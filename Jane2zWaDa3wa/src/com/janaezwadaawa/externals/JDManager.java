@@ -39,24 +39,24 @@ public class JDManager {
 	static final String TAG = "JDManager";
 	
 //	private static final String URL_BASE 				= "http://smartlives.ws/projects/exequyApp/api/";
-	private static final String URL_BASE 				= "http://gheras.net/exequyApp/api/";
-	private static final String URL_JANA2Z 				= URL_BASE + "exequy/";
-	private static final String URL_DA3WA 				= URL_BASE + "lectures/";
-	private static final String URL_MOSQUES 			= URL_BASE + "mosques";
-	private static final String URL_PLACES 				= URL_BASE + "places/";	
-	private static final String URL_ADDRESSES 			= URL_BASE + "addresses/";	
-	private static final String URL_PLACE 				= URL_BASE + "place/%d";
-	private static final String URL_MOSQUE 				= URL_BASE + "mosque/%d/%d";
-	private static final String URL_MOSQUE_SALAT_GENDER = URL_BASE + "mosque_salat_gender/%d/%d/%d/%d";
-	private static final String URL_LOGIN 				= URL_BASE + "login/%s/%s";
-	private static final String URL_ADD_JANEZA 			= URL_BASE + "addExequy";
-	private static final String URL_ADD_DA3WA 			= URL_BASE + "addLicuter";
-	private static final String URL_SELECT_MOSQUES 		= URL_BASE + "select/mosques/%d";
-	private static final String URL_SELECT_TRAINERS 	= URL_BASE + "select/trainers";
-	private static final String URL_SELECT_SALATS 		= URL_BASE + "select/salat";
+	public static final String URL_BASE 				= "http://gheras.net/exequyApp/api/";
+	public static final String URL_JANA2Z 				= URL_BASE + "exequy/";
+	public static final String URL_DA3WA 				= URL_BASE + "lectures/";
+	public static final String URL_MOSQUES 				= URL_BASE + "mosques";
+	public static final String URL_PLACES 				= URL_BASE + "places/";	
+	public static final String URL_ADDRESSES 			= URL_BASE + "addresses/";	
+	public static final String URL_PLACE 				= URL_BASE + "place/%d";
+	public static final String URL_MOSQUE 				= URL_BASE + "mosque/%d/%d";
+	public static final String URL_MOSQUE_SALAT_GENDER 	= URL_BASE + "mosque_salat_gender/%d/%d/%d/%d";
+	public static final String URL_LOGIN 				= URL_BASE + "login/%s/%s";
+	public static final String URL_ADD_JANEZA 			= URL_BASE + "addExequy";
+	public static final String URL_ADD_DA3WA 			= URL_BASE + "addLicuter";
+	public static final String URL_SELECT_MOSQUES 		= URL_BASE + "select/mosques/%d";
+	public static final String URL_SELECT_TRAINERS 		= URL_BASE + "select/trainers";
+	public static final String URL_SELECT_SALATS 		= URL_BASE + "select/salat";
 	
-	private static final String URL_PUSH_REGISTER		= "http://gheras.net/exequyApp/mobile_data/push_notifications";
-	private static final String URL_CHANGE_PUSH_PLACE	= "http://gheras.net/exequyApp/api/change_place/%s/1/%d"; //...token/type/pid
+	public static final String URL_PUSH_REGISTER		= "http://gheras.net/exequyApp/mobile_data/push_notifications";
+	public static final String URL_CHANGE_PUSH_PLACE	= "http://gheras.net/exequyApp/api/change_place/%s/1/%d"; //...token/type/pid
 	
 	private static final String ID 				= "id";
 	private static final String TITLE 			= "title";
@@ -523,7 +523,32 @@ public class JDManager {
 				item.setId(jObj.getInt(ID));
 				item.setTitle(jObj.getString(NAME));
 				
-//				Log.i(TAG, item.toString());
+				Log.i(TAG, item.toString());
+				
+				result.add(item);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		setSelectMosques(result);
+		
+		return result;
+	}
+	
+	public ArrayList<SelectMosque> getAllSelectMosques(JSONArray array) {
+		ArrayList<SelectMosque> result = new ArrayList<SelectMosque>();
+		
+		if (array != null) 
+		
+			for (int i = 0; i < array.length(); i++) {
+			try {
+				JSONObject jObj = array.getJSONObject(i);
+				SelectMosque item = new SelectMosque();
+				item.setId(jObj.getInt(ID));
+				item.setTitle(jObj.getString(NAME));
+				
+				Log.i(TAG, item.toString());
 				
 				result.add(item);
 			} catch (JSONException e) {

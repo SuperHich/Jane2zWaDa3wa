@@ -101,5 +101,7 @@
     <string name="login_title">تسجيل الدخول</string>
     <string name="ok">تم</string>
     <string name="check_login_password">رجاء التأكد من إسم الدخول و كلمة السر</string>
+    <string name="error_try_again">خطا ! رجاء المحاولة لاحقاً</string>
+    <string name="no_mosques">لا يوجد جوامع في هذه المنطقة</string>
     
 </resources>

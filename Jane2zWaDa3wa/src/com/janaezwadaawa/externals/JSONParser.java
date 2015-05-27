@@ -60,6 +60,8 @@ public class JSONParser {
     	
     	int statusCode = -1;
         // Making HTTP request
+    	Log.i("TAG", "url " + url);
+    	
         try {
             HttpClient httpClient = new DefaultHttpClient(getHttpParams());
             HttpGet httpGet = new HttpGet(url);
@@ -320,7 +322,7 @@ public class JSONParser {
     	HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
     	// Set the default socket timeout (SO_TIMEOUT) 
     	// in milliseconds which is the timeout for waiting for data.
-    	int timeoutSocket = 30000;
+    	int timeoutSocket = 60000;
     	HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
     	
     	return httpParameters;

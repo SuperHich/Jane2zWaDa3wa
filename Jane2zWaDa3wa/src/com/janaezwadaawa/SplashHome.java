@@ -1,6 +1,7 @@
 package com.janaezwadaawa;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -58,6 +59,9 @@ public class SplashHome extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.splashhome);
+		
+		
+		forceChangingLang();
 		
 		principal_layout = (RelativeLayout) findViewById(R.id.principal_layout);
 		
@@ -125,5 +129,16 @@ public class SplashHome extends Activity {
 		}.execute();
 
 	}
+	
+	public void forceChangingLang() {
+        String lang = "en";
+
+        Locale myLocale = new Locale(lang);
+        Locale.setDefault(myLocale);
+        android.content.res.Configuration config = new android.content.res.Configuration();
+        config.locale = myLocale;
+        getResources().updateConfiguration(config,
+                getResources().getDisplayMetrics());
+    }
 
 }
