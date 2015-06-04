@@ -184,6 +184,7 @@ public class GcmIntentService extends IntentService {
         
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
         
+//        JDManager.getInstance(getBaseContext()).setIntegerPreference(getBaseContext(), "notif_id", NOTIFICATION_ID);
         NOTIFICATION_ID++;
 
     }

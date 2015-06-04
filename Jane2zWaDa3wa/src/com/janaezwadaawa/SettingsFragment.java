@@ -158,7 +158,7 @@ public class SettingsFragment extends Fragment {
 		gcmManager.setOnGcmListener(new GcmListener() {
 			@Override
 			public void onRegistrationComplete(String registrationId) {
-				Log.e("XX", "" + registrationId) ;
+				Log.e("XX", ">>> XX: " + registrationId) ;
 				mManager.updateDeviceToken("" + registrationId);
 			}
 

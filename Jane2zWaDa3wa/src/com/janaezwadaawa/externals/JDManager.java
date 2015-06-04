@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.provider.Settings.Secure;
 import android.util.Log;
 
 import com.janaezwadaawa.R;
@@ -41,7 +42,7 @@ public class JDManager {
 //	private static final String URL_BASE 				= "http://smartlives.ws/projects/exequyApp/api/";
 	public static final String URL_BASE 				= "http://gheras.net/exequyApp/api/";
 	public static final String URL_JANA2Z 				= URL_BASE + "exequy/";
-	public static final String URL_DA3WA 				= URL_BASE + "lectures/";
+	public static final String URL_DA3WA 				= URL_BASE + "lectures/place/?place=%d";
 	public static final String URL_MOSQUES 				= URL_BASE + "mosques";
 	public static final String URL_PLACES 				= URL_BASE + "places/";	
 	public static final String URL_ADDRESSES 			= URL_BASE + "addresses/";	
@@ -431,9 +432,9 @@ public class JDManager {
 	}
 	
 	
-	public ArrayList<Da3wa> getAllDa3awi() {
+	public ArrayList<Da3wa> getAllDa3awi(int placeId) {
 		ArrayList<Da3wa> da3awi = new ArrayList<Da3wa>();
-		JSONArray array = jsonParser.getJSONFromUrl(URL_DA3WA);
+		JSONArray array = jsonParser.getJSONFromUrl(String.format(URL_DA3WA, placeId));
 		if (array != null) 
 		for (int i = 0; i < array.length(); i++) {
 			try {
@@ -621,6 +622,10 @@ public class JDManager {
 		if(getSelectedPlace() != null)
 			params.add(new BasicNameValuePair("pid", ""+getSelectedPlace().getId()));
 		
+		String udid = Secure.getString(mContext.getContentResolver(),
+                Secure.ANDROID_ID);
+		params.add(new BasicNameValuePair("udid", udid));
+		
 		GcmResponse result = jsonParser.getGcmResponse(URL_PUSH_REGISTER, params);
 		if (result != null) 
 		{
@@ -641,7 +646,7 @@ public class JDManager {
 		String result = jsonParser.getStringFromUrl(url);
 		if (result != null) 
 		{
-			isOK = result.trim().equals("1");
+			isOK = result.trim().contains("1");
 		}
 		
 		return isOK;
@@ -683,7 +688,8 @@ public class JDManager {
 				}
 			}
 			
-			if(!getPlaces().isEmpty())
+			int placeID = settings.getInt("place_id", -1);
+			if(!getPlaces().isEmpty() && placeID == -1)
 				setSelectedPlace(getPlaces().get(0));
 		}
 		return false;
@@ -843,4 +849,52 @@ public class JDManager {
 	public void setGcmDispatcher(IGcmDispatcher gcmDispatcher) {
 		this.gcmDispatcher = gcmDispatcher;
 	}
+	
+	 // Set String Preference
+    public void setStringPreference(Context context, String key, String value){
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(key, value);
+        editor.commit();
+    }
+    
+    // Set int Preference
+    public void setIntegerPreference(Context context, String key, int value){
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(key, value);
+        editor.commit();
+    }
+
+    // Set Boolean Preference
+    public void setBooleanPreference(Context context, String key, boolean value){
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(key, value);
+        editor.commit();
+    }
+
+    // Get String Preference
+    public String getStringPreference(Context context, String key, String defValue){
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        return sharedPreferences.getString(key, defValue);
+    }
+    
+    // Get String Preference
+    public int getIntegerPreference(Context context, String key, int defValue){
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        return sharedPreferences.getInt(key, defValue);
+    }
+
+    // Get Boolean Preference
+    public boolean getBooleanPreference(Context context, String key, boolean defValue){
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        return sharedPreferences.getBoolean(key, defValue);
+    }
 }

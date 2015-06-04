@@ -9,6 +9,8 @@ import me.leolin.shortcutbadger.ShortcutBadger;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.location.Location;
@@ -31,8 +33,8 @@ import com.janaezwadaawa.entity.Mosque2;
 import com.janaezwadaawa.entity.Place;
 import com.janaezwadaawa.externals.JDManager;
 import com.janaezwadaawa.gcm.GcmManager;
-import com.janaezwadaawa.gcm.IGcmDispatcher;
 import com.janaezwadaawa.gcm.GcmManager.GcmListener;
+import com.janaezwadaawa.gcm.IGcmDispatcher;
 import com.janaezwadaawa.utils.JDFonts;
 import com.janaezwadaawa.utils.MyLocationManager;
 import com.janaezwadaawa.utils.Utils;
@@ -90,6 +92,9 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 
 		try {
 
+			NotificationManager mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+			mNotificationManager.cancelAll();
+			
 			mManager.setBadgeCounter(0);
 			ShortcutBadger.setBadge(getApplicationContext(), mManager.getBadgeCounter());
 
@@ -332,15 +337,15 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 				}
 				break;
 			case R.id.dourouss:
-				//				if(jdManager.getSelectedPlace() == null){
-				//					Toast.makeText(IndexActivity.this, R.string.select_place, Toast.LENGTH_LONG).show();
-				//				}else{
-				Intent intent2 = new Intent(IndexActivity.this, MainActivity.class);
-				intent2.putExtra(MainActivity.DEFAULT_FRAG_POSITION, 1);
-				startActivity(intent2);
-				overridePendingTransition(R.anim.left_in, R.anim.left_out);
-				finish();
-				//				}
+				if(mManager.getSelectedPlace() == null){
+					Toast.makeText(IndexActivity.this, R.string.select_place, Toast.LENGTH_LONG).show();
+				}else{
+					Intent intent2 = new Intent(IndexActivity.this, MainActivity.class);
+					intent2.putExtra(MainActivity.DEFAULT_FRAG_POSITION, 1);
+					startActivity(intent2);
+					overridePendingTransition(R.anim.left_in, R.anim.left_out);
+					finish();
+				}
 				break;
 			case R.id.about:
 				goToFragment(ABOUT_FRAGMENT, true);
@@ -459,16 +464,6 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 			super.onBackPressed();
 	}
 
-	private void shareApp(String text){
-
-		Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-		sharingIntent.setType("text/plain");
-		sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-		sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, text);
-		startActivity(Intent.createChooser(sharingIntent, getString(R.string.share)));
-
-	}
-
 	@Override
 	public void onLocationChanged(Location location) {
 		// TODO Auto-generated method stub
@@ -539,7 +534,7 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 				if(mManager.getSelectedPlace() != null)
 					if(mManager.getSelectedPlace().getId() != -1){
 						mosques.addAll(mManager.getMosques2ByPlace(mManager.getSelectedPlace().getId()));
-						da3awi.addAll(mManager.getAllDa3awi());
+						da3awi.addAll(mManager.getAllDa3awi(mManager.getSelectedPlace().getId()));
 						return true;
 					}
 				return false;

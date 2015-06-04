@@ -110,9 +110,14 @@ public class Da3waFragment extends Fragment implements IJana2zListener, ISearchL
 				if(!Utils.isOnline(getActivity()))
 					return null;
 				
-				da3awi.addAll(jdManager.getAllDa3awi());
-				allDa3awi.addAll(da3awi);
-				return da3awi;
+				if(jdManager.getSelectedPlace() != null)
+					if(jdManager.getSelectedPlace().getId() != -1){
+						da3awi.addAll(jdManager.getAllDa3awi(jdManager.getSelectedPlace().getId()));
+						allDa3awi.addAll(da3awi);
+						return da3awi;
+					}
+				
+				return null;
 			}
 			
 			@Override

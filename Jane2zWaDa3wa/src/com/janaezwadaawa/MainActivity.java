@@ -2,9 +2,14 @@ package com.janaezwadaawa;
 
 import java.util.ArrayList;
 
+import me.leolin.shortcutbadger.ShortcutBadgeException;
+import me.leolin.shortcutbadger.ShortcutBadger;
+
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -79,6 +84,18 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 
 		mManager = JDManager.getInstance(this);
 		JDFonts.Init(this);
+		
+		try {
+
+			NotificationManager mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+			mNotificationManager.cancelAll();
+			
+			mManager.setBadgeCounter(0);
+			ShortcutBadger.setBadge(getApplicationContext(), mManager.getBadgeCounter());
+
+		} catch (ShortcutBadgeException e) {
+			e.printStackTrace();
+		}
 
 		header = (ImageView) findViewById(R.id.header);
 		img_header = (ImageView) findViewById(R.id.img_header);
