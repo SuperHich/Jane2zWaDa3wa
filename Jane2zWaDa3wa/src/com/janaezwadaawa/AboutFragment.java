@@ -105,16 +105,21 @@ public class AboutFragment extends Fragment {
 			
 			@Override
 			protected ArrayList<Address> doInBackground(Void... params) {
-				if(!Utils.isOnline(getActivity()))
-					return null;
-				
-				allAddresses.addAll(jdManager.getAllAddresses());
-				return allAddresses;
+				if(getActivity() != null){
+					if(!Utils.isOnline(getActivity()))
+						return null;
+
+					allAddresses.addAll(jdManager.getAllAddresses());
+					return allAddresses;
+				}
+				return null;
 			}
 			
 			@Override
 			protected void onPostExecute(ArrayList<Address> result) {
-//				loading.dismiss();
+				if(getActivity() == null)
+					return;
+				
 				loading.setVisibility(View.GONE);
 				
 				if(result != null){

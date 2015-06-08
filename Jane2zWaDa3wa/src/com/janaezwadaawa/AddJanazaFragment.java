@@ -57,7 +57,7 @@ public class AddJanazaFragment extends Fragment {
 	private ArrayList<Place> listManatek = new ArrayList<Place>();
 
 
-	String date = "", time = "00:00" ;
+	String date = "", time = "23:59" ;
 
 	private TextView top_header;
 
