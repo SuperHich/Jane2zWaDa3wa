@@ -85,6 +85,7 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 
 		mManager = JDManager.getInstance(this);
 		mManager.setGcmDispatcher(this);
+		mManager.forceChangingLang(this);
 		
 		mLocationManager = MyLocationManager.getIntance(this);
 		mLocationManager.start();
@@ -599,6 +600,11 @@ public class IndexActivity extends FragmentActivity implements OnTouchListener, 
 				initData();				
 			}
 		});
+	}
+	
+	@Override
+	public void onNotificationClicked() {
+		finish();
 	}
 
 }

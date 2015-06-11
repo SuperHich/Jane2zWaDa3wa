@@ -61,8 +61,6 @@ public class SplashHome extends Activity {
 		setContentView(R.layout.splashhome);
 		
 		
-		forceChangingLang();
-		
 		principal_layout = (RelativeLayout) findViewById(R.id.principal_layout);
 		
 //		Message msg = Message.obtain();
@@ -70,6 +68,7 @@ public class SplashHome extends Activity {
 //	    splashHandler.sendMessageDelayed(msg, SPLASHTIME);
 		
 		mManager = JDManager.getInstance(this);
+		mManager.forceChangingLang(this);
 		Prefs.initPrefs(SplashHome.this);
 		
 		String uid = Prefs.getString("uid", "");
@@ -129,16 +128,5 @@ public class SplashHome extends Activity {
 		}.execute();
 
 	}
-	
-	public void forceChangingLang() {
-        String lang = "en";
-
-        Locale myLocale = new Locale(lang);
-        Locale.setDefault(myLocale);
-        android.content.res.Configuration config = new android.content.res.Configuration();
-        config.locale = myLocale;
-        getResources().updateConfiguration(config,
-                getResources().getDisplayMetrics());
-    }
 
 }

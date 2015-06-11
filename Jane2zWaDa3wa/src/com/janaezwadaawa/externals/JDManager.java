@@ -3,6 +3,7 @@ package com.janaezwadaawa.externals;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -17,6 +18,7 @@ import android.preference.PreferenceManager;
 import android.provider.Settings.Secure;
 import android.util.Log;
 
+import com.google.android.gms.internal.cu;
 import com.janaezwadaawa.R;
 import com.janaezwadaawa.adapters.IFragmentNotifier;
 import com.janaezwadaawa.adapters.ISearchListener;
@@ -896,5 +898,19 @@ public class JDManager {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
         return sharedPreferences.getBoolean(key, defValue);
+    }
+    
+    public void forceChangingLang(Context context) {
+    	String currentLang = Locale.getDefault().getLanguage();
+    	if(!currentLang.equals("en")){
+    		String lang = "en";
+
+    		Locale myLocale = new Locale(lang);
+    		Locale.setDefault(myLocale);
+    		android.content.res.Configuration config = new android.content.res.Configuration();
+    		config.locale = myLocale;
+    		context.getResources().updateConfiguration(config,
+    				context.getResources().getDisplayMetrics());
+    	}
     }
 }

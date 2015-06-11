@@ -83,9 +83,13 @@ public class MainActivity extends FragmentActivity implements IMenuListener, OnT
 		setContentView(R.layout.activity_main);
 
 		mManager = JDManager.getInstance(this);
+		mManager.forceChangingLang(this);
 		JDFonts.Init(this);
 		
 		try {
+			
+			if(mManager.getGcmDispatcher() != null)
+				mManager.getGcmDispatcher().onNotificationClicked();
 
 			NotificationManager mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 			mNotificationManager.cancelAll();
