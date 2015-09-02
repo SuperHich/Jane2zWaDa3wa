@@ -1,11 +1,16 @@
 package com.janaezwadaawa;
 
+import java.nio.charset.Charset;
+
+import org.apache.http.Header;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,8 +24,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.janaezwadaawa.externals.JDManager;
+import com.janaezwadaawa.externals.LoopjRestClient;
 import com.janaezwadaawa.utils.JDFonts;
 import com.janaezwadaawa.utils.Utils;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.pixplicity.easyprefs.library.Prefs;
 
 
@@ -121,7 +129,7 @@ public class LoginFragment extends Fragment {
 						Toast.makeText(getActivity(), getString(R.string.login_empty), Toast.LENGTH_SHORT).show();
 					}
 					else {
-					
+						
 					new AsyncTask<Void, Void, String>() {
 
 						private ProgressDialog loading;

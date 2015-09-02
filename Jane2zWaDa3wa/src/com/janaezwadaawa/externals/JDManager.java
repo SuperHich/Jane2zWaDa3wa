@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -18,7 +20,6 @@ import android.preference.PreferenceManager;
 import android.provider.Settings.Secure;
 import android.util.Log;
 
-import com.google.android.gms.internal.cu;
 import com.janaezwadaawa.R;
 import com.janaezwadaawa.adapters.IFragmentNotifier;
 import com.janaezwadaawa.adapters.ISearchListener;
@@ -387,12 +388,31 @@ public class JDManager {
 		{
 			if(!response.contains("false")){
 //				response = response.substring(response.indexOf("\""));
-				uid = response.replaceAll("\"", "");
+				uid = response.replaceAll("\"", "").trim();
+//				Log.i(TAG, ">>>1 uid : " + uid + " ... " + uid.length());
+				
+				String checkStr = "";
+				for (int i = 0; i < uid.length(); i++) {
+					String c = uid.charAt(i)+"";
+//					Log.i(TAG, ">>> char at " + i + " " + c);
+					if(isDigit(c))
+						checkStr += c;
+				}
+				
+				uid = checkStr;
+//				Log.i(TAG, ">>>2 uid : " + uid + " ... " + uid.length());
 			}else
 				uid = "false";
 		}
 		
 		return uid;
+	}
+	
+	private boolean isDigit(String s){
+		Pattern p = Pattern.compile( "[0-9]" );
+		Matcher m = p.matcher(s);
+		
+		return m.matches();
 	}
 	
 	public boolean addJaneza(String uid, String title, String body, int place, int mosque, int salat, String salat_time, int gender){
@@ -407,6 +427,19 @@ public class JDManager {
 		params.add(new BasicNameValuePair(SALAT_TIME, salat_time));
 		params.add(new BasicNameValuePair(GENDER, String.valueOf(gender)));
 		
+//		String url = URL_ADD_JANEZA;
+//		
+//		url += "?" + UID 		+ "=" + uid;
+//		url += "&" + TITLE 		+ "=" + title;
+//		url += "&" + BODY 		+ "=" + body;
+//		url += "&" + PLACE 		+ "=" + place;
+//		url += "&" + MOSQUE 	+ "=" + mosque;
+//		url += "&" + SALAT 		+ "=" + salat;
+//		url += "&" + SALAT_TIME + "=" + salat_time;
+//		url += "&" + GENDER 	+ "=" + gender;
+//		
+//		url = url.replaceAll(" ", "%20");
+//		Log.i(TAG, uid + " >>> addJaneza url= " + url);
 		String response = jsonParser.post(URL_ADD_JANEZA, params);
 		if(response != null)
 			return response.trim().contains("1");
@@ -416,17 +449,31 @@ public class JDManager {
 	
 	public boolean addDa3wa(String uid, String title, String body, int place, int mosque, int trainer, String time_from, String time_to){
 
-		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair(UID, uid));
-		params.add(new BasicNameValuePair(TITLE, title));
-		params.add(new BasicNameValuePair(BODY, body));
-		params.add(new BasicNameValuePair(PLACE, String.valueOf(place)));
-		params.add(new BasicNameValuePair(MOSQUE, String.valueOf(mosque)));
-		params.add(new BasicNameValuePair(TRAINER, String.valueOf(trainer)));
-		params.add(new BasicNameValuePair(TIME_FROM, time_from));
-		params.add(new BasicNameValuePair(TIME_TO, time_to));
+//		List<NameValuePair> params = new ArrayList<NameValuePair>();
+//		params.add(new BasicNameValuePair(UID, uid));
+//		params.add(new BasicNameValuePair(TITLE, title));
+//		params.add(new BasicNameValuePair(BODY, body));
+//		params.add(new BasicNameValuePair(PLACE, String.valueOf(place)));
+//		params.add(new BasicNameValuePair(MOSQUE, String.valueOf(mosque)));
+//		params.add(new BasicNameValuePair(TRAINER, String.valueOf(trainer)));
+//		params.add(new BasicNameValuePair(TIME_FROM, time_from));
+//		params.add(new BasicNameValuePair(TIME_TO, time_to));
 		
-		String response = jsonParser.post(URL_ADD_DA3WA, params);
+		String url = URL_ADD_DA3WA;
+		
+		url += "?" + UID 		+ "=" + uid;
+		url += "&" + TITLE 		+ "=" + title;
+		url += "&" + BODY 		+ "=" + body;
+		url += "&" + PLACE 		+ "=" + place;
+		url += "&" + MOSQUE 	+ "=" + mosque;
+		url += "&" + TRAINER 	+ "=" + trainer;
+		url += "&" + TIME_FROM 	+ "=" + time_from;
+		url += "&" + TIME_TO 	+ "=" + time_to;
+		
+		url = url.replaceAll(" ", "%20");
+		Log.i(TAG, ">>> addDa3wa url= " + url);
+		
+		String response = jsonParser.getStringFromUrl(url);
 		if(response != null)
 			return response.trim().contains("1");
 		
